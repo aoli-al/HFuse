@@ -1,0 +1,7 @@
+{
+  "generator-llvm": {
+    "promptValues": {
+      "llvmInstallDir": "/usr/local/opt/llvm"
+    }
+  }
+}
