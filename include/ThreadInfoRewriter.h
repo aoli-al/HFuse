@@ -16,8 +16,11 @@ using namespace clang;
 using namespace ast_matchers;
 
 namespace kernel_fusion {
-static const std::string ThreadInfoAccessId = "thread-info";
+static const std::string ThreadAccessId = "thread-info";
 static const std::string FunctionDeclId = "thread-info-function";
+static const std::string ThreadVarDeclId = "thread-info-var-decl";
+static const std::string ThreadIdx = "threadIdx";
+static const std::string BlockDim = "blockDim";
 static const ast_matchers::StatementMatcher ThreadInfoMatcher =
     memberExpr(
         hasObjectExpression(
@@ -26,22 +29,31 @@ static const ast_matchers::StatementMatcher ThreadInfoMatcher =
                     declRefExpr(
                         to(
                             varDecl(
-                                hasName("threadIdx"))))))),
+                                anyOf(
+                                    hasName(ThreadIdx),
+                                    hasName(BlockDim)))
+                                .bind(ThreadVarDeclId)))))),
         hasAncestor(functionDecl().bind(FunctionDeclId)))
-        .bind(ThreadInfoAccessId);
+        .bind(ThreadAccessId);
 
 class ThreadInfoRewriter : public ast_matchers::MatchFinder::MatchCallback {
 public:
-  explicit ThreadInfoRewriter(
-      std::map<std::string, tooling::Replacements> &Replacements) :
-      Replacements(Replacements) {}
+  ThreadInfoRewriter(
+      std::map<std::string, tooling::Replacements> &Replacements,
+      std::string Dimension,
+      std::string SecondFunction,
+      int Offset) :
+      Replacements(Replacements), Dimension(std::move(Dimension)),
+      Offset(Offset), SecondFunction(std::move(SecondFunction)) {}
   void run(const ast_matchers::MatchFinder::MatchResult &Result) override;
   const static std::map<std::string, std::string> MemberNameMapping;
 private:
-  std::map<std::string, std::string> ThreadIdxNameMap;
+  std::map<std::string, std::string> KernelInfoNameMap;
   unsigned Idx = 0;
   std::map<std::string, tooling::Replacements> &Replacements;
-
+  std::string Dimension;
+  std::string SecondFunction;
+  int Offset;
 };
 
 }

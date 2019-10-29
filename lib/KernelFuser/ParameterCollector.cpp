@@ -8,9 +8,12 @@ namespace kernel_fusion {
 void ParameterCollector::run(
     const ast_matchers::MatchFinder::MatchResult &Result) {
   auto *D = Result.Nodes.getNodeAs<FunctionDecl>(ParameterCollectorBindId);
-  if (D->getName().empty()) {
+  if (D->getName().empty()
+      || Kernels.find(D->getName().str()) == Kernels.end()) {
     return;
   }
+  llvm::outs() << D->getName() << "\n";
+  llvm::outs().flush();
   if (auto *TF = D->getDescribedFunctionTemplate()) {
     TF->getTemplateParameters();
     for (auto Param: *TF->getTemplateParameters()) {

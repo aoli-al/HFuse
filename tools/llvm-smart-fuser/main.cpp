@@ -27,7 +27,7 @@ namespace  {
 void renameParameters(tooling::CommonOptionsParser &Op) {
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
 
-  ParameterCollector Collector;
+  ParameterCollector Collector({"upsample_bilinear2d_out_frame"});
 
   ast_matchers::MatchFinder ParameterFinder;
   ParameterFinder.addMatcher(ParameterMatcher, &Collector);
@@ -65,7 +65,8 @@ void fuseKernel(tooling::CommonOptionsParser &Op) {
 void rewriteThreadInfo(tooling::CommonOptionsParser &Op) {
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
   ast_matchers::MatchFinder Finder;
-  ThreadInfoRewriter ThreadInfoRewriter(Tool.getReplacements());
+  ThreadInfoRewriter ThreadInfoRewriter(Tool.getReplacements(),
+                                        "y", "upsample_bilinear2d_out_frame", 1);
   Finder.addMatcher(ThreadInfoMatcher, &ThreadInfoRewriter);
   if (auto Result =
       Tool.run(tooling::newFrontendActionFactory(&Finder).get())) {
@@ -87,7 +88,9 @@ void rewriteThreadInfo(tooling::CommonOptionsParser &Op) {
 
 int main(int argc, const char** argv){
   tooling::CommonOptionsParser Op(argc, argv, KernelFuseCategory);
+  renameParameters(Op);
   rewriteThreadInfo(Op);
+  fuseKernel(Op);
   return 0;
 }
 

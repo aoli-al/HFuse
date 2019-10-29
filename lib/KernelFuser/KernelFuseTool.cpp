@@ -17,8 +17,8 @@ void KernelFuseTool::run(const ast_matchers::MatchFinder::MatchResult &Result) {
 }
 
 void KernelFuseTool::onEndOfTranslationUnit() {
-  fuseKernel(KernelFunctionMap["foo"],
-             KernelFunctionMap["bar"]);
+  fuseKernel(KernelFunctionMap["im2col_kernel"],
+             KernelFunctionMap["upsample_bilinear2d_out_frame"]);
 }
 
 void KernelFuseTool::fuseKernel(FunctionDecl *FunctionA,
@@ -29,9 +29,5 @@ void KernelFuseTool::fuseKernel(FunctionDecl *FunctionA,
   KernelPrinter Printer(outs(), C->getPrintingPolicy(), *C);
   Printer.printFusedFunction(FunctionA, FunctionB);
 }
-
-void KernelFuseTool::renameKernel(FunctionDecl *D) {
-}
-
 
 }

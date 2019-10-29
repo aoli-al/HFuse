@@ -21,11 +21,13 @@ static const ast_matchers::DeclarationMatcher ParameterMatcher =
 
 class ParameterCollector: public ast_matchers::MatchFinder::MatchCallback {
 public:
-  ParameterCollector() = default;
+  explicit ParameterCollector(std::set<std::string> Kernels) :
+  Kernels(std::move(Kernels)) {};
   void run(const ast_matchers::MatchFinder::MatchResult &Result) override;
 public:
   std::map<std::string, std::vector<unsigned>> ParameterMap;
   std::vector<unsigned> ParameterList;
+  std::set<std::string> Kernels;
 };
 
 }

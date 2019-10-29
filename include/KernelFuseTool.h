@@ -25,7 +25,6 @@ public:
   void onEndOfTranslationUnit() override;
 private:
   void fuseKernel(FunctionDecl *FunctionA, FunctionDecl *FunctionB);
-  void renameKernel(FunctionDecl *D);
 
   std::map<StringRef, FunctionDecl *> KernelFunctionMap;
   std::tuple<StringRef, StringRef> KernelName;
