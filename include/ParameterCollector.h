@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+#include "KernelFusion.h"
+
 using namespace clang;
 
 namespace kernel_fusion {
@@ -21,13 +23,15 @@ static const ast_matchers::DeclarationMatcher ParameterMatcher =
 
 class ParameterCollector: public ast_matchers::MatchFinder::MatchCallback {
 public:
-  explicit ParameterCollector(std::set<std::string> Kernels) :
-  Kernels(std::move(Kernels)) {};
+  explicit ParameterCollector(const Context &Context) :
+      Context(Context) {};
   void run(const ast_matchers::MatchFinder::MatchResult &Result) override;
+  std::vector<std::string> ParameterList;
+  std::vector<std::vector<std::string>> USRList;
+
 public:
-  std::map<std::string, std::vector<unsigned>> ParameterMap;
-  std::vector<unsigned> ParameterList;
-  std::set<std::string> Kernels;
+  std::set<std::string> VisitedFunctions;
+  const Context &Context;
 };
 
 }

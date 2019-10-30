@@ -17,6 +17,9 @@
 #include "clang/AST/PrettyPrinter.h"
 #include "clang/Basic/Module.h"
 #include "llvm/Support/raw_ostream.h"
+
+#include "KernelFusion.h"
+
 using namespace clang;
 
 namespace kernel_fusion {
@@ -24,10 +27,10 @@ class KernelPrinter {
   raw_ostream &Out;
   PrintingPolicy Policy;
   const ASTContext &Context;
+  const struct Context &KFContext;
   unsigned Indentation;
   bool PrintInstantiation;
 
-  raw_ostream& Indent() { return Indent(Indentation); }
   raw_ostream& Indent(unsigned Indentation);
 
   void printFusedTemplateDecl(FunctionDecl *FA, FunctionDecl *FB);
@@ -35,10 +38,9 @@ class KernelPrinter {
 
 public:
   KernelPrinter(raw_ostream &Out, const PrintingPolicy &Policy,
-                const ASTContext &Context, unsigned Indentation = 0,
-                bool PrintInstantiation = false)
-      : Out(Out), Policy(Policy), Context(Context), Indentation(Indentation),
-        PrintInstantiation(PrintInstantiation) {}
+                const ASTContext &Context, const struct Context &KFContext)
+      : Out(Out), Policy(Policy), Context(Context), KFContext(KFContext),
+        Indentation(0), PrintInstantiation(false) {}
   void printFusedFunction(FunctionDecl *FA, FunctionDecl *FB);
   void printTemplateParameters(const TemplateParameterList *Params);
   void prettyPrintAttributes(Decl *D);

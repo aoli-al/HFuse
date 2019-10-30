@@ -5,6 +5,7 @@
 #ifndef SMART_FUSER_THREADINFOREWRITER_H
 #define SMART_FUSER_THREADINFOREWRITER_H
 
+#include "KernelFusion.h"
 #include <clang/ASTMatchers/ASTMatchFinder.h>
 #include <clang/Rewrite/Core/Rewriter.h>
 #include <clang/Tooling/Core/Replacement.h>
@@ -40,20 +41,15 @@ class ThreadInfoRewriter : public ast_matchers::MatchFinder::MatchCallback {
 public:
   ThreadInfoRewriter(
       std::map<std::string, tooling::Replacements> &Replacements,
-      std::string Dimension,
-      std::string SecondFunction,
-      int Offset) :
-      Replacements(Replacements), Dimension(std::move(Dimension)),
-      Offset(Offset), SecondFunction(std::move(SecondFunction)) {}
+      const Context &Context) :
+      Replacements(Replacements), Context(Context) {}
   void run(const ast_matchers::MatchFinder::MatchResult &Result) override;
   const static std::map<std::string, std::string> MemberNameMapping;
 private:
   std::map<std::string, std::string> KernelInfoNameMap;
   unsigned Idx = 0;
   std::map<std::string, tooling::Replacements> &Replacements;
-  std::string Dimension;
-  std::string SecondFunction;
-  int Offset;
+  const Context &Context;
 };
 
 }

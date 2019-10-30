@@ -4,7 +4,8 @@ add_library(LLVMKernelFuser
         KernelPrinter.cpp
         KernelFuseTool.cpp
         ParameterCollector.cpp
-        ThreadInfoMatcher.cpp
+        ThreadInfoRewriter.cpp
+        MacroExpand.cpp
         )
 
 target_link_libraries(LLVMKernelFuser

@@ -9,6 +9,8 @@
 #include <clang/Tooling/Execution.h>
 #include <clang/Rewrite/Core/Rewriter.h>
 
+#include "KernelFusion.h"
+
 using namespace clang;
 
 namespace kernel_fusion {
@@ -20,14 +22,14 @@ static const ast_matchers::DeclarationMatcher KernelFuseMatcher =
 
 class KernelFuseTool: public ast_matchers::MatchFinder::MatchCallback {
 public:
-  KernelFuseTool() = default;
+  explicit KernelFuseTool(const Context &Context) : Context(Context) {}
   void run(const ast_matchers::MatchFinder::MatchResult &Result) override;
   void onEndOfTranslationUnit() override;
 private:
   void fuseKernel(FunctionDecl *FunctionA, FunctionDecl *FunctionB);
 
+  const Context &Context;
   std::map<StringRef, FunctionDecl *> KernelFunctionMap;
-  std::tuple<StringRef, StringRef> KernelName;
 };
 }
 

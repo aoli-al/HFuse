@@ -27,9 +27,10 @@ void ThreadInfoRewriter::run(
       const std::string &b, const std::string &ThreadInfoName) {
     return ThreadInfoName + "_" + a + "_" + b;
   };
+  llvm::outs() << FName << "\n";
+  llvm::outs().flush();
   if (ME &&
-      Result.Context->getSourceManager()
-          .isInMainFile(ME->getSourceRange().getBegin())) {
+      (Context.Kernels.first == FName || Context.Kernels.second == FName)) {
     if (KernelInfoNameMap.find(FName) == KernelInfoNameMap.end()) {
       KernelInfoNameMap[FName] = std::to_string(Idx++);
       const auto Stmts = std::accumulate(
@@ -44,14 +45,14 @@ void ThreadInfoRewriter::run(
                 NameBuilder(b.second, KernelInfoNameMap[FName], BlockDim);
             auto BaseStrThread = "unsigned int " + NewNameThread + " = ";
             auto BaseStrBlock = "unsigned int " + NewNameBlock + " = ";
-            if (b.second == Dimension) {
-              if (FName == SecondFunction) {
+            if (b.second == Context.Dimension) {
+              if (FName == Context.Kernels.second) {
                 BaseStrThread += ThreadIdx + "."
-                    + b.second + " - " + std::to_string(Offset);
+                    + b.second + " - " + std::to_string(Context.Offset);
                 BaseStrBlock += BlockDim + "."
-                    + b.second + " - " + std::to_string(Offset);
+                    + b.second + " - " + std::to_string(Context.Offset);
               } else {
-                BaseStrBlock += std::to_string(Offset);
+                BaseStrBlock += std::to_string(Context.Offset);
                 BaseStrThread += ThreadIdx + "." + b.second;
               }
             }
@@ -81,6 +82,8 @@ void ThreadInfoRewriter::run(
     const auto CSR = CharSourceRange::getTokenRange(ME->getSourceRange());
     const auto Replacement =
         tooling::Replacement(SM, CSR, NewName);
+    outs() << Replacement.getFilePath().str() << "\n";
+    outs().flush();
     if (auto Err =
         Replacements[Replacement.getFilePath().str()].add(Replacement)) {
       outs() << "error?";

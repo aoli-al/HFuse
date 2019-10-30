@@ -22,7 +22,7 @@ void KernelPrinter::printFusedTemplateDecl(FunctionDecl *FA, FunctionDecl *FB) {
     if (TFB) {
       printTemplateParameters(TFB->getTemplateParameters());
     }
-    Out << "> ";
+    Out << ">\n";
   }
 }
 
@@ -33,7 +33,7 @@ void KernelPrinter::printFusedFunction(FunctionDecl *FA, FunctionDecl *FB) {
 
 void KernelPrinter::printFusedFunctionSignature(FunctionDecl *FA,
                                                 FunctionDecl *FB) {
-  std::string Proto = FA->getNameInfo().getAsString() + "_"
+  std::string Proto = "void " + FA->getNameInfo().getAsString() + "_"
       + FB->getNameInfo().getAsString();
 
   PrintingPolicy SubPolicy(Policy);
@@ -79,7 +79,7 @@ void KernelPrinter::printFusedFunctionSignature(FunctionDecl *FA,
 
   Out << " {\n";
   Indent(Indentation+1);
-  Out << "if (threadIdx.x < 512)\n";
+  Out << "if (threadIdx." + KFContext.Dimension  + " < " + std::to_string(KFContext.Offset) + ")\n";
   FA->getBody()->printPretty(Out, nullptr, SubPolicy, Indentation+1);
   Indent(Indentation+1);
   Out << "else\n";
