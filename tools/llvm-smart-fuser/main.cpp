@@ -17,6 +17,7 @@
 #include "ThreadInfoRewriter.h"
 #include "ParameterCollector.h"
 #include "MacroExpand.h"
+#include "BarrierHoisting.h"
 
 #include <set>
 
@@ -29,13 +30,10 @@ static cl::OptionCategory KernelFuseCategory("kernel-fuse options");
 
 namespace  {
 
-void expandMacros(tooling::CommonOptionsParser &Op, const Context &Context) {
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-  ast_matchers::MatchFinder Finder;
-  MacroExpand MacroExpand(Tool.getReplacements(), Context);
-  Finder.addMatcher(KernelFuseMatcher, &MacroExpand);
+void applyRewrites(tooling::RefactoringTool &Tool,
+    std::unique_ptr<tooling::FrontendActionFactory> Factory) {
   if (auto Result =
-      Tool.run(tooling::newFrontendActionFactory(&Finder).get())) {
+      Tool.run(Factory.get())) {
     exit(Result);
   }
   IntrusiveRefCntPtr<DiagnosticOptions> DiagOpts = new DiagnosticOptions();
@@ -48,6 +46,14 @@ void expandMacros(tooling::CommonOptionsParser &Op, const Context &Context) {
   Rewriter Rewrite(Sources, LangOptions());
   Tool.applyAllReplacements(Rewrite);
   Rewrite.overwriteChangedFiles();
+}
+
+void expandMacros(tooling::CommonOptionsParser &Op, const Context &Context) {
+  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+  ast_matchers::MatchFinder Finder;
+  MacroExpand MacroExpand(Tool.getReplacements(), Context);
+  Finder.addMatcher(KernelFuseMatcher, &MacroExpand);
+  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
 void renameParameters(tooling::CommonOptionsParser &Op, const Context &Context) {
@@ -74,7 +80,7 @@ void renameParameters(tooling::CommonOptionsParser &Op, const Context &Context) 
   Tool.runAndSave(tooling::newFrontendActionFactory(&Action).get());
 }
 
-void fuseKernel(tooling::CommonOptionsParser &Op, const Context &Context) {
+void fuseKernel(tooling::CommonOptionsParser &Op, Context &Context) {
   KernelFuseTool FuseTool(Context);
   ast_matchers::MatchFinder KernelFinder;
   KernelFinder.addMatcher(KernelFuseMatcher, &FuseTool);
@@ -87,20 +93,16 @@ void rewriteThreadInfo(tooling::CommonOptionsParser &Op, const Context &C) {
   ast_matchers::MatchFinder Finder;
   ThreadInfoRewriter ThreadInfoRewriter(Tool.getReplacements(), C);
   Finder.addMatcher(ThreadInfoMatcher, &ThreadInfoRewriter);
-  if (auto Result =
-      Tool.run(tooling::newFrontendActionFactory(&Finder).get())) {
-    exit(Result);
-  }
-  IntrusiveRefCntPtr<DiagnosticOptions> DiagOpts = new DiagnosticOptions();
-  DiagnosticsEngine Diagnostics(
-      IntrusiveRefCntPtr<DiagnosticIDs>(new DiagnosticIDs()), &*DiagOpts,
-      new TextDiagnosticPrinter(llvm::errs(), &*DiagOpts), true);
-  SourceManager Sources(Diagnostics, Tool.getFiles());
+  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+}
 
-  // Apply all replacements to a rewriter.
-  Rewriter Rewrite(Sources, LangOptions());
-  Tool.applyAllReplacements(Rewrite);
-  Rewrite.overwriteChangedFiles();
+void barrierAnalyzer(tooling::CommonOptionsParser &Op, Context &C) {
+  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+  ast_matchers::MatchFinder Finder;
+  BarrierHoisting Hoisting(Tool.getReplacements(), C);
+  Finder.addMatcher(
+      barrierMatcherFactory(hasName(C.Kernels.first), hasName(C.Kernels.second)), &Hoisting);
+  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
 }
@@ -108,12 +110,14 @@ void rewriteThreadInfo(tooling::CommonOptionsParser &Op, const Context &C) {
 int main(int argc, const char** argv){
   tooling::CommonOptionsParser Op(argc, argv, KernelFuseCategory);
   Context C {
-      {"im2col_kernel", "MaxPoolForward"},
+      {"foo", "bar"},
       "x",
-      512
+      512,
+      {}
   };
   expandMacros(Op, C);
   renameParameters(Op, C);
+  barrierAnalyzer(Op, C);
   rewriteThreadInfo(Op, C);
   fuseKernel(Op, C);
   return 0;

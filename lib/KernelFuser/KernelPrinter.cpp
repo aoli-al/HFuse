@@ -78,11 +78,15 @@ void KernelPrinter::printFusedFunctionSignature(FunctionDecl *FA,
   prettyPrintAttributes(FA);
 
   Out << " {\n";
-  Indent(Indentation+1);
-  Out << "if (threadIdx." + KFContext.Dimension  + " < " + std::to_string(KFContext.Offset) + ")\n";
+  if (!KFContext.Info[FA->getName().str()].HasBarriers) {
+    Indent(1);
+    Out << branchingStatement(KFContext, FA->getName().str());
+  }
   FA->getBody()->printPretty(Out, nullptr, SubPolicy, Indentation+1);
-  Indent(Indentation+1);
-  Out << "else\n";
+  if (!KFContext.Info[FB->getName().str()].HasBarriers) {
+    Indent(1);
+    Out << branchingStatement(KFContext, FB->getName().str());
+  }
   FB->getBody()->printPretty(Out, nullptr, SubPolicy, Indentation+1);
   Out << "}\n";
 }

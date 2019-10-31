@@ -27,8 +27,6 @@ void ThreadInfoRewriter::run(
       const std::string &b, const std::string &ThreadInfoName) {
     return ThreadInfoName + "_" + a + "_" + b;
   };
-  llvm::outs() << FName << "\n";
-  llvm::outs().flush();
   if (ME &&
       (Context.Kernels.first == FName || Context.Kernels.second == FName)) {
     if (KernelInfoNameMap.find(FName) == KernelInfoNameMap.end()) {
@@ -62,11 +60,10 @@ void ThreadInfoRewriter::run(
             }
             return std::move(a + BaseStrBlock + ";\n" + BaseStrThread + ";\n");
           });
-      const auto Replacement =
-          tooling::Replacement(SM,
-                               FDecl->getBody()->getBeginLoc().getLocWithOffset(1),
-                               0,
-                               Stmts);
+      const tooling::Replacement Replacement(SM,
+                                             FDecl->getBody()->getBeginLoc().getLocWithOffset(1),
+                                             0,
+                                             Stmts);
       if (auto Err = Replacements[Replacement.getFilePath().str()]
           .add(Replacement)) {
         outs() << "error?";
@@ -80,10 +77,7 @@ void ThreadInfoRewriter::run(
                                      KernelInfoNameMap[FName],
                                      ThreadInfoName);
     const auto CSR = CharSourceRange::getTokenRange(ME->getSourceRange());
-    const auto Replacement =
-        tooling::Replacement(SM, CSR, NewName);
-    outs() << Replacement.getFilePath().str() << "\n";
-    outs().flush();
+    const tooling::Replacement Replacement(SM, CSR, NewName);
     if (auto Err =
         Replacements[Replacement.getFilePath().str()].add(Replacement)) {
       outs() << "error?";

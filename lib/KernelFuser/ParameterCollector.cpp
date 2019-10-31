@@ -16,8 +16,6 @@ void ParameterCollector::run(
       || VisitedFunctions.find(D->getName().str()) != VisitedFunctions.end()) {
     return;
   }
-  llvm::outs() << D->getName() << "\n";
-  llvm::outs().flush();
   VisitedFunctions.insert(D->getName().str());
   if (auto *TF = D->getDescribedFunctionTemplate()) {
     TF->getTemplateParameters();

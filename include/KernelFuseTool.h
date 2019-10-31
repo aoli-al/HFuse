@@ -22,13 +22,13 @@ static const ast_matchers::DeclarationMatcher KernelFuseMatcher =
 
 class KernelFuseTool: public ast_matchers::MatchFinder::MatchCallback {
 public:
-  explicit KernelFuseTool(const Context &Context) : Context(Context) {}
+  explicit KernelFuseTool(Context &Context) : Context(Context) {}
   void run(const ast_matchers::MatchFinder::MatchResult &Result) override;
   void onEndOfTranslationUnit() override;
 private:
   void fuseKernel(FunctionDecl *FunctionA, FunctionDecl *FunctionB);
 
-  const Context &Context;
+  Context &Context;
   std::map<StringRef, FunctionDecl *> KernelFunctionMap;
 };
 }

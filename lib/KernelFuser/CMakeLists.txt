@@ -1,6 +1,8 @@
 set(LLVM_LINK_COMPONENTS support)
 
 add_library(LLVMKernelFuser
+        KernelFusion.cpp
+        BarrierHoisting.cpp
         KernelPrinter.cpp
         KernelFuseTool.cpp
         ParameterCollector.cpp

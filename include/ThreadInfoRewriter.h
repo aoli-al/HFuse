@@ -5,7 +5,6 @@
 #ifndef SMART_FUSER_THREADINFOREWRITER_H
 #define SMART_FUSER_THREADINFOREWRITER_H
 
-#include "KernelFusion.h"
 #include <clang/ASTMatchers/ASTMatchFinder.h>
 #include <clang/Rewrite/Core/Rewriter.h>
 #include <clang/Tooling/Core/Replacement.h>
@@ -13,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "KernelFusion.h"
 using namespace clang;
 using namespace ast_matchers;
 

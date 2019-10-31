@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4.3)
 project(smart-fuser)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 set(LLVM_DIST_PATH "/usr/local/opt/llvm"
         CACHE STRING "LLVM distribution install path")

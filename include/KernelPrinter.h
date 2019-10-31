@@ -5,18 +5,18 @@
 #ifndef SMART_FUSER_KERNELPRINTER_H
 #define SMART_FUSER_KERNELPRINTER_H
 
-#include "clang/AST/ASTContext.h"
-#include "clang/AST/Attr.h"
-#include "clang/AST/Decl.h"
-#include "clang/AST/DeclCXX.h"
-#include "clang/AST/DeclObjC.h"
-#include "clang/AST/DeclTemplate.h"
-#include "clang/AST/DeclVisitor.h"
-#include "clang/AST/Expr.h"
-#include "clang/AST/ExprCXX.h"
-#include "clang/AST/PrettyPrinter.h"
-#include "clang/Basic/Module.h"
-#include "llvm/Support/raw_ostream.h"
+#include <clang/AST/ASTContext.h>
+#include <clang/AST/Attr.h>
+#include <clang/AST/Decl.h>
+#include <clang/AST/DeclCXX.h>
+#include <clang/AST/DeclObjC.h>
+#include <clang/AST/DeclTemplate.h>
+#include <clang/AST/DeclVisitor.h>
+#include <clang/AST/Expr.h>
+#include <clang/AST/ExprCXX.h>
+#include <clang/AST/PrettyPrinter.h>
+#include <clang/Basic/Module.h>
+#include <llvm/Support/raw_ostream.h>
 
 #include "KernelFusion.h"
 
@@ -27,7 +27,7 @@ class KernelPrinter {
   raw_ostream &Out;
   PrintingPolicy Policy;
   const ASTContext &Context;
-  const struct Context &KFContext;
+  struct Context &KFContext;
   unsigned Indentation;
   bool PrintInstantiation;
 
@@ -38,7 +38,7 @@ class KernelPrinter {
 
 public:
   KernelPrinter(raw_ostream &Out, const PrintingPolicy &Policy,
-                const ASTContext &Context, const struct Context &KFContext)
+                const ASTContext &Context, struct Context &KFContext)
       : Out(Out), Policy(Policy), Context(Context), KFContext(KFContext),
         Indentation(0), PrintInstantiation(false) {}
   void printFusedFunction(FunctionDecl *FA, FunctionDecl *FB);
