@@ -8,7 +8,7 @@ add_library(LLVMKernelFuser
         ParameterCollector.cpp
         ThreadInfoRewriter.cpp
         MacroExpand.cpp
-        )
+        DeclRewriter.cpp)
 
 target_link_libraries(LLVMKernelFuser
         clangAST

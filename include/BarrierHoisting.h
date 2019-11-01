@@ -41,6 +41,7 @@ public:
 private:
   std::map<std::string, std::map<const CompoundStmt *, std::vector<SourceRange>>> Splits;
   std::map<std::string, tooling::Replacements> &Replacements;
+  std::set<unsigned> VisitedSplits;
   ASTContext *ASTContext = nullptr;
   Context &Context;
 

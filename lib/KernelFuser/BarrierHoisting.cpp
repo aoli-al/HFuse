@@ -11,11 +11,17 @@ void BarrierHoisting::run(const MatchFinder::MatchResult &Result) {
     ASTContext = Result.Context;
   }
   auto *Expr = Result.Nodes.getNodeAs<CallExpr>(BarrierExpressionBindId);
-  const auto FName = Result.Nodes.getNodeAs<FunctionDecl>(ContainingFunction)->getName().str();
+  const auto F = Result.Nodes.getNodeAs<FunctionDecl>(ContainingFunction);
+  const auto FName = F->getName().str();
   auto NodeLists = Result.Context->getParents(*Expr);
   auto CurrentSplit = Expr->getSourceRange();
+  if (VisitedSplits.find(CurrentSplit.getBegin().getRawEncoding()) != VisitedSplits.end())  return;
+  VisitedSplits.insert(CurrentSplit.getBegin().getRawEncoding());
+
+
   // implied semicolon of expression statements.
   CurrentSplit.setEnd(CurrentSplit.getEnd().getLocWithOffset(1));
+
   while (NodeLists.size()) {
     if (auto Node = NodeLists[0].get<CompoundStmt>()) {
       Splits[FName][Node].push_back(CurrentSplit);
@@ -34,16 +40,22 @@ void BarrierHoisting::onEndOfTranslationUnit() {
   if (!ASTContext) return;
   for (auto &F: Splits) {
     const auto FName = F.first;
+    const auto SkipedFName = FName == Context.Kernels.first
+                             ? Context.Kernels.second : Context.Kernels.first;
     Context.Info[FName].HasBarriers = true;
-    const auto BS = branchingStatement(Context, FName) + " {";
+    const auto BS = branchingStatement(Context, SkipedFName) + " goto ";
     for (auto &T: F.second) {
       const auto Stmt = T.first;
-      createAndInsert(Stmt->getBeginLoc().getLocWithOffset(1), BS);
+      auto CurrentLabel = generateNewVarName("label");
+      createAndInsert(Stmt->getBeginLoc().getLocWithOffset(1),
+          BS + CurrentLabel + ";");
       for (auto &R: T.second) {
-        createAndInsert(R.getBegin(), "}");
-        createAndInsert(R.getEnd().getLocWithOffset(1), BS);
+        createAndInsert(R.getBegin(), " "  + CurrentLabel + ":;");
+        CurrentLabel = generateNewVarName("label");
+        createAndInsert(R.getEnd().getLocWithOffset(1),
+            BS + CurrentLabel + ";");
       }
-      createAndInsert(Stmt->getEndLoc(), "}");
+      createAndInsert(Stmt->getEndLoc(), " "  + CurrentLabel + ":;");
     }
   }
 }

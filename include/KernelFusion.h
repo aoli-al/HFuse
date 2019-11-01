@@ -21,7 +21,9 @@ struct Context {
   std::map<std::string, KernelInfo> Info;
 };
 
-std::string branchingStatement(const Context &C, std::string FName);
+std::string branchingStatement(const Context &C, const std::string &FName);
+
+std::string generateNewVarName(const std::string &Base);
 
 }
 

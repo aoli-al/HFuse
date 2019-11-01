@@ -20,6 +20,7 @@
 #include "BarrierHoisting.h"
 
 #include <set>
+#include <DeclRewriter.h>
 
 using namespace llvm;
 using namespace clang;
@@ -105,20 +106,30 @@ void barrierAnalyzer(tooling::CommonOptionsParser &Op, Context &C) {
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
+void declRewriter(tooling::CommonOptionsParser &Op, Context &C) {
+  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+  ast_matchers::MatchFinder Finder;
+  DeclRewriter Rewriter(Tool.getReplacements(), C);
+  Finder.addMatcher(
+      declStmtMatcherFactory(hasName(C.Kernels.first), hasName(C.Kernels.second)), &Rewriter);
+  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+}
+
 }
 
 int main(int argc, const char** argv){
   tooling::CommonOptionsParser Op(argc, argv, KernelFuseCategory);
   Context C {
-      {"foo", "bar"},
+      {"upsample_bilinear2d_out_frame", "batch_norm_collect_statistics_kernel"},
       "x",
       512,
       {}
   };
   expandMacros(Op, C);
   renameParameters(Op, C);
-  barrierAnalyzer(Op, C);
   rewriteThreadInfo(Op, C);
+  declRewriter(Op, C);
+  barrierAnalyzer(Op, C);
   fuseKernel(Op, C);
   return 0;
 }
