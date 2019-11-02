@@ -18,8 +18,8 @@ void KernelFuseTool::run(const ast_matchers::MatchFinder::MatchResult &Result) {
 }
 
 void KernelFuseTool::onEndOfTranslationUnit() {
-  fuseKernel(KernelFunctionMap[Context.Kernels.first],
-             KernelFunctionMap[Context.Kernels.second]);
+  fuseKernel(KernelFunctionMap[Context.Kernels.first.KernelName],
+             KernelFunctionMap[Context.Kernels.second.KernelName]);
 }
 
 void KernelFuseTool::fuseKernel(FunctionDecl *FunctionA,

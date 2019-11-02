@@ -32,7 +32,7 @@ static cl::OptionCategory KernelFuseCategory("kernel-fuse options");
 namespace  {
 
 void applyRewrites(tooling::RefactoringTool &Tool,
-    std::unique_ptr<tooling::FrontendActionFactory> Factory) {
+                   std::unique_ptr<tooling::FrontendActionFactory> Factory) {
   if (auto Result =
       Tool.run(Factory.get())) {
     exit(Result);
@@ -102,7 +102,7 @@ void barrierAnalyzer(tooling::CommonOptionsParser &Op, Context &C) {
   ast_matchers::MatchFinder Finder;
   BarrierHoisting Hoisting(Tool.getReplacements(), C);
   Finder.addMatcher(
-      barrierMatcherFactory(hasName(C.Kernels.first), hasName(C.Kernels.second)), &Hoisting);
+      barrierMatcherFactory(hasName(C.Kernels.first.KernelName), hasName(C.Kernels.second.KernelName)), &Hoisting);
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
@@ -111,20 +111,32 @@ void declRewriter(tooling::CommonOptionsParser &Op, Context &C) {
   ast_matchers::MatchFinder Finder;
   DeclRewriter Rewriter(Tool.getReplacements(), C);
   Finder.addMatcher(
-      declStmtMatcherFactory(hasName(C.Kernels.first), hasName(C.Kernels.second)), &Rewriter);
+      declStmtMatcherFactory(hasName(C.Kernels.first.KernelName), hasName(C.Kernels.second.KernelName)), &Rewriter);
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
 }
 
+
+static cl::opt<std::string> Config("config", cl::desc("YAML file of the configurations of kernels."),
+                                   cl::Required, cl::cat(KernelFuseCategory));
+
 int main(int argc, const char** argv){
   tooling::CommonOptionsParser Op(argc, argv, KernelFuseCategory);
-  Context C {
-      {"upsample_bilinear2d_out_frame", "batch_norm_collect_statistics_kernel"},
-      "x",
-      512,
-      {}
-  };
+
+  ErrorOr<std::unique_ptr<MemoryBuffer>> Buffer = llvm::MemoryBuffer::getFile(Config);
+  if (!Buffer) {
+    llvm::errs() << "failed to read configs.\n";
+    return 1;
+  }
+
+  llvm::yaml::Input YAML(Buffer.get()->getBuffer());
+
+  std::vector<kernel_fusion::KernelInfo> Infos;
+  YAML >> Infos;
+
+  Context C { {Infos[0], Infos[1]} };
+
   expandMacros(Op, C);
   renameParameters(Op, C);
   rewriteThreadInfo(Op, C);

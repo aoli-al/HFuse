@@ -12,7 +12,7 @@ void ParameterCollector::run(
     const ast_matchers::MatchFinder::MatchResult &Result) {
   auto *D = Result.Nodes.getNodeAs<FunctionDecl>(ParameterCollectorBindId);
   if (D->getName().empty()
-      || D->getName().str() != Context.Kernels.second
+      || D->getName().str() != Context.Kernels.second.KernelName
       || VisitedFunctions.find(D->getName().str()) != VisitedFunctions.end()) {
     return;
   }

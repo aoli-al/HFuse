@@ -40,9 +40,10 @@ void BarrierHoisting::onEndOfTranslationUnit() {
   if (!ASTContext) return;
   for (auto &F: Splits) {
     const auto FName = F.first;
-    const auto SkipedFName = FName == Context.Kernels.first
-                             ? Context.Kernels.second : Context.Kernels.first;
-    Context.Info[FName].HasBarriers = true;
+    const auto &SkipedFName = Context.isFirstKernel(FName)
+                              ? Context.Kernels.second.KernelName
+                              : Context.Kernels.first.KernelName;
+    Context.getKernelWithName(FName).HasBarriers = true;
     const auto BS = branchingStatement(Context, SkipedFName) + " goto ";
     for (auto &T: F.second) {
       const auto Stmt = T.first;

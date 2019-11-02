@@ -40,6 +40,7 @@ private:
   void printDeclType(QualType T, StringRef DeclName, llvm::raw_string_ostream &Out,
                      const PrintingPolicy &Policy, unsigned Indentation);
   std::map<std::string, tooling::Replacements> &Replacements;
+  std::set<unsigned> VisitedDecl;
   Context &Context;
 };
 

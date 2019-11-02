@@ -1,0 +1,12 @@
+- KernelName: upsample_bilinear2d_out_frame
+  HasBarriers: false
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1
+- KernelName: batch_norm_collect_statistics_kernel
+  HasBarriers: false
+  BlockDim:
+    X: 32
+    Y: 16
+    Z: 1

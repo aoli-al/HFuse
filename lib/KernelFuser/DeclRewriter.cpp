@@ -11,6 +11,8 @@ void DeclRewriter::run(const MatchFinder::MatchResult &Result) {
   auto Stmt = Result.Nodes.getNodeAs<DeclStmt>(DeclStmtBindId);
   std::string DeclString;
   llvm::raw_string_ostream DeclStream(DeclString);
+  if (VisitedDecl.find(Stmt->getBeginLoc().getRawEncoding()) != VisitedDecl.end()) return;
+  VisitedDecl.insert(Stmt->getBeginLoc().getRawEncoding());
   for (auto Decl: Stmt->decls()) {
     if (auto VD = dyn_cast<VarDecl>(Decl)) {
       DeclStream << printVarDecl(VD, Result.Context->getPrintingPolicy());
@@ -77,7 +79,7 @@ std::string DeclRewriter::printVarDecl(VarDecl *D, const PrintingPolicy &Policy)
     Out << "constexpr ";
     T.removeLocalConst();
   }
-
+  T.removeLocalConst();
   printDeclType(T, D->getName(), Out, Policy, Policy.Indentation);
   if (Expr *Init = D->getInit()) {
     bool ImplicitInit = false;

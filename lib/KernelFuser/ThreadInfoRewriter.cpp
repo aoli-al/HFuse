@@ -22,41 +22,41 @@ void ThreadInfoRewriter::run(
   auto *VDecl = Result.Nodes.getNodeAs<VarDecl>(ThreadVarDeclId);
   auto ThreadInfoName = VDecl->getName().str();
   auto FName = FDecl->getName().str();
+  const auto &Kernel = Context.getKernelWithName(FName);
   const auto &SM = Result.Context->getSourceManager();
   const auto NameBuilder = [](const std::string &a,
       const std::string &b, const std::string &ThreadInfoName) {
     return ThreadInfoName + "_" + a + "_" + b;
   };
   if (ME &&
-      (Context.Kernels.first == FName || Context.Kernels.second == FName)) {
+      (Context.isFirstKernel(FName) || Context.isSecondKernel(FName))) {
     if (KernelInfoNameMap.find(FName) == KernelInfoNameMap.end()) {
       KernelInfoNameMap[FName] = std::to_string(Idx++);
       const auto Stmts = std::accumulate(
           MemberNameMapping.begin(),
           MemberNameMapping.end(),
           std::string(""),
-          [&NameBuilder, &FName, this]
-              (std::string a, std::pair<std::string, std::string> b) {
+          [&NameBuilder, &FName, Kernel, this]
+              (const std::string &a, const std::pair<std::string, std::string> &b) {
             const auto NewNameThread =
                 NameBuilder(b.second, KernelInfoNameMap[FName], ThreadIdx);
             const auto NewNameBlock =
                 NameBuilder(b.second, KernelInfoNameMap[FName], BlockDim);
             auto BaseStrThread = "unsigned int " + NewNameThread + " = ";
             auto BaseStrBlock = "unsigned int " + NewNameBlock + " = ";
-            if (b.second == Context.Dimension) {
-              if (FName == Context.Kernels.second) {
-                BaseStrThread += ThreadIdx + "."
-                    + b.second + " - " + std::to_string(Context.Offset);
-                BaseStrBlock += BlockDim + "."
-                    + b.second + " - " + std::to_string(Context.Offset);
-              } else {
-                BaseStrBlock += std::to_string(Context.Offset);
-                BaseStrThread += ThreadIdx + "." + b.second;
-              }
+
+            if (b.second == "x") {
+              BaseStrBlock += std::to_string(Kernel.BlockDim.X);
+              BaseStrThread += CurrentTid + "%" + std::to_string(Kernel.BlockDim.X);
             }
-            else {
-              BaseStrBlock += BlockDim + "." + b.second;
-              BaseStrThread += ThreadIdx + "." + b.second;
+            else if (b.second == "y") {
+              BaseStrBlock += std::to_string(Kernel.BlockDim.Y);
+              BaseStrThread += CurrentTid + "/" + std::to_string(Kernel.BlockDim.X)
+                  + "%" + std::to_string(Kernel.BlockDim.Y);
+            }
+            else if (b.second == "z") {
+              BaseStrBlock += std::to_string(Kernel.BlockDim.Z);
+              BaseStrThread += CurrentTid + "/" + std::to_string(Kernel.BlockDim.X * Kernel.BlockDim.Y);
             }
             return std::move(a + BaseStrBlock + ";\n" + BaseStrThread + ";\n");
           });

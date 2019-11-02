@@ -7,9 +7,10 @@
 namespace kernel_fusion {
 
 std::string branchingStatement(const Context &C, const std::string &FName) {
-  return "if (threadIdx." + C.Dimension  +
-      (FName == C.Kernels.first ? " < " : ">=") +
-      std::to_string(C.Offset) + ")";
+  const auto &Kernel = FName == C.Kernels.first.KernelName ? C.Kernels.first : C.Kernels.second;
+  return std::string("if (" + CurrentTid)
+      + (FName == C.Kernels.first.KernelName ? " < " : ">=") +
+      std::to_string(Kernel.BlockDim.size()) + ")";
 }
 
 

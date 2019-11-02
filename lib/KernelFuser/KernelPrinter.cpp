@@ -78,12 +78,12 @@ void KernelPrinter::printFusedFunctionSignature(FunctionDecl *FA,
   prettyPrintAttributes(FA);
 
   Out << " {\n";
-  if (!KFContext.Info[FA->getName().str()].HasBarriers) {
+  if (!KFContext.Kernels.first.HasBarriers) {
     Indent(1);
     Out << branchingStatement(KFContext, FA->getName().str());
   }
   FA->getBody()->printPretty(Out, nullptr, SubPolicy, Indentation+1);
-  if (!KFContext.Info[FB->getName().str()].HasBarriers) {
+  if (!KFContext.Kernels.second.HasBarriers) {
     Indent(1);
     Out << branchingStatement(KFContext, FB->getName().str());
   }
