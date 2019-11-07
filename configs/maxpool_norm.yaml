@@ -1,0 +1,12 @@
+- KernelName: MaxPoolForward
+  HasBarriers: false
+  BlockDim:
+    X: 256
+    Y: 1
+    Z: 1
+- KernelName: batch_norm_collect_statistics_kernel
+  HasBarriers: false
+  BlockDim:
+    X: 32
+    Y: 16
+    Z: 1
