@@ -23,7 +23,7 @@ static const std::string DeclStmtBindId = "decl-stmt";
 template <typename... Params>
 static StatementMatcher declStmtMatcherFactory(Params&&... Args) {
   return declStmt(
-      hasAncestor(functionDecl(anyOf(std::forward<Params>(Args)...))
+      hasAncestor(functionDecl(std::forward<Params>(Args)...)
                       .bind(ContainingFunction)),
       hasParent(compoundStmt())).bind(DeclStmtBindId);
 }

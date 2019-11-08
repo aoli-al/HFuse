@@ -64,6 +64,10 @@ void renameParameters(tooling::CommonOptionsParser &Op, const Context &Context) 
 
   ast_matchers::MatchFinder ParameterFinder;
   ParameterFinder.addMatcher(ParameterMatcher, &Collector);
+  for (const auto &K: Context.Kernels) {
+    ParameterFinder.addMatcher(
+        declStmtMatcherFactory(hasName(K.first)), &Collector);
+  }
   Tool.run(tooling::newFrontendActionFactory(&ParameterFinder).get());
 
   const std::vector<std::vector<std::string>> &USRList = Collector.USRList;
@@ -85,6 +89,10 @@ void fuseKernel(tooling::CommonOptionsParser &Op, Context &Context) {
   KernelFuseTool FuseTool(Context);
   ast_matchers::MatchFinder KernelFinder;
   KernelFinder.addMatcher(KernelFuseMatcher, &FuseTool);
+  for (const auto &K: Context.Kernels) {
+    KernelFinder.addMatcher(
+        barrierMatcherFactory(hasName(K.first)), &FuseTool);
+  }
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
   Tool.run(tooling::newFrontendActionFactory(&KernelFinder).get());
 }
@@ -101,8 +109,11 @@ void barrierAnalyzer(tooling::CommonOptionsParser &Op, Context &C) {
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
   ast_matchers::MatchFinder Finder;
   BarrierHoisting Hoisting(Tool.getReplacements(), C);
-  Finder.addMatcher(
-      barrierMatcherFactory(hasName(C.Kernels.first.KernelName), hasName(C.Kernels.second.KernelName)), &Hoisting);
+  for (const auto &K: C.Kernels) {
+    Finder.addMatcher(
+        barrierMatcherFactory(hasName(K.first)), &Hoisting);
+  }
+
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
@@ -110,8 +121,10 @@ void declRewriter(tooling::CommonOptionsParser &Op, Context &C) {
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
   ast_matchers::MatchFinder Finder;
   DeclRewriter Rewriter(Tool.getReplacements(), C);
-  Finder.addMatcher(
-      declStmtMatcherFactory(hasName(C.Kernels.first.KernelName), hasName(C.Kernels.second.KernelName)), &Rewriter);
+  for (const auto &K: C.Kernels) {
+    Finder.addMatcher(
+        declStmtMatcherFactory(hasName(K.first)), &Rewriter);
+  }
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
@@ -135,7 +148,7 @@ int main(int argc, const char** argv){
   std::vector<kernel_fusion::KernelInfo> Infos;
   YAML >> Infos;
 
-  Context C { {Infos[0], Infos[1]} };
+  Context C(Infos);
 
   expandMacros(Op, C);
   renameParameters(Op, C);

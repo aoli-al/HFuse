@@ -31,26 +31,27 @@ struct KernelInfo {
 
 
 struct Context {
-  std::pair<KernelInfo, KernelInfo> Kernels;
+  std::map<std::string, KernelInfo> Kernels;
+  std::vector<std::string> Order;
+  std::map<std::string, std::pair<unsigned, unsigned>> Bounds;
 
-  [[nodiscard]] bool isFirstKernel(const std::string &KName) const {
-    return Kernels.first.KernelName == KName;
+  explicit Context(std::vector<KernelInfo> &Infos) {
+    unsigned B = 0;
+    for (auto &Info: Infos) {
+      Kernels[Info.KernelName] = Info;
+      Order.push_back(Info.KernelName);
+      Bounds[Info.KernelName] = std::make_pair(B, B + Info.BlockDim.size());
+      B += Info.BlockDim.size();
+    }
   }
 
-  [[nodiscard]] bool isSecondKernel(const std::string &KName) const {
-    return Kernels.second.KernelName == KName;
+  [[nodiscard]] bool hasKernel(const std::string &KName) const {
+    return Kernels.find(KName) != Kernels.end();
   }
 
-  [[nodiscard]] KernelInfo &getKernelWithName(const std::string &KName) {
-    return isFirstKernel(KName) ? Kernels.first : Kernels.second;
-  }
-
-  [[nodiscard]] const KernelInfo &getKernelWithName(const std::string &KName) const {
-    return isFirstKernel(KName) ? Kernels.first : Kernels.second;
-  }
 };
 
-std::string branchingStatement(const Context &C, const std::string &FName);
+std::string branchingStatement(const Context &C, const std::string &FName, bool Inverse=false);
 
 std::string generateNewVarName(const std::string &Base);
 
@@ -69,10 +70,10 @@ struct llvm::yaml::MappingTraits<kernel_fusion::KernelInfo> {
 
 template <>
 struct llvm::yaml::MappingTraits<kernel_fusion::BlockDim> {
-  static void mapping(IO &io, kernel_fusion::BlockDim &Dim) {
-    io.mapRequired("X", Dim.X);
-    io.mapRequired("Y", Dim.Y);
-    io.mapRequired("Z", Dim.Z);
+  static void mapping(IO &Io, kernel_fusion::BlockDim &Dim) {
+    Io.mapRequired("X", Dim.X);
+    Io.mapRequired("Y", Dim.Y);
+    Io.mapRequired("Z", Dim.Z);
   }
 };
 

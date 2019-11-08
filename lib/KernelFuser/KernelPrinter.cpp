@@ -10,31 +10,34 @@ raw_ostream &KernelPrinter::Indent(unsigned Indentation) {
   return Out;
 }
 
-void KernelPrinter::printFusedTemplateDecl(FunctionDecl *FA, FunctionDecl *FB) {
-  const auto *TFA = FA->getDescribedFunctionTemplate();
-  const auto *TFB = FB->getDescribedFunctionTemplate();
-  if (TFA || TFB) {
-    Out << "template <";
-    if (TFA) {
-      printTemplateParameters(TFA->getTemplateParameters());
+void KernelPrinter::printFusedTemplateDecl() {
+  bool TemplatePrinted = false;
+  for (auto &FName: KFContext.Order) {
+    const auto *F = KernelFunctionMap[FName];
+    if (const auto *TF = F->getDescribedFunctionTemplate()) {
+      if (!TemplatePrinted) {
+        TemplatePrinted = true;
+        Out << "template <";
+      } else {
+        Out << ", ";
+      }
+      printTemplateParameters(TF->getTemplateParameters());
     }
-    Out << (TFA && TFB ? ", " : "");
-    if (TFB) {
-      printTemplateParameters(TFB->getTemplateParameters());
-    }
-    Out << ">\n";
   }
+  if (TemplatePrinted) Out << ">\n";
 }
 
-void KernelPrinter::printFusedFunction(FunctionDecl *FA, FunctionDecl *FB) {
-  printFusedTemplateDecl(FA, FB);
-  printFusedFunctionSignature(FA, FB);
+void KernelPrinter::printFusedFunction() {
+  printFusedTemplateDecl();
+  printFusedFunctionSignature();
+
 }
 
-void KernelPrinter::printFusedFunctionSignature(FunctionDecl *FA,
-                                                FunctionDecl *FB) {
-  std::string Proto = "void " + FA->getNameInfo().getAsString() + "_"
-      + FB->getNameInfo().getAsString();
+void KernelPrinter::printFusedFunctionSignature() {
+  std::string Proto = "void ";
+  for (auto &FName: KFContext.Order) {
+    Proto += FName + "_";
+  }
 
   PrintingPolicy SubPolicy(Policy);
   SubPolicy.SuppressSpecifiers = false;
@@ -69,26 +72,27 @@ void KernelPrinter::printFusedFunctionSignature(FunctionDecl *FA,
     }
   };
   Proto += "(";
-  PrintParameters(FA);
-  Proto += ", ";
-  PrintParameters(FB);
+  for (auto &FName: KFContext.Order) {
+    PrintParameters(KernelFunctionMap[FName]);
+    if (FName != *KFContext.Order.rbegin()) {
+      Proto += ", ";
+    }
+  }
   Proto += ")";
   Out << Proto;
 
-  prettyPrintAttributes(FA);
+  prettyPrintAttributes(KernelFunctionMap.begin()->second);
 
-  Out << " {\n";
-  if (!KFContext.Kernels.first.HasBarriers) {
-    Indent(1);
-    Out << branchingStatement(KFContext, FA->getName().str());
-  }
-  FA->getBody()->printPretty(Out, nullptr, SubPolicy, Indentation+1);
-  if (!KFContext.Kernels.second.HasBarriers) {
-    Indent(1);
-    Out << branchingStatement(KFContext, FB->getName().str());
-  }
-  FB->getBody()->printPretty(Out, nullptr, SubPolicy, Indentation+1);
-  Out << "}\n";
+//  Out << " {\n";
+//  for (const auto &K: KFContext.Kernels) {
+//    if (!K.second.HasBarriers) {
+//      Indent(1);
+//      Out << branchingStatement(KFContext, K.first);
+//    }
+//    KernelFunctionMap[K.first]->getBody()->printPretty(
+//        Out, nullptr, SubPolicy, Indentation+1);
+//  }
+//  Out << "}\n";
 }
 
 void KernelPrinter::prettyPrintAttributes(Decl *D) {
@@ -122,6 +126,13 @@ void KernelPrinter::printDeclType(QualType T, StringRef DeclName, bool Pack) {
     T = PET->getPattern();
   }
   T.print(Out, Policy, (Pack ? "..." : "") + DeclName, Indentation);
+}
+
+void KernelPrinter::printStmt(Stmt *S) {
+  S->printPretty(Out, nullptr, Policy);
+  if (isa<Expr>(S)) {
+    Out << ";\n" ;
+  }
 }
 
 

@@ -31,6 +31,7 @@ public:
 
 public:
   std::set<std::string> VisitedFunctions;
+  std::set<int64_t> VisitedDecl;
   const Context &Context;
 };
 

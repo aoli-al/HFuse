@@ -10,26 +10,16 @@
 #include <clang/Rewrite/Core/Rewriter.h>
 
 #include "KernelFusion.h"
+#include "BarrierAnalyzer.h"
 
 using namespace clang;
 
 namespace kernel_fusion {
 
-static const std::string KernelFuseBindId = "kernel-fuse-bind";
-static const ast_matchers::DeclarationMatcher KernelFuseMatcher =
-    ast_matchers::functionDecl(ast_matchers::hasAttr(attr::CUDAGlobal))
-        .bind(KernelFuseBindId);
-
-class KernelFuseTool: public ast_matchers::MatchFinder::MatchCallback {
+class KernelFuseTool: public BarrierAnalyzer {
 public:
-  explicit KernelFuseTool(Context &Context) : Context(Context) {}
-  void run(const ast_matchers::MatchFinder::MatchResult &Result) override;
+  explicit KernelFuseTool(struct Context &Context) : BarrierAnalyzer(Context){}
   void onEndOfTranslationUnit() override;
-private:
-  void fuseKernel(FunctionDecl *FunctionA, FunctionDecl *FunctionB);
-
-  Context &Context;
-  std::map<StringRef, FunctionDecl *> KernelFunctionMap;
 };
 }
 

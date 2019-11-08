@@ -24,27 +24,30 @@ using namespace clang;
 
 namespace kernel_fusion {
 class KernelPrinter {
-  raw_ostream &Out;
   PrintingPolicy Policy;
   const ASTContext &Context;
   struct Context &KFContext;
   unsigned Indentation;
   bool PrintInstantiation;
-
+  std::map<StringRef, FunctionDecl *> &KernelFunctionMap;
   raw_ostream& Indent(unsigned Indentation);
 
-  void printFusedTemplateDecl(FunctionDecl *FA, FunctionDecl *FB);
-  void printFusedFunctionSignature(FunctionDecl *FA, FunctionDecl *FB);
+  void printFusedTemplateDecl();
+  void printFusedFunctionSignature();
 
 public:
   KernelPrinter(raw_ostream &Out, const PrintingPolicy &Policy,
-                const ASTContext &Context, struct Context &KFContext)
+                const ASTContext &Context, struct Context &KFContext,
+                std::map<StringRef, FunctionDecl *> &KernelFunctionMap)
       : Out(Out), Policy(Policy), Context(Context), KFContext(KFContext),
-        Indentation(0), PrintInstantiation(false) {}
-  void printFusedFunction(FunctionDecl *FA, FunctionDecl *FB);
+        Indentation(0), PrintInstantiation(false), KernelFunctionMap(KernelFunctionMap) {}
+  void printFusedFunction();
   void printTemplateParameters(const TemplateParameterList *Params);
   void prettyPrintAttributes(Decl *D);
   void printDeclType(QualType T, StringRef DeclName, bool Pack);
+  void printStmt(Stmt *S);
+
+  raw_ostream &Out;
 };
 }
 

@@ -6,11 +6,11 @@
 
 namespace kernel_fusion {
 
-std::string branchingStatement(const Context &C, const std::string &FName) {
-  const auto &Kernel = FName == C.Kernels.first.KernelName ? C.Kernels.first : C.Kernels.second;
-  return std::string("if (" + CurrentTid)
-      + (FName == C.Kernels.first.KernelName ? " < " : ">=") +
-      std::to_string(Kernel.BlockDim.size()) + ")";
+std::string branchingStatement(const Context &C, const std::string &FName, bool Inverse) {
+  const auto &Bound = C.Bounds.find(FName)->second;
+  return std::string("if (") + (Inverse ? "!" : "") + "(" + CurrentTid
+      + ">=" + std::to_string(Bound.first) + " && " + CurrentTid
+      + " < " + std::to_string(Bound.second) + "))";
 }
 
 

@@ -1,0 +1,12 @@
+- KernelName: foo
+  HasBarriers: false
+  BlockDim:
+    X: 256
+    Y: 1
+    Z: 1
+- KernelName: bar
+  HasBarriers: false
+  BlockDim:
+    X: 32
+    Y: 16
+    Z: 1
