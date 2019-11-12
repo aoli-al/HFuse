@@ -1,0 +1,12 @@
+- KernelName: im2col_kernel
+  HasBarriers: false
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1
+- KernelName: kernelHistogram1D
+  HasBarriers: false
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1

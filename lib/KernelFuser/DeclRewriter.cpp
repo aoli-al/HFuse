@@ -50,9 +50,7 @@ std::string DeclRewriter::printVarDecl(VarDecl *D, const PrintingPolicy &Policy)
     }
   }
 
-  QualType T = D->getTypeSourceInfo()
-               ? D->getTypeSourceInfo()->getType()
-               : D->getASTContext().getUnqualifiedObjCPointerType(D->getType());
+  QualType T = D->getType();
 
   StorageClass SC = D->getStorageClass();
   if (SC != SC_None)
@@ -132,6 +130,11 @@ void DeclRewriter::printDeclType(QualType T, StringRef DeclName, llvm::raw_strin
   if (auto *PET = T->getAs<PackExpansionType>()) {
     Pack = true;
     T = PET->getPattern();
+  }
+  if (T->getAs<AutoType>()) {
+    auto VT = T.getCanonicalType();
+    VT.print(Out, Policy, (Pack ? "..." : "") + DeclName, Indentation);
+    return;
   }
   T.print(Out, Policy, (Pack ? "..." : "") + DeclName, Indentation);
 }

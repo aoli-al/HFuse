@@ -34,13 +34,15 @@ static StatementMatcher barrierMatcherFactory(Params&&... Args) {
       .bind(BarrierExpressionBindId);
 }
 
+using KFMap = std::map<StringRef, FunctionDecl *>;
+
 class BarrierAnalyzer: public MatchFinder::MatchCallback {
 public:
   explicit BarrierAnalyzer(Context &Context) : Context(Context) {}
   void run(const MatchFinder::MatchResult &Result) override;
 
 protected:
-  std::map<StringRef, FunctionDecl *> KernelFunctionMap;
+  KFMap KernelFunctionMap;
   std::map<std::string, std::map<const CompoundStmt *, std::list<SourceRange>>> Splits;
   std::set<unsigned> VisitedSplits;
   ASTContext *ASTContext = nullptr;

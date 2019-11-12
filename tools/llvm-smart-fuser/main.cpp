@@ -150,11 +150,11 @@ int main(int argc, const char** argv){
 
   Context C(Infos);
 
-  expandMacros(Op, C);
-  renameParameters(Op, C);
-  rewriteThreadInfo(Op, C);
-  declRewriter(Op, C);
-  barrierAnalyzer(Op, C);
+//  expandMacros(Op, C);
+//  renameParameters(Op, C);
+//  rewriteThreadInfo(Op, C);
+//  declRewriter(Op, C);
+//  barrierAnalyzer(Op, C);
   fuseKernel(Op, C);
   return 0;
 }

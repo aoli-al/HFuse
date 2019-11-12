@@ -18,14 +18,24 @@ using FunctionRanges = std::vector<std::list<SourceRange>>;
 class KernelRecursiveFuser {
 
 public:
-  KernelRecursiveFuser(KernelPrinter &Printer, Context &Context):
-      Printer(Printer), Context(Context) {};
+  KernelRecursiveFuser(std::string FuncStr, Context &Context, const ASTContext *ASTContext):
+      Context(Context), ASTContext(ASTContext) {
+    Streams.push_back(FuncStr);
+  };
 
-  void fuse(StmtPointers Pointer, FunctionRanges Ranges);
+  void fuse(StmtPointers &Pointers, FunctionRanges &Ranges);
+  void fuseRecursive(std::string Blocks);
+  void selectBlockRecursive(const std::string &Blocks, unsigned Start, unsigned NumLeft);
+  void generateCodeBlocks(StmtPointers &Pointers, FunctionRanges &Ranges);
 
 private:
-  KernelPrinter &Printer;
+  std::vector<std::string> Streams;
+  std::vector<unsigned> SelectedBlocks;
+  std::vector<unsigned> Progress;
+  std::vector<std::vector<std::pair<std::string, std::string>>> CodeBlocks;
   Context &Context;
+  unsigned Count = 0;
+  const ASTContext *ASTContext;
 };
 
 }

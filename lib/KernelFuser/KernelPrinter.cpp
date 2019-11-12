@@ -10,7 +10,7 @@ raw_ostream &KernelPrinter::Indent(unsigned Indentation) {
   return Out;
 }
 
-void KernelPrinter::printFusedTemplateDecl() {
+void KernelPrinter::printFusedTemplateDecl(KFMap &KernelFunctionMap) {
   bool TemplatePrinted = false;
   for (auto &FName: KFContext.Order) {
     const auto *F = KernelFunctionMap[FName];
@@ -27,13 +27,13 @@ void KernelPrinter::printFusedTemplateDecl() {
   if (TemplatePrinted) Out << ">\n";
 }
 
-void KernelPrinter::printFusedFunction() {
-  printFusedTemplateDecl();
-  printFusedFunctionSignature();
+void KernelPrinter::printFusedFunction(KFMap &KernelFunctionMap) {
+  printFusedTemplateDecl(KernelFunctionMap);
+  printFusedFunctionSignature(KernelFunctionMap);
 
 }
 
-void KernelPrinter::printFusedFunctionSignature() {
+void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap) {
   std::string Proto = "void ";
   for (auto &FName: KFContext.Order) {
     Proto += FName + "_";

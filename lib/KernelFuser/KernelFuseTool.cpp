@@ -14,9 +14,12 @@ namespace kernel_fusion {
 
 void KernelFuseTool::onEndOfTranslationUnit() {
   auto *C = &KernelFunctionMap.begin()->second->getASTContext();
-  KernelPrinter Printer(outs(), C->getPrintingPolicy(), *C, Context, KernelFunctionMap);
-  Printer.printFusedFunction();
-  Printer.Out << "\n {\n";
+  std::string FuncStr;
+  llvm::raw_string_ostream FuncStream(FuncStr);
+  KernelPrinter Printer( FuncStream, C->getPrintingPolicy(), *C, Context);
+  Printer.printFusedFunction(KernelFunctionMap);
+  FuncStream << "\n {\n";
+  FuncStream.flush();
 
   StmtPointers Pointers;
   FunctionRanges Ranges;
@@ -36,12 +39,10 @@ void KernelFuseTool::onEndOfTranslationUnit() {
     } else {
       Pointers.push_back(std::make_pair(nullptr, nullptr));
     }
-//    Pointers.push_back(std::make_pair(KernelFunctionMap[Func].ge))
   }
 
-  KernelRecursiveFuser Fuser(Printer, Context);
+  KernelRecursiveFuser Fuser(FuncStr, Context, C);
   Fuser.fuse(Pointers, Ranges);
-  Printer.Out << "}\n";
 }
 
 }

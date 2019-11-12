@@ -18,6 +18,7 @@
 #include <clang/Basic/Module.h>
 #include <llvm/Support/raw_ostream.h>
 
+#include "BarrierAnalyzer.h"
 #include "KernelFusion.h"
 
 using namespace clang;
@@ -29,19 +30,17 @@ class KernelPrinter {
   struct Context &KFContext;
   unsigned Indentation;
   bool PrintInstantiation;
-  std::map<StringRef, FunctionDecl *> &KernelFunctionMap;
   raw_ostream& Indent(unsigned Indentation);
 
-  void printFusedTemplateDecl();
-  void printFusedFunctionSignature();
+  void printFusedTemplateDecl(KFMap &KernelFunctionMap);
+  void printFusedFunctionSignature(KFMap &KernelFunctionMap);
 
 public:
   KernelPrinter(raw_ostream &Out, const PrintingPolicy &Policy,
-                const ASTContext &Context, struct Context &KFContext,
-                std::map<StringRef, FunctionDecl *> &KernelFunctionMap)
+                const ASTContext &Context, struct Context &KFContext)
       : Out(Out), Policy(Policy), Context(Context), KFContext(KFContext),
-        Indentation(0), PrintInstantiation(false), KernelFunctionMap(KernelFunctionMap) {}
-  void printFusedFunction();
+        Indentation(0), PrintInstantiation(false) {}
+  void printFusedFunction(KFMap &KernelFunctionMap);
   void printTemplateParameters(const TemplateParameterList *Params);
   void prettyPrintAttributes(Decl *D);
   void printDeclType(QualType T, StringRef DeclName, bool Pack);
