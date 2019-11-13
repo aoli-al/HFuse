@@ -18,23 +18,41 @@ using FunctionRanges = std::vector<std::list<SourceRange>>;
 class KernelRecursiveFuser {
 
 public:
-  KernelRecursiveFuser(std::string FuncStr, Context &Context, const ASTContext *ASTContext):
-      Context(Context), ASTContext(ASTContext) {
-    Streams.push_back(FuncStr);
-  };
+  KernelRecursiveFuser(Context &Context, const ASTContext *ASTContext):
+      Context(Context), ASTContext(ASTContext) {}
 
   void fuse(StmtPointers &Pointers, FunctionRanges &Ranges);
-  void fuseRecursive(std::string Blocks);
-  void selectBlockRecursive(const std::string &Blocks, unsigned Start, unsigned NumLeft);
+  void fuseRecursive(unsigned CheckStart, uint64_t CurrentHash);
   void generateCodeBlocks(StmtPointers &Pointers, FunctionRanges &Ranges);
 
+  unsigned shift() const {
+    return 64u - __builtin_clzll(NumOfBlocks << 1u) << 1u;
+  }
+
+  const std::vector<std::string> &getCandidates() const {
+    return CandidateSnippets;
+  }
+
 private:
-  std::vector<std::string> Streams;
-  std::vector<unsigned> SelectedBlocks;
+
+  struct Block {
+    std::string Code;
+    std::string Sync;
+    unsigned BlockId;
+    unsigned SegId;
+    unsigned Id;
+  };
+
+
+  std::map<unsigned, unsigned> LastVisited;
+  std::string Code;
   std::vector<unsigned> Progress;
-  std::vector<std::vector<std::pair<std::string, std::string>>> CodeBlocks;
+  std::vector<std::vector<Block>> CodeBlocks;
+  std::vector<const Block *> SelectedBlocks;
+  std::set<uint64_t> Searched;
+  std::vector<std::string> CandidateSnippets;
   Context &Context;
-  unsigned Count = 0;
+  unsigned NumOfBlocks = 0;
   const ASTContext *ASTContext;
 };
 

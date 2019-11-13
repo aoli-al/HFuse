@@ -27,17 +27,18 @@ void KernelPrinter::printFusedTemplateDecl(KFMap &KernelFunctionMap) {
   if (TemplatePrinted) Out << ">\n";
 }
 
-void KernelPrinter::printFusedFunction(KFMap &KernelFunctionMap) {
+void KernelPrinter::printFusedFunction(KFMap &KernelFunctionMap, unsigned Idx) {
   printFusedTemplateDecl(KernelFunctionMap);
-  printFusedFunctionSignature(KernelFunctionMap);
+  printFusedFunctionSignature(KernelFunctionMap, Idx);
 
 }
 
-void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap) {
+void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsigned Idx) {
   std::string Proto = "void ";
   for (auto &FName: KFContext.Order) {
     Proto += FName + "_";
   }
+  Proto += std::to_string(Idx);
 
   PrintingPolicy SubPolicy(Policy);
   SubPolicy.SuppressSpecifiers = false;

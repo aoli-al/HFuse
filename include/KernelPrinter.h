@@ -33,14 +33,14 @@ class KernelPrinter {
   raw_ostream& Indent(unsigned Indentation);
 
   void printFusedTemplateDecl(KFMap &KernelFunctionMap);
-  void printFusedFunctionSignature(KFMap &KernelFunctionMap);
+  void printFusedFunctionSignature(KFMap &KernelFunctionMap, unsigned Idx);
 
 public:
   KernelPrinter(raw_ostream &Out, const PrintingPolicy &Policy,
                 const ASTContext &Context, struct Context &KFContext)
       : Out(Out), Policy(Policy), Context(Context), KFContext(KFContext),
         Indentation(0), PrintInstantiation(false) {}
-  void printFusedFunction(KFMap &KernelFunctionMap);
+  void printFusedFunction(KFMap &KernelFunctionMap, unsigned Idx);
   void printTemplateParameters(const TemplateParameterList *Params);
   void prettyPrintAttributes(Decl *D);
   void printDeclType(QualType T, StringRef DeclName, bool Pack);

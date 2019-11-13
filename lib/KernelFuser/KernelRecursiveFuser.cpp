@@ -6,56 +6,67 @@
 
 namespace kernel_fusion {
 
-void KernelRecursiveFuser::selectBlockRecursive(const std::string &Blocks, unsigned Start, unsigned NumLeft) {
-  if (NumLeft == 0) {
-    std::string Sync = "";
-    std::string B = Blocks;
-    for (const auto &BId: SelectedBlocks) {
-      B += CodeBlocks[BId][Progress[BId]].first;
-      Sync += CodeBlocks[BId][Progress[BId]++].second;
-    }
-    auto SB = SelectedBlocks;
-    SelectedBlocks.resize(0);
-    fuseRecursive(B + Sync);
-    SelectedBlocks = std::move(SB);
-    for (const auto &BId: SelectedBlocks) {
-      Progress[BId]--;
-    }
-    return;
-  }
-  if (Start == Progress.size()) return;
-  if (Progress[Start] < CodeBlocks[Start].size()) {
-    SelectedBlocks.push_back(Start);
-    selectBlockRecursive(Blocks, Start + 1, NumLeft - 1);
-    SelectedBlocks.pop_back();
-  }
-  selectBlockRecursive(Blocks, Start + 1, NumLeft);
-}
 
-void KernelRecursiveFuser::fuseRecursive(std::string Blocks) {
-  auto Num = 0;
+void KernelRecursiveFuser::fuseRecursive(unsigned CheckStart, uint64_t CurrentHash) {
+  bool Change = false;
+  auto UpdateHash = [CheckStart, this](uint64_t NewHash, unsigned  End, auto Success) {
+    uint64_t SyncHash = 0;
+    uint64_t CodeHash = 0;
+    std::string Sync, Stmt;
+    for (auto J = CheckStart; J < End; J++  ) {
+      SyncHash ^= SelectedBlocks[J]->Id + NumOfBlocks;
+      Sync += SelectedBlocks[J]->Sync;
+      CodeHash ^= SelectedBlocks[J]->Id;
+      Stmt += SelectedBlocks[J]->Code;
+    }
+    NewHash <<= shift();
+    NewHash += CodeHash;
+    NewHash <<= shift();
+    NewHash += SyncHash;
+    if (Searched.find(NewHash) == Searched.end()) {
+      unsigned Cut = Code.size();
+      Searched.insert(NewHash);
+      Code += std::move(Stmt) + std::move(Sync);
+      Success(NewHash);
+      Code.resize(Cut);
+    }
+  };
   for (unsigned I = 0; I < Context.Order.size(); I++) {
-    if (Progress[I] != CodeBlocks[I].size()) Num++;
+    if (Progress[I] != CodeBlocks[I].size()) {
+      Change = true;
+      const auto *Block = &CodeBlocks[I][Progress[I]++];
+      SelectedBlocks.push_back(Block);
+      auto V = LastVisited[Block->BlockId];
+      LastVisited[Block->BlockId] = SelectedBlocks.size() - 1;
+      if (V >= CheckStart && Block->SegId != 0) {
+        UpdateHash(CurrentHash, SelectedBlocks.size() - 1, [this](uint64_t NewHash) {
+          fuseRecursive(SelectedBlocks.size() - 1, NewHash);
+        });
+      } else {
+        fuseRecursive(CheckStart, CurrentHash);
+      }
+      SelectedBlocks.pop_back();
+      LastVisited[Block->BlockId] = V;
+      Progress[I]--;
+    }
   }
-  if (Num == 0) {
-    llvm::outs() << Blocks;
-    llvm::outs().flush();
-    return;
-  }
-  for (unsigned I = 1; I <= Num; I++) {
-    selectBlockRecursive(Blocks, 0, I);
+  if (!Change) {
+    UpdateHash(CurrentHash, SelectedBlocks.size(), [this](uint64_t) {
+      CandidateSnippets.push_back(Code);
+    });
   }
 }
 
 void KernelRecursiveFuser::fuse(StmtPointers &Pointers, FunctionRanges &Ranges) {
   generateCodeBlocks(Pointers, Ranges);
   Progress.resize(Context.Order.size(), 0);
-  fuseRecursive("");
+  fuseRecursive(0, 0);
 }
 void KernelRecursiveFuser::generateCodeBlocks(StmtPointers &Pointers,
                                               FunctionRanges &Ranges) {
   CodeBlocks.resize(Context.Order.size());
   for (unsigned I = 0; I < Context.Order.size(); I++) {
+    unsigned SegId = 0;
     while (Pointers[I].second != Pointers[I].first) {
       std::string Block;
       llvm::raw_string_ostream BlockStream(Block);
@@ -79,7 +90,7 @@ void KernelRecursiveFuser::generateCodeBlocks(StmtPointers &Pointers,
         SyncStream.flush();
       }
       BlockStream.flush();
-      CodeBlocks[I].push_back(std::make_pair(std::move(Block), std::move(Sync)));
+      CodeBlocks[I].push_back({std::move(Block), std::move(Sync), I, SegId++, NumOfBlocks++});
     }
   }
 }
