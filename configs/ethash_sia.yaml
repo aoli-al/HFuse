@@ -1,0 +1,12 @@
+- KernelName: sia_blake2b_gpu_hash
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1
+- KernelName: ethash_search4
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1

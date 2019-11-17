@@ -1,0 +1,12 @@
+- KernelName: sha256d_gpu_hash_shared
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1
+- KernelName: ethash_search3
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1

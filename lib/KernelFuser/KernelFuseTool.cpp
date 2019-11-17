@@ -38,15 +38,25 @@ void KernelFuseTool::onEndOfTranslationUnit() {
   KernelRecursiveFuser Fuser(Context, C);
   Fuser.fuse(Pointers, Ranges);
 
-  unsigned Idx = 0;
-  for (const auto &Snippet: Fuser.getCandidates()) {
-    std::string FuncStr;
-    llvm::raw_ostream &FuncStream = llvm::outs();
-    KernelPrinter Printer( FuncStream, C->getPrintingPolicy(), *C, Context);
-    Printer.printFusedFunction(KernelFunctionMap, Idx++);
+  std::string FuncStr;
+  llvm::raw_ostream &FuncStream = llvm::outs();
+  KernelPrinter Printer( FuncStream, C->getPrintingPolicy(), *C, Context);
+  if (!Context.BaseLine) {
+    unsigned Idx = 0;
+    for (const auto &Snippet: Fuser.getCandidates()) {
+      Printer.printFusedFunction(KernelFunctionMap, Idx++);
+      FuncStream << "\n {\n";
+      FuncStream.flush();
+      FuncStream << Snippet;
+      FuncStream << "}\n";
+    }
+  } else {
+    Printer.printFusedFunction(KernelFunctionMap, 100);
     FuncStream << "\n {\n";
-    FuncStream.flush();
-    FuncStream << Snippet;
+    for (const auto &FName: Context.Order) {
+      FuncStream << branchingStatement(Context, FName);
+      KernelFunctionMap[FName]->getBody()->printPretty(llvm::outs(), nullptr, C->getPrintingPolicy());
+    }
     FuncStream << "}\n";
   }
 }

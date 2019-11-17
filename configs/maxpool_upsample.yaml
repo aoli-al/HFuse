@@ -1,0 +1,12 @@
+- KernelName: MaxPoolForward
+  HasBarriers: false
+  BlockDim:
+    X: 256
+    Y: 1
+    Z: 1
+- KernelName: upsample_bilinear2d_out_frame
+  HasBarriers: false
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1

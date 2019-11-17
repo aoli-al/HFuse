@@ -8,6 +8,7 @@ set(LLVM_DIST_PATH "/usr/local/opt/llvm"
 
 set(LLVM_DIR ${LLVM_DIST_PATH}/lib/cmake/llvm)
 set(Clang_DIR ${LLVM_DIST_PATH}/lib/cmake/clang)
+
 find_package(LLVM REQUIRED CONFIG)
 find_package(Clang REQUIRED CONFIG)
 message(STATUS "Using LLVM version ${LLVM_PACKAGE_VERSION}")

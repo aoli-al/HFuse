@@ -12,10 +12,18 @@ void KernelRecursiveFuser::fuseRecursive(unsigned CheckStart, uint64_t CurrentHa
   auto UpdateHash = [CheckStart, this](uint64_t NewHash, unsigned  End, auto Success) {
     uint64_t SyncHash = 0;
     uint64_t CodeHash = 0;
+    bool Synced = false;
     std::string Sync, Stmt;
     for (auto J = CheckStart; J < End; J++  ) {
       SyncHash ^= SelectedBlocks[J]->Id + NumOfBlocks;
-      Sync += SelectedBlocks[J]->Sync;
+      if (SelectedBlocks[J]->Sync == "__syncthreads();\n") {
+        if (!Synced) {
+          Synced = true;
+          Sync += SelectedBlocks[J]->Sync;
+        }
+      } else {
+        Sync += SelectedBlocks[J]->Sync;
+      }
       CodeHash ^= SelectedBlocks[J]->Id;
       Stmt += SelectedBlocks[J]->Code;
     }

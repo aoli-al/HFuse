@@ -34,14 +34,17 @@ struct Context {
   std::map<std::string, KernelInfo> Kernels;
   std::vector<std::string> Order;
   std::map<std::string, std::pair<unsigned, unsigned>> Bounds;
+  bool BaseLine;
 
-  explicit Context(std::vector<KernelInfo> &Infos) {
+  explicit Context(std::vector<KernelInfo> &Infos, bool BaseLine): BaseLine(BaseLine) {
     unsigned B = 0;
     for (auto &Info: Infos) {
       Kernels[Info.KernelName] = Info;
       Order.push_back(Info.KernelName);
       Bounds[Info.KernelName] = std::make_pair(B, B + Info.BlockDim.size());
-      B += Info.BlockDim.size();
+      if (!BaseLine) {
+        B += Info.BlockDim.size();
+      }
     }
   }
 
@@ -61,10 +64,10 @@ const static std::string CurrentTid = "(threadIdx.x + threadIdx.y * blockDim.x +
 
 template <>
 struct llvm::yaml::MappingTraits<kernel_fusion::KernelInfo> {
-  static void mapping(IO &io, kernel_fusion::KernelInfo &Info) {
-    io.mapRequired("KernelName", Info.KernelName);
-    io.mapRequired("HasBarriers", Info.HasBarriers);
-    io.mapRequired("BlockDim", Info.BlockDim);
+  static void mapping(IO &Io, kernel_fusion::KernelInfo &Info) {
+    Io.mapRequired("KernelName", Info.KernelName);
+    Io.mapRequired("HasBarriers", Info.HasBarriers);
+    Io.mapRequired("BlockDim", Info.BlockDim);
   }
 };
 
