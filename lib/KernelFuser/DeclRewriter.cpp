@@ -93,7 +93,11 @@ std::string DeclRewriter::printVarDecl(VarDecl *D, const PrintingPolicy &Policy)
       if ((D->getInitStyle() == VarDecl::CallInit) && !isa<ParenListExpr>(Init))
         Out << "(";
       else if (D->getInitStyle() == VarDecl::CInit) {
-        Out << "; " + D->getName() + " = ";
+        if (isa<ConstantArrayType>(T.getTypePtr())) {
+          Out << " = ";
+        } else {
+          Out << "; " + D->getName() + " = ";
+        }
       }
       PrintingPolicy SubPolicy(Policy);
       SubPolicy.SuppressSpecifiers = false;

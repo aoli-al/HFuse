@@ -15,18 +15,14 @@ void MacroExpand::run(const ast_matchers::MatchFinder::MatchResult &Result) {
   llvm::outs() << D->getName() << "\n";
   std::string Impl;
   llvm::raw_string_ostream ImplStream(Impl);
-  const auto TD = D->getDescribedTemplate();
-  if (TD) {
-    TD->print(ImplStream);
-  } else {
-    D->print(ImplStream);
-  }
+  auto *Body = D->getBody();
+  Body->printPretty(ImplStream, nullptr, Result.Context->getPrintingPolicy());
   ImplStream.flush();
   const auto Replacement = tooling::Replacement(Result.Context->getSourceManager(),
-                                                TD ? dyn_cast<NamedDecl>(TD) :  D, Impl);
-  llvm::outs() << D->getLocation().printToString(Result.Context->getSourceManager());
-  llvm::outs() << "\n";
-  if (auto Err = Replacements[Replacement.getFilePath().str()].add(Replacement)) {
+                                                Body, Impl);
+  std::string Path = D->getLocation().printToString(Result.Context->getSourceManager());
+  Path = Path.substr(0, Path.find_first_of(":"));
+  if (auto Err = Replacements[Path].add(Replacement)) {
     llvm::outs() << "error";
   }
 }

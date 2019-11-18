@@ -1,0 +1,28 @@
+"Device","Kernel","Invocations","Event Name","Min","Max","Avg","Total"
+"GeForce GTX 1080 Ti (0)","sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",1518125431,1518125431,1518125431,1518125431
+"GeForce GTX 1080 Ti (0)","sia_blake2b_gpu_hash_ethash_search4_0(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",2369091534,2369091534,2369091534,2369091534
+"GeForce GTX 1080 Ti (0)","ethash_calculate_dag_item(unsigned int)",16,"elapsed_cycles_pm",8063579075,8169330176,8105894567,129694313077
+"GeForce GTX 1080 Ti (0)","foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",3199400140,3199400140,3199400140,3199400140
+"GeForce GTX 1080 Ti (0)","_GLOBAL__N__57_tmpxft_00003c11_00000000_15_sha256_sia_compute_75_cpp1_ii_760fc11c::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",1,"elapsed_cycles_pm",1356638315,1356638315,1356638315,1356638315
+"GeForce GTX) 1080 Ti (0)","_GLOBAL__N__59_tmpxft_00003c05_00000000_15_blake_sha256_compute_75_cpp1_ii_f2a120ba::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",1502454347,1502454347,1502454347,1502454347
+"GeForce GTX 1080 Ti (0)","ethash_search2_blake2b_gpu_hash_0(Search_results volatile *, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",2544203155,2544203155,2544203155,2544203155
+"GeForce GTX 1080 Ti (0)","ethash_search(Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",2295346135,2295346135,2295346135,2295346135
+"GeForce GTX 1080 Ti (0)","foo::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",1526962724,1526962724,1526962724,1526962724
+"GeForce GTX 1080 Ti (0)","sha256d_gpu_hash_shared_ethash_search3_100(unsigned int, unsigned int, unsigned int*, Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",2773873718,2773873718,2773873718,2773873718
+"GeForce GTX 1080 Ti (0)","_GLOBAL__N__57_tmpxft_00003c11_00000000_15_sha256_sia_compute_75_cpp1_ii_760fc11c::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",5804770442,5804770442,5804770442,5804770442
+"GeForce GTX 1080 Ti (0)","_GLOBAL__N__59_tmpxft_00003c05_00000000_15_blake_sha256_compute_75_cpp1_ii_f2a120ba::blake2b_gpu_hash_sha256d_gpu_hash_shared_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",1,"elapsed_cycles_pm",5826619425,5826619425,5826619425,5826619425
+"GeForce GTX 1080 Ti (0)","_GLOBAL__N__57_tmpxft_00003c11_00000000_15_sha256_sia_compute_75_cpp1_ii_760fc11c::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",4524665621,4524665621,4524665621,4524665621
+"GeForce GTX 1080 Ti (0)","ethash_search3(Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",2298391921,2298391921,2298391921,2298391921
+"GeForce GTX 1080 Ti (0)","_GLOBAL__N__59_tmpxft_00003c05_00000000_15_blake_sha256_compute_75_cpp1_ii_f2a120ba::blake2b_gpu_hash_sha256d_gpu_hash_shared_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",1,"elapsed_cycles_pm",4533289159,4533289159,4533289159,4533289159
+"GeForce GTX 1080 Ti (0)","sia_blake2b_gpu_hash_ethash_search4_100(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",2406639177,2406639177,2406639177,2406639177
+"GeForce GTX 1080 Ti (0)","_GLOBAL__N__57_tmpxft_00003c11_00000000_15_sha256_sia_compute_75_cpp1_ii_760fc11c::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",1521831964,1521831964,1521831964,1521831964
+"GeForce GTX 1080 Ti (0)","foo::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",1515739063,1515739063,1515739063,1515739063
+"GeForce GTX 1080 Ti (0)","_GLOBAL__N__59_tmpxft_00003c05_00000000_15_blake_sha256_compute_75_cpp1_ii_f2a120ba::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",1,"elapsed_cycles_pm",1346887167,1346887167,1346887167,1346887167
+"GeForce GTX 1080 Ti (0)","ethash_search2_blake2b_gpu_hash_100(Search_results volatile *, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",2230011031,2230011031,2230011031,2230011031
+"GeForce GTX 1080 Ti (0)","blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",1526346905,1526346905,1526346905,1526346905
+"GeForce GTX 1080 Ti (0)","sha256d_gpu_hash_shared_ethash_search3_0(unsigned int, unsigned int, unsigned int*, Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",3424735728,3424735728,3424735728,3424735728
+"GeForce GTX 1080 Ti (0)","ethash_search4(Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",2297150925,2297150925,2297150925,2297150925
+"GeForce GTX 1080 Ti (0)","ethash_search2(Search_results volatile *, unsigned long)",1,"elapsed_cycles_pm",2311421479,2311421479,2311421479,2311421479
+"GeForce GTX 1080 Ti (0)","sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",1,"elapsed_cycles_pm",1355681818,1355681818,1355681818,1355681818
+"GeForce GTX 1080 Ti (0)","foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",1,"elapsed_cycles_pm",3194225125,3194225125,3194225125,3194225125
+

@@ -20,5 +20,4 @@ std::string generateNewVarName(const std::string &Base) {
   return Base + "_" + std::to_string(Count++);
 }
 
-
 }

@@ -8,8 +8,7 @@
 #include <string>
 #include <map>
 #include <llvm/Support/YAMLTraits.h>
-
-
+#include <clang/AST/ASTContext.h>
 
 namespace kernel_fusion {
 
@@ -57,6 +56,19 @@ struct Context {
 std::string branchingStatement(const Context &C, const std::string &FName, bool Inverse=false);
 
 std::string generateNewVarName(const std::string &Base);
+
+template <typename NodeT>
+std::string getDeclFunctionName(const clang::ASTContext *C, const NodeT &N) {
+  auto NodeLists = C->getParents(N);
+
+  while (NodeLists.size()) {
+    if (auto N = NodeLists[0].template get<clang::FunctionDecl>()) {
+      return N->getName();
+    }
+    NodeLists = C->getParents(NodeLists[0]);
+  }
+  return "";
+}
 
 const static std::string CurrentTid = "(threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y)";
 

@@ -34,7 +34,8 @@ void KernelPrinter::printFusedFunction(KFMap &KernelFunctionMap, unsigned Idx) {
 }
 
 void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsigned Idx) {
-  std::string Proto = "void ";
+  prettyPrintAttributes(KernelFunctionMap.begin()->second);
+  std::string Proto = " void ";
   for (auto &FName: KFContext.Order) {
     Proto += FName + "_";
   }
@@ -82,7 +83,6 @@ void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsign
   Proto += ")";
   Out << Proto;
 
-  prettyPrintAttributes(KernelFunctionMap.begin()->second);
 
 //  Out << " {\n";
 //  for (const auto &K: KFContext.Kernels) {

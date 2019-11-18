@@ -148,16 +148,16 @@ int main(int argc, const char** argv){
   std::vector<kernel_fusion::KernelInfo> Infos;
   YAML >> Infos;
 
-  Context C(Infos, true);
+  Context C(Infos, false);
 
   expandMacros(Op, C);
-//  renameParameters(Op, C);
-//  rewriteThreadInfo(Op, C);
-//  declRewriter(Op, C);
-//  if (!C.BaseLine) {
-//    barrierAnalyzer(Op, C);
-//  }
-//  fuseKernel(Op, C);
+  renameParameters(Op, C);
+  rewriteThreadInfo(Op, C);
+  declRewriter(Op, C);
+  if (!C.BaseLine) {
+    barrierAnalyzer(Op, C);
+  }
+  fuseKernel(Op, C);
   return 0;
 }
 
