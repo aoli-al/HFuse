@@ -137,12 +137,16 @@ def find_name(kernel):
     return candidate
 
 def analyze(file_name):
+    app = ""
+    if "spill" in file_name:
+        app = "_p"
     with open(file_name) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             key = find_name(row['Kernel'])
             if not key:
                 continue
+            key += app
             if key not in result:
                 result[key] = {}
             if 'event' in file_name:
@@ -228,51 +232,63 @@ def generate_table_1(result):
         s += "\\\\ \n \\hline\n"
     print(s)
 
-generate_table_1(fr)
+# generate_table_1(fr)
 
-# analyze(sys.argv[1] + "_event.csv")
-# analyze(sys.argv[1] + "_metrics.csv")
-#
-# header_printed = False
-#
-# spill = "spill" in sys.argv[1]
-# print(result)
-# for o in order:
-#     key = kernels[o]
-#     m = result[key]
-# #  for key, m in result.items():
-#     d = "Pairs & "
-#     if not spill:
-#         s = key + " & "
-#     else:
-#         s = key + " (Spill)" + " & "
-#     for k in event_order:
-#         v = m[k]
-#         if events[k] == "Cycles":
-#             d += "Time" + " & "
-#             if spill:
-#                 if "+" in key:
-#                     s += ("%.1f" % execution_time_spill[key]) + " & "
-#                 else:
-#                     s += " & "
-#             else:
-#                 s += ("%.1f" % execution_time[key]) + " & "
-#             continue
-#         d += events[k] + " & "
-#         s  += ("%.2f" % v) + " & "
-#     if "+" in key:
-#         [k1, k2] = key.split("+")
-#         ek1 = result[k1]['elapsed_cycles_pm']
-#         ek2 = result[k2]['elapsed_cycles_pm']
-#         wk1 = result[k1]['eligible_warps_per_cycle']
-#         wk2 = result[k2]['eligible_warps_per_cycle']
-#         if not spill:
-#             s +=  "\\multirow{2}{*}{%.2f}" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
-#
-#     #  s = s[:-2]
-#     #  d = d[:-2]
-#     s += " \\\\ \n \\hline"
-#     if not header_printed:
-#         header_printed = True
-#         print(d + " \\\\ \n \\hline")
-#     print(s)
+analyze("./data/ml_event.csv")
+analyze("./data/ml_metrics.csv")
+analyze("./data/ml_spill_event.csv")
+analyze("./data/ml_spill_metrics.csv")
+analyze("./data/ethminer_event.csv")
+analyze("./data/ethminer_metrics.csv")
+analyze("./data/ethminer_spill_event.csv")
+analyze("./data/ethminer_spill_metrics.csv")
+
+header_printed = False
+
+print(result)
+for o in order:
+    s1 = ""
+    s2 = ""
+    key = kernels[o]
+    if "_" in key:
+        continue
+    m1 = result[key]
+    m2 = result[key + "_p"]
+    #  for key, m in result.items():
+    d = "Pairs & "
+    if "+" in key:
+        s1 += "\\multirow{2}{*}{" + key + "} & "
+    else:
+        s1 += key + " & "
+    s2 += " & "
+    for k in event_order:
+        if events[k] == "Cycles":
+            d += "Time" + " & "
+            s2 += ("%.1f" % r2[key]) + " & "
+            s1 += ("%.1f" % r1[key]) + " & "
+            continue
+        v1 = m1[k]
+        v2 = m2[k]
+        d += events[k] + " & "
+        s1 += ("%.2f" % v1) + " & "
+        s2 += ("%.2f" % v2) + " & "
+    if "+" in key:
+        [k1, k2] = key.split("+")
+        ek1 = result[k1]['elapsed_cycles_pm']
+        ek2 = result[k2]['elapsed_cycles_pm']
+        wk1 = result[k1]['eligible_warps_per_cycle']
+        wk2 = result[k2]['eligible_warps_per_cycle']
+        s1 += "\\multirow{2}{*}{%.2f}" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
+
+    #  s = s[:-2]
+    #  d = d[:-2]
+    s1 += " \\\\"
+    s2 += " \\\\"
+    if not header_printed:
+        header_printed = True
+        print(d + " \\\\ \n \\hline")
+    print(s1)
+    if "+" in key:
+        print("\\cline{2-8}")
+        print(s2)
+    print("\\hline")
