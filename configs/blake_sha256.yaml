@@ -1,10 +1,10 @@
-- KernelName: ethash_search2
+- KernelName: blake2b_gpu_hash
   HasBarriers: false
   BlockDim:
     X: 128
     Y: 1
     Z: 1
-- KernelName: blake2b_gpu_hash
+- KernelName: sha256d_gpu_hash_shared
   HasBarriers: false
   BlockDim:
     X: 128
