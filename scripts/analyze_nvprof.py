@@ -52,6 +52,11 @@ order = [
     "im2col_kernel_kernelHistogram1D_100",
     "kernelHistogram1D_upsample_bilinear2d_out_frame_100",
     "upsample_bilinear2d_out_frame_batch_norm_collect_statistics_kernel_100",
+
+    "kernelHistogram1D_MaxPoolForward_0",
+    "kernelHistogram1D_batch_norm_collect_statistics_kernel_0",
+    "im2col_kernel_kernelHistogram1D_1x",
+    "kernelHistogram1D_upsample_bilinear2d_out_frame_0",
 ]
 
 kernels = {
@@ -103,6 +108,11 @@ kernels = {
     "im2col_kernel_kernelHistogram1D_100": "Im2Col+Hist_",
     "kernelHistogram1D_upsample_bilinear2d_out_frame_100": "Upsample+Hist_",
     "upsample_bilinear2d_out_frame_batch_norm_collect_statistics_kernel_100": "Upsample+Batchnorm_",
+
+    "kernelHistogram1D_MaxPoolForward_0": "Maxpool+Hist_n",
+    "kernelHistogram1D_batch_norm_collect_statistics_kernel_0": "Batchnorm+Hist_n",
+    "im2col_kernel_kernelHistogram1D_1x": "Im2Col+Hist_n",
+    "kernelHistogram1D_upsample_bilinear2d_out_frame_0": "Upsample+Hist_n",
 }
 
 event_order = [
@@ -112,7 +122,7 @@ event_order = [
     # "stall_exec_dependency",
     "stall_memory_dependency",
     "achieved_occupancy",
-    "eligible_warps_per_cycle",
+    # "eligible_warps_per_cycle",
 ]
 
 events = {
@@ -136,6 +146,7 @@ def find_name(kernel):
     #     print(kernel)
     return candidate
 
+LABEL = "Avg"
 def analyze(file_name):
     app = ""
     if "spill" in file_name:
@@ -150,12 +161,12 @@ def analyze(file_name):
             if key not in result:
                 result[key] = {}
             if 'event' in file_name:
-                result[key][row['Event Name']] = float(row['Avg'].strip("%"))
+                result[key][row['Event Name']] = float(row[LABEL].strip("%"))
             else:
                 if row['Metric Name'] == "achieved_occupancy":
-                    result[key][row['Metric Name']] = float(row['Avg'].strip("%")) * 100
+                    result[key][row['Metric Name']] = float(row[LABEL].strip("%")) * 100
                 else:
-                    result[key][row['Metric Name']] = float(row['Avg'].strip("%"))
+                    result[key][row['Metric Name']] = float(row[LABEL].strip("%"))
 
 
 
@@ -209,6 +220,7 @@ analyze_execution_time("./data/ml.json", r1)
 analyze_execution_time("./data/miner.json", r1)
 analyze_execution_time("./data/miner_regcap.json", r2)
 analyze_execution_time("./data/ml_regcap.json", r2)
+analyze_execution_time("./data/ml-naive.json", r2)
 
 fr = {}
 for x, y in r1.items():
@@ -246,6 +258,8 @@ analyze("./data/ethminer_event.csv")
 analyze("./data/ethminer_metrics.csv")
 analyze("./data/ethminer_spill_event.csv")
 analyze("./data/ethminer_spill_metrics.csv")
+analyze("./data/ml-naive-event.csv")
+analyze("./data/ml-naive-metric.csv")
 
 header_printed = False
 
@@ -255,18 +269,28 @@ print(result)
 for o in order:
     s1 = ""
     s2 = ""
+    s3 = ""
     key = kernels[o]
     if "_" in key:
         continue
     m1 = result[key]
     m2 = result[key + "_p"]
+    naive = "Hist" in key and "+" in key
+    if naive:
+        m3 = result[key + "_n"]
     #  for key, m in result.items():
     d = "Pairs & "
+    multirow = "3" if naive else "2"
     if "+" in key:
-        s1 += "\\multirow{2}{*}{\\textbf{" + key + "}} & "
+        s1 += "\\multirow{" + multirow + "}{*}{\\textbf{" + key + "}} & "
     else:
         s1 += "\\textbf{" + key + "} & "
     s2 += " & "
+    s3 += " & "
+
+    s1 += " N-RegCap & "
+    s2 += " RegCap & "
+    s3 += " Naive & "
     for k in event_order:
         if events[k] == "Cycles":
             d += "Time" + " & "
@@ -279,6 +303,11 @@ for o in order:
             if "+" in key:
                 s2 += color_str(r2, key)
                 s1 += color_str(r1, key)
+                if naive:
+                    if r1[key + "_s"] > r2[key + "_n"]:
+                        s3 += "\\textcolor{green}{%.1f} & " % r2[key+"_n"]
+                    else:
+                        s3 += "\\textcolor{red}{%.1f} & " % r2[key+"_n"]
                 # s1 += ("%.1f" % r1[key]) + " & "
             continue
         v1 = m1[k]
@@ -286,6 +315,8 @@ for o in order:
         d += events[k] + " & "
         s1 += ("%.2f" % v1) + " & "
         s2 += ("%.2f" % v2) + " & "
+        if naive:
+            s3 += ("%.2f" % m3[k]) + " & "
         if "+" in key and k == "issue_slot_utilization":
             [k1, k2] = key.split("+")
             ek1 = result[k1]['elapsed_cycles_pm']
@@ -293,8 +324,9 @@ for o in order:
             wk1 = result[k1]['issue_slot_utilization']
             wk2 = result[k2]['issue_slot_utilization']
             d += " Stream Slot Utilization & "
-            s1 += "\\multirow{2}{*}{%.2f} &" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
+            s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
             s2 += " & "
+            s3 += " & "
 
     s1 = s1[:-2]
     s2 = s2[:-2]
@@ -306,8 +338,11 @@ for o in order:
         print(d + " \\\\ \n \\hline")
     if "+" in key:
         print(s1)
-        print("\\cline{2-3} \\cline{5-7}")
+        print("\\cline{2-4} \\cline{6-7}")
         print(s2)
+        if naive:
+            print("\\cline{2-4} \\cline{6-7}")
+            print(s3[:-2] + "\\\\")
         print("\\hline")
     else:
         t3 += s1 + "\n"
