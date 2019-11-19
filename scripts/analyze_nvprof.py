@@ -135,6 +135,17 @@ events = {
     "achieved_occupancy": "Occupancy",
 }
 
+
+###
+# note maxpool issue slot util = 6.301776
+#      upsample = 2072924527
+#      mp clock = 1453350987
+#      up sample clock = 2072924527
+
+###
+
+
+
 result =  {}
 
 def find_name(kernel):
@@ -288,9 +299,10 @@ for o in order:
     s2 += " & "
     s3 += " & "
 
-    s1 += " N-RegCap & "
-    s2 += " RegCap & "
-    s3 += " Naive & "
+    if "+" in key:
+        s1 += " N-RegCap & "
+        s2 += " RegCap & "
+        s3 += " Naive & "
     for k in event_order:
         if events[k] == "Cycles":
             d += "Time" + " & "
