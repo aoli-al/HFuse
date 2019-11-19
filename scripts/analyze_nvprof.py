@@ -106,10 +106,10 @@ kernels = {
 }
 
 event_order = [
-    "elapsed_cycles_pm" ,
+    "elapsed_cycles_pm",
     "issue_slot_utilization",
-    "stall_inst_fetch",
-    "stall_exec_dependency",
+    # "stall_inst_fetch",
+    # "stall_exec_dependency",
     "stall_memory_dependency",
     "achieved_occupancy",
     "eligible_warps_per_cycle",
@@ -152,7 +152,11 @@ def analyze(file_name):
             if 'event' in file_name:
                 result[key][row['Event Name']] = float(row['Avg'].strip("%"))
             else:
-                result[key][row['Metric Name']] = float(row['Avg'].strip("%"))
+                if row['Metric Name'] == "achieved_occupancy":
+                    result[key][row['Metric Name']] = float(row['Avg'].strip("%")) * 100
+                else:
+                    result[key][row['Metric Name']] = float(row['Avg'].strip("%"))
+
 
 
 def analyze_execution_time(f, res):
@@ -225,14 +229,14 @@ def generate_table_1(result):
         if kernel not in result:
             continue
         prt = lambda p: "%.2f" % result[p]
-        s += kernel + " & " + prt(kernel + "_s") \
+        s += "\\textbf{" + kernel + "} & " + prt(kernel + "_s") \
              + " & " + prt(kernel + "_") \
              + " & " + prt(kernel)
         s += " & " + "%.2f" % (((result[kernel + "_s"] / result[kernel]) - 1) * 100)
         s += "\\\\ \n \\hline\n"
     print(s)
 
-# generate_table_1(fr)
+generate_table_1(fr)
 
 analyze("./data/ml_event.csv")
 analyze("./data/ml_metrics.csv")
@@ -244,6 +248,8 @@ analyze("./data/ethminer_spill_event.csv")
 analyze("./data/ethminer_spill_metrics.csv")
 
 header_printed = False
+
+t3 = ""
 
 print(result)
 for o in order:
@@ -257,38 +263,53 @@ for o in order:
     #  for key, m in result.items():
     d = "Pairs & "
     if "+" in key:
-        s1 += "\\multirow{2}{*}{" + key + "} & "
+        s1 += "\\multirow{2}{*}{\\textbf{" + key + "}} & "
     else:
-        s1 += key + " & "
+        s1 += "\\textbf{" + key + "} & "
     s2 += " & "
     for k in event_order:
         if events[k] == "Cycles":
             d += "Time" + " & "
-            s2 += ("%.1f" % r2[key]) + " & "
-            s1 += ("%.1f" % r1[key]) + " & "
+            def color_str(dic, k):
+                if r1[k + "_s"] > dic[k]:
+                    return "\\textcolor{green}{%.1f} & " % dic[k]
+                else:
+                    return "\\textcolor{red}{%.1f} & " % dic[k]
+            # s2 += ("%.1f" % r2[key]) + " & "
+            if "+" in key:
+                s2 += color_str(r2, key)
+                s1 += color_str(r1, key)
+                # s1 += ("%.1f" % r1[key]) + " & "
             continue
         v1 = m1[k]
         v2 = m2[k]
         d += events[k] + " & "
         s1 += ("%.2f" % v1) + " & "
         s2 += ("%.2f" % v2) + " & "
-    if "+" in key:
-        [k1, k2] = key.split("+")
-        ek1 = result[k1]['elapsed_cycles_pm']
-        ek2 = result[k2]['elapsed_cycles_pm']
-        wk1 = result[k1]['eligible_warps_per_cycle']
-        wk2 = result[k2]['eligible_warps_per_cycle']
-        s1 += "\\multirow{2}{*}{%.2f}" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
+        if "+" in key and k == "issue_slot_utilization":
+            [k1, k2] = key.split("+")
+            ek1 = result[k1]['elapsed_cycles_pm']
+            ek2 = result[k2]['elapsed_cycles_pm']
+            wk1 = result[k1]['issue_slot_utilization']
+            wk2 = result[k2]['issue_slot_utilization']
+            d += " Stream Slot Utilization & "
+            s1 += "\\multirow{2}{*}{%.2f} &" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
+            s2 += " & "
 
-    #  s = s[:-2]
-    #  d = d[:-2]
+    s1 = s1[:-2]
+    s2 = s2[:-2]
+     # d = d[:-2]
     s1 += " \\\\"
     s2 += " \\\\"
     if not header_printed:
         header_printed = True
         print(d + " \\\\ \n \\hline")
-    print(s1)
     if "+" in key:
-        print("\\cline{2-8}")
+        print(s1)
+        print("\\cline{2-3} \\cline{5-7}")
         print(s2)
-    print("\\hline")
+        print("\\hline")
+    else:
+        t3 += s1 + "\n"
+
+print(t3)
