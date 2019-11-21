@@ -7,6 +7,7 @@
 #include "KernelFuseTool.h"
 #include "KernelPrinter.h"
 #include "KernelRecursiveFuser.h"
+#include "llvm/Support/JSON.h"
 
 using namespace llvm;
 
@@ -39,8 +40,9 @@ void KernelFuseTool::onEndOfTranslationUnit() {
   Fuser.fuse(Pointers, Ranges);
 
   std::string FuncStr;
-  llvm::raw_ostream &FuncStream = llvm::outs();
+  auto FuncStream = llvm::raw_string_ostream(FuncStr);
   KernelPrinter Printer( FuncStream, C->getPrintingPolicy(), *C, Context);
+  std::vector<std::string> Candidates;
   if (!Context.BaseLine) {
     unsigned Idx = 0;
     for (const auto &Snippet: Fuser.getCandidates()) {
@@ -49,6 +51,9 @@ void KernelFuseTool::onEndOfTranslationUnit() {
       FuncStream.flush();
       FuncStream << Snippet;
       FuncStream << "}\n";
+      FuncStream.flush();
+      Candidates.push_back(FuncStr);
+      FuncStr.clear();
     }
   } else {
     Printer.printFusedFunction(KernelFunctionMap, 100);
@@ -58,7 +63,11 @@ void KernelFuseTool::onEndOfTranslationUnit() {
       KernelFunctionMap[FName]->getBody()->printPretty(llvm::outs(), nullptr, C->getPrintingPolicy());
     }
     FuncStream << "}\n";
+    FuncStream.flush();
+    Candidates.push_back(FuncStr);
   }
+  auto R = llvm::json::Value(Candidates);
+  llvm::outs() << R;
 }
 
 }

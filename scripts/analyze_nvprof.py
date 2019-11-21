@@ -243,7 +243,8 @@ for x, y in r1.items():
 
 def generate_table_1(result):
     s = ""
-
+    suc = 0
+    su = 0
     for kernel in kernels.values():
         if "+" not in kernel:
             continue
@@ -255,9 +256,14 @@ def generate_table_1(result):
         s += "\\textbf{" + kernel + "} & " + prt(kernel + "_s") \
              + " & " + prt(kernel + "_") \
              + " & " + prt(kernel)
-        s += " & " + "%.2f" % (((result[kernel + "_s"] / result[kernel]) - 1) * 100)
+        t_su = ((result[kernel + "_s"] / result[kernel]) - 1) * 100
+        s += " & " + "%.2f" % (t_su)
         s += "\\\\ \n \\hline\n"
+        if t_su > 0:
+            suc += 1
+            su += t_su
     print(s)
+    print(su / suc)
 
 generate_table_1(fr)
 
@@ -306,20 +312,23 @@ for o in order:
     for k in event_order:
         if events[k] == "Cycles":
             d += "Time" + " & "
-            def color_str(dic, k):
-                if r1[k + "_s"] > dic[k]:
-                    return "\\textcolor{green}{%.1f} & " % dic[k]
+            def color_str(prec):
+                prec *= 100
+                if prec > 0:
+                    return "\\textcolor{green}{%.1f} & " % prec
                 else:
-                    return "\\textcolor{red}{%.1f} & " % dic[k]
+                    return "\\textcolor{red}{%.1f} & " % prec
             # s2 += ("%.1f" % r2[key]) + " & "
             if "+" in key:
-                s2 += color_str(r2, key)
-                s1 += color_str(r1, key)
+                s2 += color_str(r1[key+"_s"] / r2[key] - 1)
+                s1 += color_str(r1[key+"_s"] / r1[key] - 1)
                 if naive:
-                    if r1[key + "_s"] > r2[key + "_n"]:
-                        s3 += "\\textcolor{green}{%.1f} & " % r2[key+"_n"]
-                    else:
-                        s3 += "\\textcolor{red}{%.1f} & " % r2[key+"_n"]
+                    perc = r1[key + "_s"] / r2[key + "_n"] - 1
+                    s3 += color_str(perc)
+                    # if r1[key + "_s"] > r2[key + "_n"]:
+                    #     s3 += "\\textcolor{green}{%.1f} & " % r2[key+"_n"]
+                    # else:
+                    #     s3 += "\\textcolor{red}{%.1f} & " % r2[key+"_n"]
                 # s1 += ("%.1f" % r1[key]) + " & "
             continue
         v1 = m1[k]
@@ -336,7 +345,12 @@ for o in order:
             wk1 = result[k1]['issue_slot_utilization']
             wk2 = result[k2]['issue_slot_utilization']
             d += " Stream Slot Utilization & "
-            s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
+
+            if "Maxpool+Upsample" in key:
+                ## See comments above, maxpool uses different configurations because of memory limitation
+                s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % (14.37)
+            else:
+                s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
             s2 += " & "
             s3 += " & "
 

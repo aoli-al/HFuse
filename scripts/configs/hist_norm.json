@@ -1,0 +1,10 @@
+{
+  "kernel_file": "/mnt/HDD2/home/hao01/handmade_fusion/fused/SummaryNorm.cu",
+  "kernel_config": "/tmp/tmp.Qz5yLOgO2H/configs/summary_norm.yaml",
+  "function_location": 434,
+  "invocation_statement": "FUNC<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED,decltype(getDummyOp), InvStd, scalar_t, scalar_t, accscalar_t, index_t><<<10000, 1024, sharedMem, stream>>>(aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,input, epsilon, 0.0, dummy_mean, dummy_invstd, mean, invstd);\n",
+  "invocation_insert_location": 2142,
+  "build_script": "bash /mnt/HDD2/home/hao01/handmade_fusion/build.sh",
+  "run_script":  "/home/hao01/torch_extension/bin/python3 /mnt/HDD2/home/hao01/handmade_fusion/call.py 3",
+  "launch_bound": 32
+}
