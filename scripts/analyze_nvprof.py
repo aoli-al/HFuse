@@ -227,7 +227,10 @@ def analyze_execution_time(f, res):
 
 r1 = {}
 r2 = {}
-# analyze_execution_time("./data/ml.json", r1)
+analyze_execution_time("./data/ml.json", r1)
+analyze_execution_time("./data/ml-regcap.json", r2)
+# analyze_execution_time("./data/ml-regcap.json", r2)
+# analyze_execution_time("./data/ml-regcap.json", r2)
 analyze_execution_time("./data/miner.json", r1)
 analyze_execution_time("./data/miner_regcap.json", r2)
 # analyze_execution_time("./data/ml_regcap.json", r2)
@@ -241,6 +244,7 @@ for x, y in r1.items():
         fr[x] = y
 
 
+print(fr)
 def generate_table_1(result):
     s = ""
     suc = 0
@@ -267,16 +271,16 @@ def generate_table_1(result):
 
 generate_table_1(fr)
 
-analyze("./data/ml_event.csv")
-analyze("./data/ml_metrics.csv")
-analyze("./data/ml_spill_event.csv")
-analyze("./data/ml_spill_metrics.csv")
+analyze("./data/ml-event.csv")
+analyze("./data/ml-spill-event.csv")
+analyze("./data/ml-metrics.csv")
+analyze("./data/ml-spill-metrics.csv")
 analyze("./data/ethminer_event.csv")
 analyze("./data/ethminer_metrics.csv")
 analyze("./data/ethminer_spill_event.csv")
 analyze("./data/ethminer_spill_metrics.csv")
-analyze("./data/ml-naive-event.csv")
-analyze("./data/ml-naive-metric.csv")
+# analyze("./data/ml-naive-event.csv")
+# analyze("./data/ml-naive-metric.csv")
 
 header_printed = False
 
@@ -346,11 +350,11 @@ for o in order:
             wk2 = result[k2]['issue_slot_utilization']
             d += " Stream Slot Utilization & "
 
-            if "Maxpool+Upsample" in key:
-                ## See comments above, maxpool uses different configurations because of memory limitation
-                s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % (14.37)
-            else:
-                s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
+            # if "Maxpool+Upsample" in key:
+            #     ## See comments above, maxpool uses different configurations because of memory limitation
+            #     s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % (14.37)
+            # else:
+            s1 += "\\multirow{" + multirow + "}{*}{%.2f} &" % ((ek1 * wk1 + ek2 * wk2) / (ek1 + ek2))
             s2 += " & "
             s3 += " & "
 
