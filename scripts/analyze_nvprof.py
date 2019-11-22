@@ -227,11 +227,11 @@ def analyze_execution_time(f, res):
 
 r1 = {}
 r2 = {}
-analyze_execution_time("./data/ml.json", r1)
+# analyze_execution_time("./data/ml.json", r1)
 analyze_execution_time("./data/miner.json", r1)
 analyze_execution_time("./data/miner_regcap.json", r2)
-analyze_execution_time("./data/ml_regcap.json", r2)
-analyze_execution_time("./data/ml-naive.json", r2)
+# analyze_execution_time("./data/ml_regcap.json", r2)
+# analyze_execution_time("./data/ml-naive.json", r2)
 
 fr = {}
 for x, y in r1.items():
@@ -253,7 +253,7 @@ def generate_table_1(result):
         if kernel not in result:
             continue
         prt = lambda p: "%.2f" % result[p]
-        s += "\\textbf{" + kernel + "} & " + prt(kernel + "_s") \
+        s += "{" + kernel + "} & " + prt(kernel + "_s") \
              + " & " + prt(kernel + "_") \
              + " & " + prt(kernel)
         t_su = ((result[kernel + "_s"] / result[kernel]) - 1) * 100
@@ -299,9 +299,9 @@ for o in order:
     d = "Pairs & "
     multirow = "3" if naive else "2"
     if "+" in key:
-        s1 += "\\multirow{" + multirow + "}{*}{\\textbf{" + key + "}} & "
+        s1 += "\\multirow{" + multirow + "}{*}{{" + key + "}} & "
     else:
-        s1 += "\\textbf{" + key + "} & "
+        s1 += "{" + key + "} & "
     s2 += " & "
     s3 += " & "
 

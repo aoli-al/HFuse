@@ -53,21 +53,23 @@ void KernelFuseTool::onEndOfTranslationUnit() {
       FuncStream << "}\n";
       FuncStream.flush();
       Candidates.push_back(FuncStr);
+      llvm::outs() << FuncStr;
       FuncStr.clear();
     }
   } else {
     Printer.printFusedFunction(KernelFunctionMap, 100);
     FuncStream << "\n {\n";
     for (const auto &FName: Context.Order) {
-      FuncStream << branchingStatement(Context, FName);
-      KernelFunctionMap[FName]->getBody()->printPretty(llvm::outs(), nullptr, C->getPrintingPolicy());
+//      FuncStream << branchingStatement(Context, FName);
+      KernelFunctionMap[FName]->getBody()->printPretty(FuncStream, nullptr, C->getPrintingPolicy());
     }
     FuncStream << "}\n";
     FuncStream.flush();
     Candidates.push_back(FuncStr);
+    llvm::outs() << FuncStr;
   }
-  auto R = llvm::json::Value(Candidates);
-  llvm::outs() << R;
+//  auto R = llvm::json::Value(Candidates);
+//  llvm::outs() << R;
 }
 
 }

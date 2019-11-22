@@ -14,7 +14,7 @@ void BarrierHoisting::onEndOfTranslationUnit() {
     const auto BS = branchingStatement(Context, FName, true) + " goto ";
     for (auto &T: F.second) {
       const auto Stmt = T.first;
-      if (ASTContext->getParents(*Stmt)[0].get<FunctionDecl>()) {
+      if (ASTContext->getParents(*Stmt)[0].get<FunctionDecl>() && !Context.BaseLine) {
         continue;
       }
       auto CurrentLabel = generateNewVarName("label");
