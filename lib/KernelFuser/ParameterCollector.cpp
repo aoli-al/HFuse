@@ -1,6 +1,3 @@
-//
-// Created by Leo Li on 2019-10-26.
-//
 #include <clang/Tooling/Refactoring/Rename/USRFindingAction.h>
 #include <DeclRewriter.h>
 #include "ParameterCollector.h"

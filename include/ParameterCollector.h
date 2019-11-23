@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-10-26.
-//
-
 #ifndef SMART_FUSER_PARAMETERCOLLECTOR_H
 #define SMART_FUSER_PARAMETERCOLLECTOR_H
 

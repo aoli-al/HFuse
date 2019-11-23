@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-11-01.
-//
-
 #include "DeclRewriter.h"
 
 namespace kernel_fusion {

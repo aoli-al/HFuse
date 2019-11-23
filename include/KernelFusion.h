@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-10-29.
-//
-
 #ifndef SMART_FUSER_INCLUDE_KERNELFUSION_H
 #define SMART_FUSER_INCLUDE_KERNELFUSION_H
 

@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-10-24.
-//
-
 #include <clang/AST/Decl.h>
 
 #include "KernelFuseTool.h"

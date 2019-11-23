@@ -1,6 +1,3 @@
-//
-// Created by Leo Li on 2019-10-27.
-//
 #include "ThreadInfoRewriter.h"
 #include <numeric>
 

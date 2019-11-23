@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-10-27.
-//
-
 #ifndef SMART_FUSER_THREADINFOREWRITER_H
 #define SMART_FUSER_THREADINFOREWRITER_H
 

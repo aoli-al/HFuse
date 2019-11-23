@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-11-07.
-//
-
 #include "KernelRecursiveFuser.h"
 
 namespace kernel_fusion {

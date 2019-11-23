@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-10-24.
-//
-
 #ifndef SMART_FUSER_KERNELPRINTER_H
 #define SMART_FUSER_KERNELPRINTER_H
 

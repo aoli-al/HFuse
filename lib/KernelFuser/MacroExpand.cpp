@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-10-29.
-//
-
 #include "MacroExpand.h"
 #include "KernelFuseTool.h"
 

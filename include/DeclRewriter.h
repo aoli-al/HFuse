@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-11-01.
-//
-
 #ifndef SMART_FUSER_INCLUDE_DECLREWRITER_H
 #define SMART_FUSER_INCLUDE_DECLREWRITER_H
 

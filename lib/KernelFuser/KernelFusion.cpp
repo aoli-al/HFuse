@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2019-10-31.
-//
-
 #include "KernelFusion.h"
 
 namespace kernel_fusion {
