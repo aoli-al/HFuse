@@ -803,11 +803,11 @@ for (int index = blockIdx.x * blockDim_x_1 + threadIdx_x_1; index < (nthreads31)
 label_0:;
 if (!((threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y)>=256 && (threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y) < 768)) goto label_1;
 unsigned int blockDim_x_0;
-blockDim_x_0 = 32;
+blockDim_x_0 = 128;
 unsigned int threadIdx_x_0;
 threadIdx_x_0 = ((threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y) - 256) % 32;
 unsigned int blockDim_y_0;
-blockDim_y_0 = 16;
+blockDim_y_0 = 4;
 unsigned int threadIdx_y_0;
 threadIdx_y_0 = ((threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y) - 256) / 32 % 16;
 unsigned int blockDim_z_0;

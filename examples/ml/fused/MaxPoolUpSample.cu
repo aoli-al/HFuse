@@ -277,10 +277,9 @@ __global__ void max_pool_upsample_kernel(const int nthreads, const scalar_t* bot
     const accscalar_t rwidth,
     const bool align_corners,
     const PackedTensorAccessor<scalar_t, 4> idata,
-    PackedTensorAccessor<scalar_t, 4> odata,
-    const int max_pool_threads)
+    PackedTensorAccessor<scalar_t, 4> odata)
 {
-  if (threadIdx.x < max_pool_threads) {
+  if (threadIdx.x < 256) {
     CUDA_KERNEL_LOOP_C(index, nthreads) {
       int pw = index % pooled_width;
       int ph = (index / pooled_width) % pooled_height;
@@ -310,7 +309,7 @@ __global__ void max_pool_upsample_kernel(const int nthreads, const scalar_t* bot
       top_mask[index] = maxidx;
     }
   } else {
-    int index = threadIdx.x + blockIdx.x * blockDim.x - max_pool_threads;
+    int index = threadIdx.x + blockIdx.x * blockDim.x - 256;
 
     const int batchsize = idata.size(0);
     const int channels = idata.size(1);
@@ -476,7 +475,7 @@ void max_pool2d_upsample_fused(
         count, input_data,
         nbatch_max_pool, nInputPlane, inputHeight, inputWidth, outputHeight, outputWidth,
         kH, kW, dH, dW, padH, padW, dilationH, dilationW, output_data, indices_data,
-        num_kernels, rheight, rwidth, align_corners, idata, odata, num_threads_max_pool);
+        num_kernels, rheight, rwidth, align_corners, idata, odata);
       cudaDeviceSynchronize();
       cudaProfilerStop();
     });

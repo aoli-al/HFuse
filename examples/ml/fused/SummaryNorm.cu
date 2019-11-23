@@ -2112,16 +2112,16 @@ std::tuple<Tensor, Tensor> _histc_cuda_fused(
   //        (
   //           aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
   //   input, epsilon, 0.0, dummy_mean, dummy_invstd, mean, invstd);
-  // kernelHistogram1D_batch_norm_collect_statistics_kernel_11<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
-  // InvStd, scalar_t, scalar_t, accscalar_t, index_t> <<<10000, 1024, sharedMem, stream>>>
-  //        (
-  //           aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
-  //   input, epsilon, 0.0, dummy_mean, dummy_invstd, mean, invstd);
-  //   kernelHistogram1D_batch_norm_collect_statistics_kernel_100<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
-  // InvStd, scalar_t, scalar_t, accscalar_t, index_t> <<<10000, 512, sharedMem, stream>>>
-  //        (
-  //           aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
-  //   input, epsilon, 0.0, dummy_mean, dummy_invstd, mean, invstd);
+  kernelHistogram1D_batch_norm_collect_statistics_kernel_11<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
+  InvStd, scalar_t, scalar_t, accscalar_t, index_t> <<<10000, 1024, sharedMem, stream>>>
+         (
+            aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
+    input, epsilon, 0.0, dummy_mean, dummy_invstd, mean, invstd);
+    kernelHistogram1D_batch_norm_collect_statistics_kernel_100<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
+  InvStd, scalar_t, scalar_t, accscalar_t, index_t> <<<10000, 512, sharedMem, stream>>>
+         (
+            aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
+    input, epsilon, 0.0, dummy_mean, dummy_invstd, mean, invstd);
   //   kernelHistogram1D_batch_norm_collect_statistics_kernel_3<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
   // InvStd, scalar_t, scalar_t, accscalar_t, index_t> <<<10000, 1024, sharedMem, stream>>>
   //        (
@@ -2167,7 +2167,7 @@ std::tuple<Tensor, Tensor> hist_norm(
     AT_ERROR("HalfTensor is not supported");
   }
     printf("0\n");
-  return AT_DISPATCH_ALL_TYPES(self.scalar_type(), "histc", [&] {
+  AT_DISPATCH_ALL_TYPES(self.scalar_type(), "histc", [&] {
     printf("1\n");
     return native::_histc_cuda_fused<scalar_t, scalar_t, int32_t>(self, nbins, min.to<scalar_t>(), max.to<scalar_t>()
     , input_, 0.2

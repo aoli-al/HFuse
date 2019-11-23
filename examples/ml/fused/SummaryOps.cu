@@ -596,6 +596,25 @@ std::tuple<Tensor, Tensor> _histc_cuda_template_fused(
     static const auto getDummyOp = [] __device__(IndexType) { return 1L; };
 
   cudaProfilerStart();
+    im2col_kernel_kernelHistogram1D_0
+    <scalar_t, input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED>
+    <<<10000, 1024, sharedMem, at::cuda::getCurrentCUDAStream()>>>(
+        num_kernels,
+        input_n.data<scalar_t>(),
+        input_height,
+        input_width,
+        kernel_height,
+        kernel_width,
+        pad_height,
+        pad_width,
+        stride_height,
+        stride_width,
+        dilation_height,
+        dilation_width,
+        output_height,
+        output_width,
+        output_n.data<scalar_t>(),
+        aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp);
     im2col_kernel_kernelHistogram1D_1x
     <scalar_t, input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED>
     <<<10000, 1024, sharedMem, at::cuda::getCurrentCUDAStream()>>>(
@@ -615,25 +634,25 @@ std::tuple<Tensor, Tensor> _histc_cuda_template_fused(
         output_width,
         output_n.data<scalar_t>(),
         aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp);
-    // im2col_kernel_kernelHistogram1D_100
-    // <scalar_t, input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED>
-    // <<<10000, 1024, sharedMem, at::cuda::getCurrentCUDAStream()>>>(
-    //     num_kernels,
-    //     input_n.data<scalar_t>(),
-    //     input_height,
-    //     input_width,
-    //     kernel_height,
-    //     kernel_width,
-    //     pad_height,
-    //     pad_width,
-    //     stride_height,
-    //     stride_width,
-    //     dilation_height,
-    //     dilation_width,
-    //     output_height,
-    //     output_width,
-    //     output_n.data<scalar_t>(),
-    //     aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp);
+    im2col_kernel_kernelHistogram1D_100
+    <scalar_t, input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED>
+    <<<10000, 1024, sharedMem, at::cuda::getCurrentCUDAStream()>>>(
+        num_kernels,
+        input_n.data<scalar_t>(),
+        input_height,
+        input_width,
+        kernel_height,
+        kernel_width,
+        pad_height,
+        pad_width,
+        stride_height,
+        stride_width,
+        dilation_height,
+        dilation_width,
+        output_height,
+        output_width,
+        output_n.data<scalar_t>(),
+        aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp);
 
   cudaProfilerStop();
     AT_ASSERTM(cudaGetLastError() == cudaSuccess, "kernelHistogram1D failed");
@@ -833,16 +852,16 @@ std::tuple<Tensor, Tensor> _histc_cuda2(
     AT_ERROR("HalfTensor is not supported");
   }
     printf("0\n");
-  // AT_DISPATCH_ALL_TYPES(self.scalar_type(), "histc", [&] {
-  //   printf("1\n");
-  //   return native::_histc_cuda_template<scalar_t>(self, nbins, min.to<scalar_t>(), max.to<scalar_t>(),
-  //   input_im2col_,
-  //   kernel_size_im2col,
-  //   dilation_im2col,
-  //   pad_im2colding_im2col,
-  //   stride_im2col
-  // );
-  // });
+  AT_DISPATCH_ALL_TYPES(self.scalar_type(), "histc", [&] {
+    printf("1\n");
+    return native::_histc_cuda_template<scalar_t>(self, nbins, min.to<scalar_t>(), max.to<scalar_t>(),
+    input_im2col_,
+    kernel_size_im2col,
+    dilation_im2col,
+    pad_im2colding_im2col,
+    stride_im2col
+  );
+  });
   return AT_DISPATCH_ALL_TYPES(self.scalar_type(), "histc", [&] {
     printf("1\n");
     return native::_histc_cuda_template_fused<scalar_t>(self, nbins, min.to<scalar_t>(), max.to<scalar_t>(),

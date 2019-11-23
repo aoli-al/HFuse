@@ -747,20 +747,19 @@ std::tuple<Tensor, Tensor> _histc_cuda_template(
       printf("%d %d %d\n", count, blocks, num_threads);
       cudaProfilerStart();
             cudaDeviceSynchronize();
-      // MaxPoolForward<scalar_t, scalar_t>
-      //   <<<cuda::ATenCeilDiv(count, num_threads), num_threads, 0, at::cuda::getStreamFromPool(true)>>>(
-      //     count, input_data,
-      //     nbatch, nInputPlane, inputHeight, inputWidth, outputHeight, outputWidth,
-      //     kH, kW, dH, dW, padH, padW, dilationH, dilationW, output_data, indices_data);
-    // Launch kernel
+      MaxPoolForward<scalar_t, scalar_t>
+        <<<cuda::ATenCeilDiv(count, num_threads), num_threads, 0, at::cuda::getStreamFromPool(true)>>>(
+          count, input_data,
+          nbatch, nInputPlane, inputHeight, inputWidth, outputHeight, outputWidth,
+          kH, kW, dH, dW, padH, padW, dilationH, dilationW, output_data, indices_data);
     static const auto getDummyOp = [] __device__(IndexType) { return 1L; };
-    // kernelHistogram1D<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED>
-    //     <<<grid,
-    //       block,
-    //       sharedMem,
-    //       getStreamFromPool(true)>>>(
-    //         aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp);
-    //         cudaDeviceSynchronize();
+    kernelHistogram1D<input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED>
+        <<<grid,
+          block,
+          sharedMem,
+          getStreamFromPool(true)>>>(
+            aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp);
+            cudaDeviceSynchronize();
             kernelHistogram1D_MaxPoolForward_0
     <input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
       scalar_t, scalar_t>
@@ -773,17 +772,29 @@ std::tuple<Tensor, Tensor> _histc_cuda_template(
           nbatch, nInputPlane, inputHeight, inputWidth, outputHeight, outputWidth,
           kH, kW, dH, dW, padH, padW, dilationH, dilationW, output_data, indices_data);
             cudaDeviceSynchronize();
-    //   kernelHistogram1D_MaxPoolForward_100
-    // <input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
-    //   scalar_t, scalar_t>
-    //     <<<grid,
-    //       512,
-    //       sharedMem,
-    //       getStreamFromPool(true)>>>(
-    //         aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
-    //       count, input_data,
-    //       nbatch, nInputPlane, inputHeight, inputWidth, outputHeight, outputWidth,
-    //       kH, kW, dH, dW, padH, padW, dilationH, dilationW, output_data, indices_data);
+            kernelHistogram1D_MaxPoolForward_11
+    <input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
+      scalar_t, scalar_t>
+        <<<grid,
+          block.x + num_threads,
+          sharedMem,
+          getStreamFromPool(true)>>>(
+            aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
+          count, input_data,
+          nbatch, nInputPlane, inputHeight, inputWidth, outputHeight, outputWidth,
+          kH, kW, dH, dW, padH, padW, dilationH, dilationW, output_data, indices_data);
+            cudaDeviceSynchronize();
+      kernelHistogram1D_MaxPoolForward_100
+    <input_hist_t, input_hist_t, IndexType, 1, 2, -1, CUDAHistogramMemoryType::SHARED, decltype(getDummyOp),
+      scalar_t, scalar_t>
+        <<<grid,
+          512,
+          sharedMem,
+          getStreamFromPool(true)>>>(
+            aInfo, pInfo, bInfo, nbins, minvalue, maxvalue, totalElements, getDummyOp,
+          count, input_data,
+          nbatch, nInputPlane, inputHeight, inputWidth, outputHeight, outputWidth,
+          kH, kW, dH, dW, padH, padW, dilationH, dilationW, output_data, indices_data);
       cudaProfilerStop();
     });
 
