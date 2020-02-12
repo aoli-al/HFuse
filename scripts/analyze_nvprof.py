@@ -333,7 +333,8 @@ for o in order:
                     #     s3 += "\\textcolor{green}{%.1f} & " % r2[key+"_n"]
                     # else:
                     #     s3 += "\\textcolor{red}{%.1f} & " % r2[key+"_n"]
-                # s1 += ("%.1f" % r1[key]) + " & "
+            else:
+                s1 += ("%.1f" % r1[key]) + " & "
             continue
         v1 = m1[k]
         v2 = m2[k]

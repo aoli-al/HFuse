@@ -56,7 +56,7 @@ void KernelFuseTool::onEndOfTranslationUnit() {
     Printer.printFusedFunction(KernelFunctionMap, 100);
     FuncStream << "\n {\n";
     for (const auto &FName: Context.Order) {
-//      FuncStream << branchingStatement(Context, FName);
+      FuncStream << branchingStatement(Context, FName);
       KernelFunctionMap[FName]->getBody()->printPretty(FuncStream, nullptr, C->getPrintingPolicy());
     }
     FuncStream << "}\n";

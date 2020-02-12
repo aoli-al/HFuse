@@ -1,6 +1,3 @@
-//
-// Created by Leo Li on 2019-11-14.
-//
 
 #include "libethash-cuda/CUDAMiner.h"
 #include "libethash-cuda/ethash_cuda_miner_kernel.h"

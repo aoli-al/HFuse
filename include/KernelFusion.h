@@ -30,8 +30,11 @@ struct Context {
   std::vector<std::string> Order;
   std::map<std::string, std::pair<unsigned, unsigned>> Bounds;
   bool BaseLine;
+  bool IsBarSyncEnabled;
 
-  explicit Context(std::vector<KernelInfo> &Infos, bool BaseLine): BaseLine(BaseLine) {
+  explicit Context(std::vector<KernelInfo> &Infos, bool BaseLine,
+                   bool IsBarSyncEnabled=true): BaseLine(BaseLine),
+                                           IsBarSyncEnabled(IsBarSyncEnabled) {
     unsigned B = 0;
     for (auto &Info: Infos) {
       Kernels[Info.KernelName] = Info;

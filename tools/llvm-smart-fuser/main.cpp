@@ -18,6 +18,7 @@
 #include "ParameterCollector.h"
 #include "MacroExpand.h"
 #include "BarrierHoisting.h"
+#include "BarrierRewriter.h"
 
 #include <set>
 #include <DeclRewriter.h>
@@ -113,9 +114,20 @@ void barrierAnalyzer(tooling::CommonOptionsParser &Op, Context &C) {
     Finder.addMatcher(
         barrierMatcherFactory(hasName(K.first)), &Hoisting);
   }
-
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
+
+void barrierRewriter(tooling::CommonOptionsParser &Op, Context &C) {
+  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+  ast_matchers::MatchFinder Finder;
+  BarrierRewriter Rewriter(Tool.getReplacements(), C);
+  for (const auto &K: C.Kernels) {
+    Finder.addMatcher(
+        barrierMatcherFactory(hasName(K.first)), &Rewriter);
+  }
+  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+}
+
 
 void declRewriter(tooling::CommonOptionsParser &Op, Context &C) {
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
@@ -154,8 +166,11 @@ int main(int argc, const char** argv){
   renameParameters(Op, C);
   rewriteThreadInfo(Op, C);
   declRewriter(Op, C);
-//  if (!C.BaseLine) {
+  if (C.IsBarSyncEnabled) {
+    barrierRewriter(Op, C);
+  }
   barrierAnalyzer(Op, C);
+//  if (!C.BaseLine) {
 //  }
   fuseKernel(Op, C);
   return 0;

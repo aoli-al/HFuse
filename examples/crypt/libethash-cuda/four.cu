@@ -1,6 +1,3 @@
-////
-//// Created by Leo Li on 2019-11-14.
-////
 //#include "ethash_cuda_miner_kernel.h"
 //
 //#include "ethash_cuda_miner_kernel_globals.h"

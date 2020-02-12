@@ -1,0 +1,4263 @@
+{
+ "traceEvents": [
+  {
+   "name": "cuMemGetInfo",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775187755256,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 242179215,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429937671,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 25455,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429963998,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 4188,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429968971,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 3201,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429972969,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 2880,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429976636,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 3119,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429980544,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 3813,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429985147,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 3439,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429989370,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 2917,
+   "args": {}
+  },
+  {
+   "name": "cuDeviceGet",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775429994055,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 993,
+   "args": {}
+  },
+  {
+   "name": "cuDeviceGetCount",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776775430002634,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 247783,
+   "args": {}
+  },
+  {
+   "name": "cuCtxGetDevice",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776181778354,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 9832,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776182579068,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 69538676,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776252612041,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 707300,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadData",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776253322457,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 3967,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9End",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776253327772,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 211935303,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776465335875,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 201870,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776465539565,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1524158,
+   "args": {}
+  },
+  {
+   "name": "cuMemGetInfo",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776467065911,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1244847,
+   "args": {}
+  },
+  {
+   "name": "cu64D3D10ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776468312912,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 19069,
+   "args": {}
+  },
+  {
+   "name": "cuMemGetInfo",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776468332975,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 11360,
+   "args": {}
+  },
+  {
+   "name": "cu64D3D10ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776468345205,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 4816,
+   "args": {}
+  },
+  {
+   "name": "cuMemAllocPitch",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776468351261,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 2845343,
+   "args": {}
+  },
+  {
+   "name": "cuMemHostAlloc",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471198764,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 208219,
+   "args": {}
+  },
+  {
+   "name": "cuMemHostAlloc",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471408495,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 13703,
+   "args": {}
+  },
+  {
+   "name": "cuMemHostAlloc",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471423080,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 136719,
+   "args": {}
+  },
+  {
+   "name": "cuMemHostAlloc",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471560982,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 11410,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471576139,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 40351,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471617757,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 102803275,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776574423930,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 27374,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776574452330,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 103165044,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776677620645,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 25007,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776677646608,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101714027,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776779366045,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 34925,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776779402189,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 102016586,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776881421853,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 25448,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776881448310,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101672015,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776983125045,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 38175,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776983164323,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 100683854,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777083851798,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 27568,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777083880387,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101562255,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777185445575,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 21860,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777185468396,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101414269,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777286886874,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 35453,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777286923346,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101340415,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777388272382,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 59526,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777388333263,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101893721,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777490231592,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 30775,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777490263520,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101884711,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777592152746,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 27407,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777592181140,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101512361,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777693696177,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 20887,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777693718023,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 102227492,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777795955928,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 64515,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777796021770,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 101711643,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777897736204,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 21742,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777897758970,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 102280170,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778000048020,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 63364,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778000112587,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 100975613,
+   "args": {}
+  },
+  {
+   "name": "cuCtxCreate",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101090479,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1386,
+   "args": {}
+  },
+  {
+   "name": "cuMemHostAlloc",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101205571,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 49445,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9MapVertexBuffer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101256654,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 5228,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101263581,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 333105,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101598556,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 15225,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101615078,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 15488,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101631484,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 4746,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101638931,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 23999,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101664767,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 14903,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101680638,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 58249048,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778159933481,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 22438,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778159956895,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 40030966,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778199991389,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 18759,
+   "args": {}
+  },
+  {
+   "name": "cuCtxCreate",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778200011191,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1033,
+   "args": {}
+  },
+  {
+   "name": "cuMemHostAlloc",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778200013421,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 37463763,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237478967,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 29585,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237509622,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 12861,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237523289,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 5053,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237529358,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 9314,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237539786,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 8882,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237550941,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 19819,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237572906,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 12397,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237586257,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 52894559,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778290485320,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 23493,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778290509765,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 39509273,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778330022920,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 19348,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778330043256,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 37201975,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367246826,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 8523,
+   "args": {}
+  },
+  {
+   "name": "cuCtxCreate",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367256242,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1027,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367258570,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 24295,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367284161,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 11921,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367297109,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 78425,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367376915,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 13306,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367391142,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 5407,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367398990,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 19956,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367421341,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 16487,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367438801,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 58529547,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778425972958,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 25715,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778425999665,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 39860842,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465864831,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 20612,
+   "args": {}
+  },
+  {
+   "name": "cuCtxCreate",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465886452,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 875,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465888888,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 25923,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465915849,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 11680,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465928371,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 9112,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465938294,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 5320,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465944620,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 284334,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778466230294,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 4590,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778466237254,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 22713,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778466261673,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 12045,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778466274754,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 81887059,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778548168796,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 39327,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778548209217,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 45826390,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778594040513,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 30189,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778594071755,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 44821845,
+   "args": {}
+  },
+  {
+   "name": "cuCtxCreate",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638895519,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1214,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638898511,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 46283,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638945656,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 9921,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638956753,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 17337,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638974958,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 5295,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638981305,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 17367,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638999492,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 4918,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778639006470,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 21922,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778639030261,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 13348,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778639044524,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 36524092,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778675572266,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 21969,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778675595230,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 39670498,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778715269251,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 19240,
+   "args": {}
+  },
+  {
+   "name": "cuD3D9ResourceGetMappedPointer",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778715289449,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 38747949,
+   "args": {}
+  },
+  {
+   "name": "cuCtxCreate",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754039651,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1308,
+   "args": {}
+  },
+  {
+   "name": "cuMemHostAlloc",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754042704,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 38262,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754082286,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 29954,
+   "args": {}
+  },
+  {
+   "name": "cuModuleLoadDataEx",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754113199,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 10210,
+   "args": {}
+  },
+  {
+   "name": "cuMemcpyDtoA",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754124460,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 10624,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754136157,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 90262,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754228003,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 16170,
+   "args": {}
+  },
+  {
+   "name": "cuGraphicsSubResourceGetMappedArray",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754245136,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 4975,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754252599,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 27013,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754281552,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 12761,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754295311,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 36747017,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778791046066,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 24934,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778791072041,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 39541483,
+   "args": {}
+  },
+  {
+   "name": "cuD3D10GetDevices",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778830617165,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 20655,
+   "args": {}
+  },
+  {
+   "name": "cuStreamSynchronize",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778830638857,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 38637890,
+   "args": {}
+  },
+  {
+   "name": "cuCtxCreate",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778869278362,
+   "pid": "[23830] Process",
+   "tid": "Thread 598522432: Runtime API",
+   "dur": 1279,
+   "args": {}
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776468537685,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 2741196,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471396096,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 1952,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471414880,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 1536,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471550271,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 1568,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471565375,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 1536,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101258550,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 1472,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237481466,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 1504,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memcpy host to device [sync]",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754080120,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "MemCpy (host to device)",
+   "dur": 1472,
+   "args": {
+    "Dst": "on the device",
+    "Src": "pageable"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101620115,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1792,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237547865,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1440,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367307532,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1472,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778505932191,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1824,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778505936735,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1472,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638972730,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1568,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778638980122,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1472,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "Memset",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754138199,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Memset",
+   "dur": 1472,
+   "args": {
+    "bytes": "8"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471606847,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 102706007,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471606847,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 102706007,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471606847,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 102706007,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776574443317,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 103065909,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776574443317,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 103065909,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776574443317,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 103065909,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776677640745,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101598655,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776677640745,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101598655,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776677640745,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101598655,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776779396967,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101927389,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776779396967,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101927389,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776779396967,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101927389,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776881445763,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101534848,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776881445763,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101534848,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776881445763,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101534848,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776983163425,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 100568519,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776983163425,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 100568519,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776983163425,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 100568519,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777083881927,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101458240,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777083881927,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101458240,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777083881927,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101458240,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777185472486,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101284098,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777185472486,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101284098,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777185472486,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101284098,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777286928614,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101144675,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777286928614,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101144675,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777286928614,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101144675,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777388338343,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101772542,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777388338343,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101772542,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777388338343,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101772542,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777490254820,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101773150,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777490254820,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101773150,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777490254820,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101773150,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777592174977,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101412705,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777592174977,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101412705,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777592174977,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101412705,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777693714017,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 102055484,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777693714017,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 102055484,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777693714017,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 102055484,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777796017307,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 101614111,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777796017307,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 101614111,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777796017307,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 101614111,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777897759097,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 102090396,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777897759097,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 102090396,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777897759097,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 102090396,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778000111635,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 100870661,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778000111635,
+   "pid": "Compute",
+   "tid": "ethash_calculate_dag_item(unsigned int)",
+   "dur": 100870661,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_calculate_dag_item(unsigned int)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778000111635,
+   "pid": "Streams",
+   "tid": "Stream 30",
+   "dur": 100870661,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "78",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "30"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101667507,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 37316433,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "33"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101667507,
+   "pid": "Compute",
+   "tid": "ethash_search(Search_results volatile*, unsigned long)",
+   "dur": 37316433,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "33"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101667507,
+   "pid": "Streams",
+   "tid": "Stream 33",
+   "dur": 37316433,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "33"
+   }
+  },
+  {
+   "name": "blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778138274281,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 21560612,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "32"
+   }
+  },
+  {
+   "name": "blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778138274281,
+   "pid": "Compute",
+   "tid": "blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 21560612,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "32"
+   }
+  },
+  {
+   "name": "blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778138274281,
+   "pid": "Streams",
+   "tid": "Stream 32",
+   "dur": 21560612,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "32"
+   }
+  },
+  {
+   "name": "ethash_search2_blake2b_gpu_hash_0(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778159961420,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 39932222,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "ethash_search2_blake2b_gpu_hash_0(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778159961420,
+   "pid": "Compute",
+   "tid": "ethash_search2_blake2b_gpu_hash_0(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 39932222,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "ethash_search2_blake2b_gpu_hash_0(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778159961420,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 39932222,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "ethash_search2_blake2b_gpu_hash_100(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778200016233,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 37345458,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "ethash_search2_blake2b_gpu_hash_100(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778200016233,
+   "pid": "Compute",
+   "tid": "ethash_search2_blake2b_gpu_hash_100(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 37345458,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "ethash_search2_blake2b_gpu_hash_100(Search_results volatile*, unsigned long, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778200016233,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 37345458,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237578489,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 37400433,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "35"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237578489,
+   "pid": "Compute",
+   "tid": "ethash_search(Search_results volatile*, unsigned long)",
+   "dur": 37400433,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "35"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237578489,
+   "pid": "Streams",
+   "tid": "Stream 35",
+   "dur": 37400433,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "35"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778274311471,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 16080075,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "95",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "34"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778274311471,
+   "pid": "Compute",
+   "tid": "sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "dur": 16080075,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "95",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "34"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778274311471,
+   "pid": "Streams",
+   "tid": "Stream 34",
+   "dur": 16080075,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "95",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "34"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared_ethash_search3_0(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778290516729,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 39409474,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "144",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared_ethash_search3_0(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778290516729,
+   "pid": "Compute",
+   "tid": "sha256d_gpu_hash_shared_ethash_search3_0(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "dur": 39409474,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "144",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared_ethash_search3_0(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778290516729,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 39409474,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "144",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared_ethash_search3_100(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778330051098,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 37102643,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "144",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared_ethash_search3_100(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778330051098,
+   "pid": "Compute",
+   "tid": "sha256d_gpu_hash_shared_ethash_search3_100(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "dur": 37102643,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "144",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sha256d_gpu_hash_shared_ethash_search3_100(unsigned int, unsigned int, unsigned int*, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778330051098,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 37102643,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "144",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367430443,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 37491441,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "36"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367430443,
+   "pid": "Compute",
+   "tid": "ethash_search(Search_results volatile*, unsigned long)",
+   "dur": 37491441,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "36"
+   }
+  },
+  {
+   "name": "ethash_search(Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367430443,
+   "pid": "Streams",
+   "tid": "Stream 36",
+   "dur": 37491441,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "137",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "36"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778404143105,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 21722147,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "37"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778404143105,
+   "pid": "Compute",
+   "tid": "sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 21722147,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "37"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778404143105,
+   "pid": "Streams",
+   "tid": "Stream 37",
+   "dur": 21722147,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "37"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash_ethash_search4_0(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778425991843,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 39759135,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash_ethash_search4_0(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778425991843,
+   "pid": "Compute",
+   "tid": "sia_blake2b_gpu_hash_ethash_search4_0(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "dur": 39759135,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash_ethash_search4_0(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778425991843,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 39759135,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash_ethash_search4_100(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465879618,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 40049213,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash_ethash_search4_100(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465879618,
+   "pid": "Compute",
+   "tid": "sia_blake2b_gpu_hash_ethash_search4_100(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "dur": 40049213,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "sia_blake2b_gpu_hash_ethash_search4_100(unsigned int, unsigned int, unsigned int*, uint2, Search_results volatile*, unsigned long)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778465879618,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 40049213,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "145",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778525752879,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 22298527,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778525752879,
+   "pid": "Compute",
+   "tid": "foo::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 22298527,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778525752879,
+   "pid": "Streams",
+   "tid": "Stream 38",
+   "dur": 22298527,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778505943103,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 22008064,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "39"
+   }
+  },
+  {
+   "name": "foo::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778505943103,
+   "pid": "Compute",
+   "tid": "foo::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 22008064,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "39"
+   }
+  },
+  {
+   "name": "foo::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778505943103,
+   "pid": "Streams",
+   "tid": "Stream 39",
+   "dur": 22008064,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "39"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778548201645,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 45721236,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "16",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778548201645,
+   "pid": "Compute",
+   "tid": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 45721236,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "16",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778548201645,
+   "pid": "Streams",
+   "tid": "Stream 38",
+   "dur": 45721236,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "16",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778594065216,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 44727868,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "16",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778594065216,
+   "pid": "Compute",
+   "tid": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 44727868,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "16",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "foo::blake2b_gpu_hash_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778594065216,
+   "pid": "Streams",
+   "tid": "Stream 38",
+   "dur": 44727868,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "16",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "38"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778639025818,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 21445093,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "40"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778639025818,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 21445093,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "40"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778639025818,
+   "pid": "Streams",
+   "tid": "Stream 40",
+   "dur": 21445093,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "0",
+    "StreamID": "40"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778658777099,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 16697319,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "94",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "41"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778658777099,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "dur": 16697319,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "94",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "41"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778658777099,
+   "pid": "Streams",
+   "tid": "Stream 41",
+   "dur": 16697319,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "94",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "41"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778675592273,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 39576897,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "111",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778675592273,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "dur": 39576897,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "111",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_0(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778675592273,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 39576897,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "111",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778715286673,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 38614280,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "111",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778715286673,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "dur": 38614280,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "111",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::blake2b_gpu_hash_sha256d_gpu_hash_shared_100(unsigned int, unsigned int, unsigned int*, uint2, unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778715286673,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 38614280,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "111",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754279254,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 21489284,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "43"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754279254,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 21489284,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "43"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sia_blake2b_gpu_hash(unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754279254,
+   "pid": "Streams",
+   "tid": "Stream 43",
+   "dur": 21489284,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "64",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "8",
+    "StreamID": "43"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778774127718,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 16822598,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "95",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "42"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778774127718,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "dur": 16822598,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "95",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "42"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared(unsigned int, unsigned int, unsigned int*)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778774127718,
+   "pid": "Streams",
+   "tid": "Stream 42",
+   "dur": 16822598,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "0",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "95",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1024",
+    "StreamID": "42"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778791070571,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 39439235,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "113",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1032",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778791070571,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 39439235,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "113",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1032",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_0(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778791070571,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 39439235,
+   "args": {
+    "Block": "[256,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "113",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1032",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778830638413,
+   "pid": "[0:2] Tesla V100-SXM2-16GB",
+   "tid": "Compute",
+   "dur": 38541832,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "113",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1032",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778830638413,
+   "pid": "Compute",
+   "tid": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "dur": 38541832,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "113",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1032",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "(anonymous namespace)::sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_100(unsigned int, unsigned int, unsigned int*, unsigned int, unsigned int, unsigned int*, uint2)",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778830638413,
+   "pid": "Streams",
+   "tid": "Stream 23",
+   "dur": 38541832,
+   "args": {
+    "Block": "[128,1,1]",
+    "DynamicSharedMemory": "8",
+    "Grid": "[8192,1,1]",
+    "RegistersPerThread": "113",
+    "SharedMemoryConfig": "0",
+    "StaticSharedMemory": "1032",
+    "StreamID": "23"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776471619397,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 102799036,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776574453552,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 103161454,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776677647871,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101708326,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776779403423,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 102012283,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776881449516,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101666856,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776776983165643,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 100679861,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777083881639,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101559102,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777185469466,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101410296,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777286924665,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101333517,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777388334801,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101888722,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777490264882,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101880642,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777592182188,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101508901,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777693719018,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 102219044,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777796023639,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 101707708,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776777897760161,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 102273518,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778000114272,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 100971749,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778101681712,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 58246054,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778159957981,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 40027971,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237540847,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 6854,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778237587214,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 52891573,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778290510785,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 39506095,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778330044307,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 37198950,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367248319,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 6030,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367298007,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 75991,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778367439705,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 58526021,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778426000916,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 39857474,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778466275796,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 81882291,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778548210737,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 45822003,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778594072780,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 44818879,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778639045515,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 36521021,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778675596314,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 39667612,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778715290464,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 38743979,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754137170,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 87371,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778754296331,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 36743838,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778791073097,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 39538219,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  },
+  {
+   "name": "Context synchronize API",
+   "ph": "X",
+   "cat": "cuda",
+   "ts": 1580776778830639882,
+   "pid": "Synchronization",
+   "tid": "Synchronize",
+   "dur": 38634917,
+   "args": {
+    "CudaEventID": "-1"
+   }
+  }
+ ],
+ "displayTimeUnit": "ns",
+ "meta": {
+  "devices": [
+   {
+    "Key": 1,
+    "flags": 1,
+    "globalMemoryBandwidth": 898048000,
+    "globalMemorySize": 16945512448,
+    "constantMemorySize": 65536,
+    "l2CacheSize": 6291456,
+    "numThreadsPerWarp": 32,
+    "coreClockRate": 1530000,
+    "numMemcpyEngines": 2,
+    "numMultiprocessors": 80,
+    "maxIPC": 4,
+    "maxWarpsPerMultiprocessor": 64,
+    "maxBlocksPerMultiprocessor": 32,
+    "maxSharedMemoryPerMultiprocessor": 98304,
+    "maxRegistersPerMultiprocessor": 65536,
+    "maxRegistersPerBlock": 65536,
+    "maxSharedMemoryPerBlock": 49152,
+    "maxThreadsPerBlock": 1024,
+    "maxBlockDimX": 1024,
+    "maxBlockDimY": 1024,
+    "maxBlockDimZ": 64,
+    "maxGridDimX": 2147483647,
+    "maxGridDimY": 65535,
+    "maxGridDimZ": 65535,
+    "computeCapabilityMajor": 7,
+    "computeCapabilityMinor": 0,
+    "id": 0,
+    "eccEnabled": 1,
+    "uuid": "5unWh6XVChoaFsmfhz7WPQ==",
+    "name": 2
+   }
+  ]
+ }
+}

@@ -36,11 +36,12 @@ void KernelPrinter::printFusedFunction(KFMap &KernelFunctionMap, unsigned Idx) {
 void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsigned Idx) {
   prettyPrintAttributes(KernelFunctionMap.begin()->second);
   std::string Proto = " void ";
-//  for (auto &FName: KFContext.Order) {
-//    Proto += FName + "_";
-//  }
+  for (auto &FName: KFContext.Order) {
+    Proto += FName + "_";
+  }
+  Proto += "bar_sync";
 //  Proto += std::to_string(Idx);
-  Proto += "FUNC";
+//  Proto += "FUNC";
 
 
   PrintingPolicy SubPolicy(Policy);
