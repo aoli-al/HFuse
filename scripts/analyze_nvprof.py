@@ -57,6 +57,14 @@ order = [
     "kernelHistogram1D_batch_norm_collect_statistics_kernel_0",
     "im2col_kernel_kernelHistogram1D_1x",
     "kernelHistogram1D_upsample_bilinear2d_out_frame_0",
+
+    "kernelHistogram1D_MaxPoolForward_bar_sync",
+    "kernelHistogram1D_batch_norm_collect_statistics_kernel_bar_sync",
+    "im2col_kernel_kernelHistogram1D_bar_sync",
+    "kernelHistogram1D_upsample_bilinear2d_out_frame_bar_sync",
+    "upsample_bilinear2d_out_frame_batch_norm_collect_statistics_kernel_bar_sync",
+    "im2col_kernel_batch_norm_collect_statistics_kernel_bar_sync",
+    "MaxPoolForward_batch_norm_collect_statistics_kernel_bar_sync",
 ]
 
 kernels = {
@@ -113,6 +121,14 @@ kernels = {
     "kernelHistogram1D_batch_norm_collect_statistics_kernel_0": "Batchnorm+Hist_n",
     "im2col_kernel_kernelHistogram1D_1x": "Im2Col+Hist_n",
     "kernelHistogram1D_upsample_bilinear2d_out_frame_0": "Upsample+Hist_n",
+
+    "kernelHistogram1D_MaxPoolForward_bar_sync": "Maxpool+Hist_bar_sync",
+    "kernelHistogram1D_batch_norm_collect_statistics_kernel_bar_sync": "Batchnorm+Hist_bar_sync",
+    "im2col_kernel_kernelHistogram1D_bar_sync": "Im2Col+Hist_bar_sync",
+    "kernelHistogram1D_upsample_bilinear2d_out_frame_bar_sync": "Upsample+Hist_bar_sync",
+    "upsample_bilinear2d_out_frame_batch_norm_collect_statistics_kernel_bar_sync": "Upsample+Batchnorm_bar_sync",
+    "im2col_kernel_batch_norm_collect_statistics_kernel_bar_sync": "Batchnorm+Im2Col_bar_sync",
+    "MaxPoolForward_batch_norm_collect_statistics_kernel_bar_sync": "Maxpool+Batchnorm_bar_sync",
 }
 
 event_order = [
@@ -271,10 +287,15 @@ def generate_table_1(result):
 
 generate_table_1(fr)
 
-analyze("./data/ml-event.csv")
-analyze("./data/ml-spill-event.csv")
-analyze("./data/ml-metrics.csv")
-analyze("./data/ml-spill-metrics.csv")
+# analyze("./data/ml-event.csv")
+# analyze("./data/ml-spill-event.csv")
+# analyze("./data/ml-metrics.csv")
+# analyze("./data/ml-spill-metrics.csv")
+analyze("./data/barsync-event.csv")
+analyze("./data/barsync-metrics.csv")
+analyze("./data/barsync-spill-event.csv")
+analyze("./data/barsync-spill-metrics.csv")
+# analyze("./data/ml-spill-metrics.csv")
 analyze("./data/ethminer_event.csv")
 analyze("./data/ethminer_metrics.csv")
 analyze("./data/ethminer_spill_event.csv")
@@ -292,11 +313,11 @@ for o in order:
     s2 = ""
     s3 = ""
     key = kernels[o]
-    if "_" in key:
+    if "_" in key and "bar" not in key:
         continue
     m1 = result[key]
     m2 = result[key + "_p"]
-    naive = "Hist" in key and "+" in key
+    naive = "Hist" in key and "+" in key and "bar" not in key
     if naive:
         m3 = result[key + "_n"]
     #  for key, m in result.items():
@@ -324,8 +345,12 @@ for o in order:
                     return "\\textcolor{red}{%.1f} & " % prec
             # s2 += ("%.1f" % r2[key]) + " & "
             if "+" in key:
-                s2 += color_str(r1[key+"_s"] / r2[key] - 1)
-                s1 += color_str(r1[key+"_s"] / r1[key] - 1)
+                if "bar_sync" in key:
+                    stream_key = key[:-9] + "_s"
+                else:
+                    stream_key = key + "_s"
+                s2 += color_str(r1[stream_key] / r2[key] - 1)
+                s1 += color_str(r1[stream_key] / r1[key] - 1)
                 if naive:
                     perc = r1[key + "_s"] / r2[key + "_n"] - 1
                     s3 += color_str(perc)
