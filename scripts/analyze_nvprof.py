@@ -169,6 +169,8 @@ def find_name(kernel):
     for name in order:
         if name in kernel:
             candidate = kernels[name]
+    if "Histogram1D_batch_norm_collect_statistics_kernel_101" in kernel:
+        return False
     # if not candidate:
     #     print(kernel)
     return candidate
@@ -243,8 +245,10 @@ def analyze_execution_time(f, res):
 
 r1 = {}
 r2 = {}
-analyze_execution_time("./data/ml.json", r1)
-analyze_execution_time("./data/ml-regcap.json", r2)
+analyze_execution_time("./data/noregcap-barsync.json", r1)
+analyze_execution_time("./data/regcap-barsync.json", r2)
+# analyze_execution_time("./data/ml.json", r1)
+# analyze_execution_time("./data/ml-regcap.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
 analyze_execution_time("./data/miner.json", r1)
@@ -315,6 +319,8 @@ for o in order:
     key = kernels[o]
     if "_" in key and "bar" not in key:
         continue
+    if key not in result:
+        continue
     m1 = result[key]
     m2 = result[key + "_p"]
     naive = "Hist" in key and "+" in key and "bar" not in key
@@ -324,7 +330,7 @@ for o in order:
     d = "Pairs & "
     multirow = "3" if naive else "2"
     if "+" in key:
-        s1 += "\\multirow{" + multirow + "}{*}{{" + key + "}} & "
+        s1 += "\\multirow{" + multirow + "}{*}{{" + key.replace("_", "") + "}} & "
     else:
         s1 += "{" + key + "} & "
     s2 += " & "
@@ -349,8 +355,10 @@ for o in order:
                     stream_key = key[:-9] + "_s"
                 else:
                     stream_key = key + "_s"
-                s2 += color_str(r1[stream_key] / r2[key] - 1)
-                s1 += color_str(r1[stream_key] / r1[key] - 1)
+                # s2 += color_str(r1[stream_key] / r2[key] - 1)
+                # s1 += color_str(r1[stream_key] / r1[key] - 1)
+                s2 += color_str(r2[key]/100)
+                s1 += color_str(r1[key]/100)
                 if naive:
                     perc = r1[key + "_s"] / r2[key + "_n"] - 1
                     s3 += color_str(perc)
@@ -370,6 +378,8 @@ for o in order:
             s3 += ("%.2f" % m3[k]) + " & "
         if "+" in key and k == "issue_slot_utilization":
             [k1, k2] = key.split("+")
+            if 'bar' in k2:
+                k2 = k2[:-9]
             ek1 = result[k1]['elapsed_cycles_pm']
             ek2 = result[k2]['elapsed_cycles_pm']
             wk1 = result[k1]['issue_slot_utilization']
