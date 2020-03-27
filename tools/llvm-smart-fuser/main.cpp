@@ -11,6 +11,7 @@
 #include <llvm/IR/Module.h>
 #include <llvm/Passes/PassBuilder.h>
 #include <llvm/Support/CommandLine.h>
+#include <llvm/Support/FileSystem.h>
 
 #include "KernelFusion.h"
 #include "KernelFuseTool.h"
@@ -21,6 +22,9 @@
 #include "BarrierRewriter.h"
 
 #include <set>
+#include <utility>
+#include <fstream>
+#include <thread>
 #include <DeclRewriter.h>
 
 using namespace llvm;
@@ -86,7 +90,8 @@ void renameParameters(tooling::CommonOptionsParser &Op, const Context &Context) 
   Tool.runAndSave(tooling::newFrontendActionFactory(&Action).get());
 }
 
-void fuseKernel(tooling::CommonOptionsParser &Op, Context &Context) {
+std::vector<std::string> fuseKernel(tooling::CommonOptionsParser &Op,
+                                           Context &Context) {
   KernelFuseTool FuseTool(Context);
   ast_matchers::MatchFinder KernelFinder;
   KernelFinder.addMatcher(KernelFuseMatcher, &FuseTool);
@@ -96,6 +101,7 @@ void fuseKernel(tooling::CommonOptionsParser &Op, Context &Context) {
   }
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
   Tool.run(tooling::newFrontendActionFactory(&KernelFinder).get());
+  return FuseTool.GetResults();
 }
 
 void rewriteThreadInfo(tooling::CommonOptionsParser &Op, const Context &C) {
@@ -117,7 +123,7 @@ void barrierAnalyzer(tooling::CommonOptionsParser &Op, Context &C) {
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
 }
 
-void barrierRewriter(tooling::CommonOptionsParser &Op, Context &C) {
+bool barrierRewriter(tooling::CommonOptionsParser &Op, Context &C) {
   tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
   ast_matchers::MatchFinder Finder;
   BarrierRewriter Rewriter(Tool.getReplacements(), C);
@@ -126,6 +132,7 @@ void barrierRewriter(tooling::CommonOptionsParser &Op, Context &C) {
         barrierMatcherFactory(hasName(K.first)), &Rewriter);
   }
   applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+  return Rewriter.hasBarrier();
 }
 
 
@@ -143,36 +150,96 @@ void declRewriter(tooling::CommonOptionsParser &Op, Context &C) {
 }
 
 
-static cl::opt<std::string> Config("config", cl::desc("YAML file of the configurations of kernels."),
-                                   cl::Required, cl::cat(KernelFuseCategory));
+static std::vector<std::pair<std::vector<bool>, std::string>> Presets= {
+    std::make_pair(std::vector({true, false, false}), "vfuse"),
+    std::make_pair(std::vector({true, false, true}), "vfuse_lb"),
+    std::make_pair(std::vector({false, true, false}), "hfuse_bar_sync"),
+    std::make_pair(std::vector({false, false, false}), "hfuse"),
+    std::make_pair(std::vector({false, false, true}), "hfuse_lb"),
+    std::make_pair(std::vector({false, true, true}), "hfuse_lb_bar_sync"),
+};
+
+void Fuse(int argc, const char **argv,
+    const std::map<std::string, KernelInfo> &KernelInfo,
+    const FusionInfo &Fusion) {
+  std::string BasePath = argv[3];
+  int NArgc = argc - 2;
+  const char **NArgv = (const char **)malloc(sizeof(char *) * (NArgc));
+  NArgv[0] = argv[0];
+  for (unsigned i = 4; i < argc; i++) {
+    NArgv[i-2] = argv[i];
+  }
+
+  std::string Path = BasePath + "/" + Fusion.File;
+  std::vector<kernel_fusion::KernelInfo> Infos;
+  for (const auto KName: Fusion.Kernels) {
+    Infos.push_back(KernelInfo.at(KName));
+  }
+
+  NArgv[1] = Path.c_str();
+  tooling::CommonOptionsParser Op(NArgc, NArgv, KernelFuseCategory);
+  for (const auto &S : Op.getSourcePathList()) {
+    llvm::outs() << S << "\n";
+    llvm::sys::fs::copy_file(S, S + ".bak");
+  }
+
+  std::vector<std::string> Results;
+  for (const auto &Preset : Presets) {
+    Context C(Infos, Preset.first, Preset.second);
+    expandMacros(Op, C);
+    renameParameters(Op, C);
+    rewriteThreadInfo(Op, C);
+    declRewriter(Op, C);
+    if (C.IsBarSyncEnabled) {
+      bool HasBarrier = barrierRewriter(Op, C);
+      if (!HasBarrier) {
+        for (const auto &S : Op.getSourcePathList()) {
+          llvm::sys::fs::copy_file(S + ".bak", S);
+        }
+        continue;
+      }
+    }
+    if (!C.BaseLine) {
+      barrierAnalyzer(Op, C);
+    }
+    const auto &R = fuseKernel(Op, C);
+    Results.insert(Results.end(), R.begin(), R.end());
+    for (const auto &S : Op.getSourcePathList()) {
+      llvm::sys::fs::copy_file(S + ".bak", S);
+    }
+  }
+
+  std::string FName;
+  for (auto &K : Infos) {
+    FName += K.KernelName + "_";
+  }
+  FName += ".inc";
+  std::ofstream Of;
+  Of.open(FName);
+  for (const auto &R : Results) {
+    Of << R;
+  }
+  Of.close();
+
+}
+
 
 int main(int argc, const char** argv){
-  tooling::CommonOptionsParser Op(argc, argv, KernelFuseCategory);
 
-  ErrorOr<std::unique_ptr<MemoryBuffer>> Buffer = llvm::MemoryBuffer::getFile(Config);
-  if (!Buffer) {
-    llvm::errs() << "failed to read configs.\n";
-    return 1;
+  assert(argc >= 4);
+
+  const auto FusionInfo =
+      readYAMLInfo<std::vector<kernel_fusion::FusionInfo>>(argv[1]);
+  const auto KernelInfo =
+      readYAMLInfo<std::map<std::string, kernel_fusion::KernelInfo>>(argv[2]);
+
+  std::vector<std::thread> FusionThreads;
+
+  // We can't do multi-thread here...
+  for (const auto &Fusion: FusionInfo) {
+    std::thread T(Fuse, argc, argv, KernelInfo, Fusion);
+    T.join();
   }
-
-  llvm::yaml::Input YAML(Buffer.get()->getBuffer());
-
-  std::vector<kernel_fusion::KernelInfo> Infos;
-  YAML >> Infos;
-
-  Context C(Infos, false);
-
-  expandMacros(Op, C);
-  renameParameters(Op, C);
-  rewriteThreadInfo(Op, C);
-  declRewriter(Op, C);
-  if (C.IsBarSyncEnabled) {
-    barrierRewriter(Op, C);
-  }
-  barrierAnalyzer(Op, C);
-//  if (!C.BaseLine) {
-//  }
-  fuseKernel(Op, C);
   return 0;
 }
 

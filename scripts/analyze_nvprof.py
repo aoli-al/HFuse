@@ -251,8 +251,8 @@ analyze_execution_time("./data/regcap-barsync.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
-analyze_execution_time("./data/miner.json", r1)
-analyze_execution_time("./data/miner_regcap.json", r2)
+#  analyze_execution_time("./data/miner.json", r1)
+#  analyze_execution_time("./data/miner_regcap.json", r2)
 # analyze_execution_time("./data/ml_regcap.json", r2)
 # analyze_execution_time("./data/ml-naive.json", r2)
 
@@ -300,10 +300,10 @@ analyze("./data/barsync-metrics.csv")
 analyze("./data/barsync-spill-event.csv")
 analyze("./data/barsync-spill-metrics.csv")
 # analyze("./data/ml-spill-metrics.csv")
-analyze("./data/ethminer_event.csv")
-analyze("./data/ethminer_metrics.csv")
-analyze("./data/ethminer_spill_event.csv")
-analyze("./data/ethminer_spill_metrics.csv")
+#  analyze("./data/ethminer_event.csv")
+#  analyze("./data/ethminer_metrics.csv")
+#  analyze("./data/ethminer_spill_event.csv")
+#  analyze("./data/ethminer_spill_metrics.csv")
 # analyze("./data/ml-naive-event.csv")
 # analyze("./data/ml-naive-metric.csv")
 
@@ -346,7 +346,7 @@ for o in order:
             def color_str(prec):
                 prec *= 100
                 if prec > 0:
-                    return "\\textcolor{green}{%.1f} & " % prec
+                    return "\\textcolor{green}{%.2f} & " % prec
                 else:
                     return "\\textcolor{red}{%.1f} & " % prec
             # s2 += ("%.1f" % r2[key]) + " & "

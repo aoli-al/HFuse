@@ -1,0 +1,40 @@
+upsample_bilinear2d_out_frame:
+  KernelName: upsample_bilinear2d_out_frame
+  HasBarriers: false
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1
+  Reg: 43
+kernelHistogram1D:
+  KernelName: kernelHistogram1D
+  HasBarriers: false
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1
+  Reg: 32
+batch_norm_collect_statistics_kernel:
+  KernelName: batch_norm_collect_statistics_kernel
+  HasBarriers: false
+  BlockDim:
+    X: 32
+    Y: 16
+    Z: 1
+  Reg: 24
+im2col_kernel:
+  KernelName: im2col_kernel
+  HasBarriers: false
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1
+  Reg: 49
+MaxPoolForward:
+  KernelName: MaxPoolForward
+  HasBarriers: false
+  BlockDim:
+    X: 256
+    Y: 1
+    Z: 1
+  Reg: 24

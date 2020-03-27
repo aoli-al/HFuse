@@ -1,8 +1,13 @@
 #include "KernelPrinter.h"
 
+#include <climits>
+
 using namespace clang;
 
 namespace kernel_fusion {
+
+const unsigned RegFileSize = 64 * 1024;
+const unsigned MaxThreadNum = 2 * 1024;
 
 raw_ostream &KernelPrinter::Indent(unsigned Indentation) {
   for (unsigned i = 0; i != Indentation; ++i)
@@ -34,12 +39,26 @@ void KernelPrinter::printFusedFunction(KFMap &KernelFunctionMap, unsigned Idx) {
 }
 
 void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsigned Idx) {
-  prettyPrintAttributes(KernelFunctionMap.begin()->second);
-  std::string Proto = " void ";
+//  prettyPrintAttributes(KernelFunctionMap.begin()->second);
+  std::string Proto = " __global__ ";
+  if (KFContext.LaunchBound) {
+    unsigned MaxBlock = 0;
+    unsigned TotalThreadNum = 0;
+    for (const auto &K: KFContext.Kernels) {
+      const auto &Info = K.second;
+      MaxBlock = std::max(RegFileSize / Info.Reg / Info.BlockDim.size(),
+                          MaxBlock);
+      TotalThreadNum += Info.BlockDim.size();
+    }
+    MaxBlock = std::min(MaxBlock, MaxThreadNum / TotalThreadNum);
+    Proto += "__launch_bounds__(" + std::to_string(TotalThreadNum) + ", " +
+        std::to_string(MaxBlock) + ") ";
+  }
+  Proto += "void ";
   for (auto &FName: KFContext.Order) {
     Proto += FName + "_";
   }
-  Proto += "bar_sync";
+  Proto += "fused_kernel_" + KFContext.Name + "_" + std::to_string(Idx);
 //  Proto += std::to_string(Idx);
 //  Proto += "FUNC";
 

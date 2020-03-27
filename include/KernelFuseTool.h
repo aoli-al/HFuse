@@ -13,7 +13,10 @@ using namespace clang;
 namespace kernel_fusion {
 
 class KernelFuseTool: public BarrierAnalyzer {
+private:
+  std::vector<std::string> Results;
 public:
+  const std::vector<std::string> &GetResults() { return Results; }
   explicit KernelFuseTool(struct Context &Context) : BarrierAnalyzer(Context){}
   void onEndOfTranslationUnit() override;
 };

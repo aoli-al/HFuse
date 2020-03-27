@@ -44,16 +44,17 @@ void KernelFuseTool::onEndOfTranslationUnit() {
     for (const auto &Snippet: Fuser.getCandidates()) {
       Printer.printFusedFunction(KernelFunctionMap, Idx++);
       FuncStream << "\n {\n";
-      FuncStream.flush();
       FuncStream << Snippet;
       FuncStream << "}\n";
       FuncStream.flush();
       Candidates.push_back(FuncStr);
-      llvm::outs() << FuncStr;
+      Results.push_back(FuncStr);
+//      llvm::outs() << FuncStr;
+      llvm::outs().flush();
       FuncStr.clear();
     }
   } else {
-    Printer.printFusedFunction(KernelFunctionMap, 100);
+    Printer.printFusedFunction(KernelFunctionMap, 0);
     FuncStream << "\n {\n";
     for (const auto &FName: Context.Order) {
       FuncStream << branchingStatement(Context, FName);
@@ -62,7 +63,7 @@ void KernelFuseTool::onEndOfTranslationUnit() {
     FuncStream << "}\n";
     FuncStream.flush();
     Candidates.push_back(FuncStr);
-    llvm::outs() << FuncStr;
+    Results.push_back(FuncStr);
   }
 //  auto R = llvm::json::Value(Candidates);
 //  llvm::outs() << R;

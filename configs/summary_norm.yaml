@@ -4,9 +4,11 @@
     X: 512
     Y: 1
     Z: 1
+  Reg: 32
 - KernelName: batch_norm_collect_statistics_kernel
   HasBarriers: false
   BlockDim:
     X: 32
     Y: 16
     Z: 1
+  Reg: 24

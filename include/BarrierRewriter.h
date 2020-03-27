@@ -25,6 +25,9 @@ public:
       Context &Context): Replacements(Replacements),
                          Context(Context) {};
   void run(const MatchFinder::MatchResult &Result) override;
+  bool hasBarrier() const {
+    return BarrierIdx != 1;
+  }
 private:
   Context &Context;
   unsigned BarrierIdx = 1;

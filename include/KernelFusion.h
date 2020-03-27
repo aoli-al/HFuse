@@ -22,6 +22,12 @@ struct KernelInfo {
   std::string KernelName;
   bool HasBarriers;
   BlockDim BlockDim;
+  unsigned Reg;
+};
+
+struct FusionInfo {
+  std::string File;
+  std::vector<std::string> Kernels;
 };
 
 
@@ -31,10 +37,16 @@ struct Context {
   std::map<std::string, std::pair<unsigned, unsigned>> Bounds;
   bool BaseLine;
   bool IsBarSyncEnabled;
+  bool LaunchBound;
+  std::string Name;
 
   explicit Context(std::vector<KernelInfo> &Infos, bool BaseLine,
-                   bool IsBarSyncEnabled=true): BaseLine(BaseLine),
-                                           IsBarSyncEnabled(IsBarSyncEnabled) {
+                   bool IsBarSyncEnabled, bool LaunchBound,
+                   const std::string &Name):
+      BaseLine(BaseLine),
+      IsBarSyncEnabled(IsBarSyncEnabled),
+      LaunchBound(LaunchBound),
+      Name(Name) {
     unsigned B = 0;
     for (auto &Info: Infos) {
       Kernels[Info.KernelName] = Info;
@@ -44,6 +56,11 @@ struct Context {
         B += Info.BlockDim.size();
       }
     }
+  }
+
+  explicit Context(std::vector<KernelInfo> &Infos,
+                   const std::vector<bool> &Configs, const std::string &Name="") :
+      Context(Infos, Configs[0], Configs[1], Configs[2], Name) {
   }
 
   [[nodiscard]] bool hasKernel(const std::string &KName) const {
@@ -69,6 +86,20 @@ std::string getDeclFunctionName(const clang::ASTContext *C, const NodeT &N) {
   return "";
 }
 
+template <typename Info>
+Info readYAMLInfo(const char *Path) {
+  llvm::ErrorOr<std::unique_ptr<llvm::MemoryBuffer>> Buffer =
+      llvm::MemoryBuffer::getFile(Path);
+  Info Infos;
+  if (!Buffer) {
+    llvm::errs() << "failed to read configs.\n";
+    return std::move(Infos);
+  }
+  llvm::yaml::Input YAML(Buffer.get()->getBuffer());
+  YAML >> Infos;
+  return std::move(Infos);
+}
+
 const static std::string CurrentTid = "(threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y)";
 
 }
@@ -79,6 +110,15 @@ struct llvm::yaml::MappingTraits<kernel_fusion::KernelInfo> {
     Io.mapRequired("KernelName", Info.KernelName);
     Io.mapRequired("HasBarriers", Info.HasBarriers);
     Io.mapRequired("BlockDim", Info.BlockDim);
+    Io.mapRequired("Reg", Info.Reg);
+  }
+};
+
+template <>
+struct llvm::yaml::MappingTraits<kernel_fusion::FusionInfo> {
+  static void mapping(IO &Io, kernel_fusion::FusionInfo &Info) {
+    Io.mapRequired("File", Info.File);
+    Io.mapRequired("Kernels", Info.Kernels);
   }
 };
 
@@ -92,6 +132,7 @@ struct llvm::yaml::MappingTraits<kernel_fusion::BlockDim> {
 };
 
 
-LLVM_YAML_IS_SEQUENCE_VECTOR(kernel_fusion::KernelInfo)
+LLVM_YAML_IS_STRING_MAP(kernel_fusion::KernelInfo)
+LLVM_YAML_IS_SEQUENCE_VECTOR(kernel_fusion::FusionInfo)
 
 #endif //SMART_FUSER_INCLUDE_KERNELFUSION_H

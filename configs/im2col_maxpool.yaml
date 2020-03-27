@@ -4,9 +4,12 @@
     X: 512
     Y: 1
     Z: 1
+  Reg: 49
 - KernelName: MaxPoolForward
   HasBarriers: false
   BlockDim:
     X: 256
     Y: 1
     Z: 1
+  Reg: 24
+
