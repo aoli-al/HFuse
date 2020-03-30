@@ -21,6 +21,8 @@
 #include "BarrierHoisting.h"
 #include "BarrierRewriter.h"
 
+#include <unistd.h>
+#include <sys/wait.h>
 #include <set>
 #include <utility>
 #include <fstream>
@@ -32,127 +34,151 @@ using namespace clang;
 using namespace kernel_fusion;
 
 
-static cl::OptionCategory KernelFuseCategory("kernel-fuse options");
 
 namespace  {
 
-void applyRewrites(tooling::RefactoringTool &Tool,
-                   std::unique_ptr<tooling::FrontendActionFactory> Factory) {
-  if (auto Result =
-      Tool.run(Factory.get())) {
-    exit(Result);
+static cl::OptionCategory KernelFuseCategory("kernel-fusion option");
+
+class FuseInstance {
+private:
+  std::set<std::string> ModifiedFiles;
+  tooling::CommonOptionsParser &Op;
+  kernel_fusion::Context &Context;
+
+  void backupFile(const std::string &File) {
+    if (ModifiedFiles.find(File) == ModifiedFiles.end()) {
+      llvm::sys::fs::copy_file(File, File + ".bak");
+      ModifiedFiles.insert(File);
+    }
   }
-  IntrusiveRefCntPtr<DiagnosticOptions> DiagOpts = new DiagnosticOptions();
-  DiagnosticsEngine Diagnostics(
-      IntrusiveRefCntPtr<DiagnosticIDs>(new DiagnosticIDs()), &*DiagOpts,
-      new TextDiagnosticPrinter(llvm::errs(), &*DiagOpts), true);
-  SourceManager Sources(Diagnostics, Tool.getFiles());
+public:
+  FuseInstance(tooling::CommonOptionsParser &Op, kernel_fusion::Context &Context): Op(Op),
+                                                                                   Context(Context) {}
 
-  // Apply all replacements to a rewriter.
-  Rewriter Rewrite(Sources, LangOptions());
-  Tool.applyAllReplacements(Rewrite);
-  Rewrite.overwriteChangedFiles();
-}
-
-void expandMacros(tooling::CommonOptionsParser &Op, const Context &Context) {
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-  ast_matchers::MatchFinder Finder;
-  MacroExpand MacroExpand(Tool.getReplacements(), Context);
-  Finder.addMatcher(KernelFuseMatcher, &MacroExpand);
-  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
-}
-
-void renameParameters(tooling::CommonOptionsParser &Op, const Context &Context) {
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-
-  ParameterCollector Collector(Context);
-
-  ast_matchers::MatchFinder ParameterFinder;
-  ParameterFinder.addMatcher(ParameterMatcher, &Collector);
-  for (const auto &K: Context.Kernels) {
-    ParameterFinder.addMatcher(
-        declStmtMatcherFactory(hasName(K.first)), &Collector);
+  void recoverFiles() {
+    for (const auto &File: ModifiedFiles) {
+      llvm::sys::fs::copy_file(File + ".bak", File);
+    }
   }
-  Tool.run(tooling::newFrontendActionFactory(&ParameterFinder).get());
 
-  const std::vector<std::vector<std::string>> &USRList = Collector.USRList;
-  const std::vector<std::string> &PrevNames = Collector.ParameterList;
-  std::vector<std::string> NewNames(PrevNames.size());
+  void applyRewrites(tooling::RefactoringTool &Tool,
+                     std::unique_ptr<tooling::FrontendActionFactory> Factory) {
+    if (auto Result = Tool.run(Factory.get())) {
+      exit(Result);
+    }
+    IntrusiveRefCntPtr<DiagnosticOptions> DiagOpts = new DiagnosticOptions();
+    DiagnosticsEngine Diagnostics(
+        IntrusiveRefCntPtr<DiagnosticIDs>(new DiagnosticIDs()), &*DiagOpts,
+        new TextDiagnosticPrinter(llvm::errs(), &*DiagOpts), true);
+    SourceManager Sources(Diagnostics, Tool.getFiles());
 
-  int i = 0;
-  std::transform(PrevNames.begin(), PrevNames.end(), NewNames.begin(),
-                 [&i](std::string name) {
-                   return std::move(name + std::to_string(i++));
-                 });
-  i++;
-  tooling::RenamingAction Action(NewNames, PrevNames, USRList,
-                                 Tool.getReplacements(), false);
-  Tool.runAndSave(tooling::newFrontendActionFactory(&Action).get());
-}
-
-std::vector<std::string> fuseKernel(tooling::CommonOptionsParser &Op,
-                                           Context &Context) {
-  KernelFuseTool FuseTool(Context);
-  ast_matchers::MatchFinder KernelFinder;
-  KernelFinder.addMatcher(KernelFuseMatcher, &FuseTool);
-  for (const auto &K: Context.Kernels) {
-    KernelFinder.addMatcher(
-        barrierMatcherFactory(hasName(K.first)), &FuseTool);
+    // Apply all replacements to a rewriter.
+    Rewriter Rewrite(Sources, LangOptions());
+    for (auto R: Tool.getReplacements()) {
+      backupFile(R.first);
+    }
+    Tool.applyAllReplacements(Rewrite);
+    Rewrite.overwriteChangedFiles();
   }
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-  Tool.run(tooling::newFrontendActionFactory(&KernelFinder).get());
-  return FuseTool.GetResults();
-}
 
-void rewriteThreadInfo(tooling::CommonOptionsParser &Op, const Context &C) {
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-  ast_matchers::MatchFinder Finder;
-  ThreadInfoRewriter ThreadInfoRewriter(Tool.getReplacements(), C);
-  Finder.addMatcher(ThreadInfoMatcher, &ThreadInfoRewriter);
-  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
-}
-
-void barrierAnalyzer(tooling::CommonOptionsParser &Op, Context &C) {
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-  ast_matchers::MatchFinder Finder;
-  BarrierHoisting Hoisting(Tool.getReplacements(), C);
-  for (const auto &K: C.Kernels) {
-    Finder.addMatcher(
-        barrierMatcherFactory(hasName(K.first)), &Hoisting);
+  void expandMacros() {
+    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+    ast_matchers::MatchFinder Finder;
+    MacroExpand MacroExpand(Tool.getReplacements(), Context);
+    Finder.addMatcher(KernelFuseMatcher, &MacroExpand);
+    applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
   }
-  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
-}
 
-bool barrierRewriter(tooling::CommonOptionsParser &Op, Context &C) {
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-  ast_matchers::MatchFinder Finder;
-  BarrierRewriter Rewriter(Tool.getReplacements(), C);
-  for (const auto &K: C.Kernels) {
-    Finder.addMatcher(
-        barrierMatcherFactory(hasName(K.first)), &Rewriter);
+  void renameParameters() {
+    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+
+    ParameterCollector Collector(Context);
+
+    ast_matchers::MatchFinder ParameterFinder;
+    ParameterFinder.addMatcher(ParameterMatcher, &Collector);
+    for (const auto &K : Context.Kernels) {
+      ParameterFinder.addMatcher(declStmtMatcherFactory(hasName(K.first)),
+                                 &Collector);
+    }
+    Tool.run(tooling::newFrontendActionFactory(&ParameterFinder).get());
+
+    const std::vector<std::vector<std::string>> &USRList = Collector.USRList;
+    const std::vector<std::string> &PrevNames = Collector.ParameterList;
+    std::vector<std::string> NewNames(PrevNames.size());
+
+    int i = 0;
+    std::transform(PrevNames.begin(), PrevNames.end(), NewNames.begin(),
+                   [&i](std::string name) {
+                     return std::move(name + std::to_string(i++));
+                   });
+    i++;
+    tooling::RenamingAction Action(NewNames, PrevNames, USRList,
+                                   Tool.getReplacements(), false);
+    for (auto R: Tool.getReplacements()) {
+      backupFile(R.first);
+    }
+    Tool.runAndSave(tooling::newFrontendActionFactory(&Action).get());
   }
-  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
-  return Rewriter.hasBarrier();
-}
 
-
-void declRewriter(tooling::CommonOptionsParser &Op, Context &C) {
-  tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
-  ast_matchers::MatchFinder Finder;
-  DeclRewriter Rewriter(Tool.getReplacements(), C);
-  for (const auto &K: C.Kernels) {
-    Finder.addMatcher(
-        declStmtMatcherFactory(hasName(K.first)), &Rewriter);
+  std::vector<std::string> fuseKernel() {
+    KernelFuseTool FuseTool(Context);
+    ast_matchers::MatchFinder KernelFinder;
+    KernelFinder.addMatcher(KernelFuseMatcher, &FuseTool);
+    for (const auto &K : Context.Kernels) {
+      KernelFinder.addMatcher(barrierMatcherFactory(hasName(K.first)),
+                              &FuseTool);
+    }
+    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+    Tool.run(tooling::newFrontendActionFactory(&KernelFinder).get());
+    return FuseTool.GetResults();
   }
-  applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
-}
+
+  void rewriteThreadInfo() {
+    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+    ast_matchers::MatchFinder Finder;
+    ThreadInfoRewriter ThreadInfoRewriter(Tool.getReplacements(), Context);
+    Finder.addMatcher(ThreadInfoMatcher, &ThreadInfoRewriter);
+    applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+  }
+
+  void barrierAnalyzer() {
+    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+    ast_matchers::MatchFinder Finder;
+    BarrierHoisting Hoisting(Tool.getReplacements(), Context);
+    for (const auto &K : Context.Kernels) {
+      Finder.addMatcher(barrierMatcherFactory(hasName(K.first)), &Hoisting);
+    }
+    applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+  }
+
+  bool barrierRewriter() {
+    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+    ast_matchers::MatchFinder Finder;
+    BarrierRewriter Rewriter(Tool.getReplacements(), Context);
+    for (const auto &K : Context.Kernels) {
+      Finder.addMatcher(barrierMatcherFactory(hasName(K.first)), &Rewriter);
+    }
+    applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+    return Rewriter.hasBarrier();
+  }
+
+  void declRewriter() {
+    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+    ast_matchers::MatchFinder Finder;
+    DeclRewriter Rewriter(Tool.getReplacements(), Context);
+    for (const auto &K : Context.Kernels) {
+      Finder.addMatcher(declStmtMatcherFactory(hasName(K.first)), &Rewriter);
+    }
+    applyRewrites(Tool, tooling::newFrontendActionFactory(&Finder));
+  }
+};
 
 }
 
 
 static std::vector<std::pair<std::vector<bool>, std::string>> Presets= {
-    std::make_pair(std::vector({true, false, false}), "vfuse"),
     std::make_pair(std::vector({true, false, true}), "vfuse_lb"),
+    std::make_pair(std::vector({true, false, false}), "vfuse"),
     std::make_pair(std::vector({false, true, false}), "hfuse_bar_sync"),
     std::make_pair(std::vector({false, false, false}), "hfuse"),
     std::make_pair(std::vector({false, false, true}), "hfuse_lb"),
@@ -172,41 +198,34 @@ void Fuse(int argc, const char **argv,
 
   std::string Path = BasePath + "/" + Fusion.File;
   std::vector<kernel_fusion::KernelInfo> Infos;
-  for (const auto KName: Fusion.Kernels) {
+  for (const auto &KName: Fusion.Kernels) {
     Infos.push_back(KernelInfo.at(KName));
   }
 
   NArgv[1] = Path.c_str();
-  tooling::CommonOptionsParser Op(NArgc, NArgv, KernelFuseCategory);
-  for (const auto &S : Op.getSourcePathList()) {
-    llvm::outs() << S << "\n";
-    llvm::sys::fs::copy_file(S, S + ".bak");
-  }
-
   std::vector<std::string> Results;
+  tooling::CommonOptionsParser Op(NArgc, NArgv, KernelFuseCategory);
   for (const auto &Preset : Presets) {
     Context C(Infos, Preset.first, Preset.second);
-    expandMacros(Op, C);
-    renameParameters(Op, C);
-    rewriteThreadInfo(Op, C);
-    declRewriter(Op, C);
+
+    FuseInstance I(Op, C);
+    I.expandMacros();
+    I.renameParameters();
+    I.rewriteThreadInfo();
+    I.declRewriter();
     if (C.IsBarSyncEnabled) {
-      bool HasBarrier = barrierRewriter(Op, C);
+      bool HasBarrier = I.barrierRewriter();
       if (!HasBarrier) {
-        for (const auto &S : Op.getSourcePathList()) {
-          llvm::sys::fs::copy_file(S + ".bak", S);
-        }
+        I.recoverFiles();
         continue;
       }
     }
     if (!C.BaseLine) {
-      barrierAnalyzer(Op, C);
+      I.barrierAnalyzer();
     }
-    const auto &R = fuseKernel(Op, C);
+    const auto &R = I.fuseKernel();
     Results.insert(Results.end(), R.begin(), R.end());
-    for (const auto &S : Op.getSourcePathList()) {
-      llvm::sys::fs::copy_file(S + ".bak", S);
-    }
+    I.recoverFiles();
   }
 
   std::string FName;
@@ -233,12 +252,25 @@ int main(int argc, const char** argv){
   const auto KernelInfo =
       readYAMLInfo<std::map<std::string, kernel_fusion::KernelInfo>>(argv[2]);
 
-  std::vector<std::thread> FusionThreads;
+  std::vector<int> FusionProcesses;
 
   // We can't do multi-thread here...
   for (const auto &Fusion: FusionInfo) {
-    std::thread T(Fuse, argc, argv, KernelInfo, Fusion);
-    T.join();
+    int id = fork();
+    if (id == 0) {
+      Fuse(argc, argv, KernelInfo, Fusion);
+      break;
+    } else {
+      FusionProcesses.push_back(id);
+    }
+//    FusionThreads.push_back(
+//        std::thread(Fuse, argc, argv, KernelInfo, Fusion));
+//    FusionThreads.back().join();
+//    T.join();
+  }
+  for (auto &P: FusionProcesses) {
+    int status;
+    waitpid(P, &status, 0);
   }
   return 0;
 }

@@ -68,68 +68,25 @@ order = [
 ]
 
 kernels = {
-    "sia_blake2b_gpu_hash(": "SIA",
-    "sha256d_gpu_hash_shared(": "SHA256",
-    "ethash_search(": "Ethash",
-    "blake2b_gpu_hash(": "Blake",
-
-    "ethash_search2_blake2b_gpu_hash_0": "Ethash+Blake",
-    "sia_blake2b_gpu_hash_ethash_search4_0": "Ethash+SIA",
-    "sha256d_gpu_hash_shared_ethash_search3_0": "Ethash+SHA256",
-
-    "blake2b_gpu_hash_sia_blake2b_gpu_hash_0": "Blake+SIA",
-    "blake2b_gpu_hash_sha256d_gpu_hash_shared_0": "Blake+SHA256",
-    "sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_0":"SIA+SHA256",
-
-    "sia_blake2b_gpu_hash_ethash_search4_100": "Ethash+SIA_",
-    "ethash_search2_blake2b_gpu_hash_100": "Ethash+Blake_",
-    "sha256d_gpu_hash_shared_ethash_search3_100": "Ethash+SHA256_",
-
-    "blake2b_gpu_hash_sia_blake2b_gpu_hash_100": "Blake+SIA_",
-    "blake2b_gpu_hash_sha256d_gpu_hash_shared_100": "Blake+SHA256_",
-    "sha256d_gpu_hash_shared_sia_blake2b_gpu_hash_100": "SIA+SHA256_",
-
-    "kernelHistogram1D" : "Hist",
-    "im2col_kernel" : "Im2Col",
+    "sia_blake2b_gpu_hash": "SIA",
+    "sha256d_gpu_hash_shared": "SHA256",
+    "ethash_search": "Ethash",
+    "blake2b_gpu_hash": "Blake",
+    "kernelHistogram1D": "Hist",
+    "im2col_kernel": "Im2Col",
     "MaxPoolForward": "Maxpool",
     "batch_norm_collect_statistics_kernel": "Batchnorm",
     "upsample_bilinear2d_out_frame": "Upsample",
-
-    "im2col_kernel_MaxPoolForward_0": "Maxpool+Im2Col",
-    "im2col_kernel_batch_norm_collect_statistics_kernel_0": "Batchnorm+Im2Col",
-    "im2col_kernel_upsample_bilinear2d_out_frame_0": "Upsample+Im2Col",
-    "MaxPoolForward_batch_norm_collect_statistics_kernel_0": "Maxpool+Batchnorm",
-    "max_pool_upsample_kernel": "Maxpool+Upsample",
-    "kernelHistogram1D_MaxPoolForward_11": "Maxpool+Hist",
-    "kernelHistogram1D_batch_norm_collect_statistics_kernel_11": "Batchnorm+Hist",
-    "im2col_kernel_kernelHistogram1D_0": "Im2Col+Hist",
-    "kernelHistogram1D_upsample_bilinear2d_out_frame_11": "Upsample+Hist",
-    "upsample_bilinear2d_out_frame_batch_norm_collect_statistics_kernel_0": "Upsample+Batchnorm",
-
-    "im2col_kernel_MaxPoolForward_100": "Maxpool+Im2Col_",
-    "im2col_kernel_batch_norm_collect_statistics_kernel_100": "Batchnorm+Im2Col_",
-    "im2col_kernel_upsample_bilinear2d_out_frame_100": "Upsample+Im2Col_",
-    "MaxPoolForward_batch_norm_collect_statistics_kernel_100": "Maxpool+Batchnorm_",
-    "MaxPoolForward_upsample_bilinear2d_out_frame_100": "Maxpool+Upsample_",
-    "kernelHistogram1D_MaxPoolForward_100": "Maxpool+Hist_",
-    "kernelHistogram1D_batch_norm_collect_statistics_kernel_100": "Batchnorm+Hist_",
-    "im2col_kernel_kernelHistogram1D_100": "Im2Col+Hist_",
-    "kernelHistogram1D_upsample_bilinear2d_out_frame_100": "Upsample+Hist_",
-    "upsample_bilinear2d_out_frame_batch_norm_collect_statistics_kernel_100": "Upsample+Batchnorm_",
-
-    "kernelHistogram1D_MaxPoolForward_0": "Maxpool+Hist_n",
-    "kernelHistogram1D_batch_norm_collect_statistics_kernel_0": "Batchnorm+Hist_n",
-    "im2col_kernel_kernelHistogram1D_1x": "Im2Col+Hist_n",
-    "kernelHistogram1D_upsample_bilinear2d_out_frame_0": "Upsample+Hist_n",
-
-    "kernelHistogram1D_MaxPoolForward_bar_sync": "Maxpool+Hist_bar_sync",
-    "kernelHistogram1D_batch_norm_collect_statistics_kernel_bar_sync": "Batchnorm+Hist_bar_sync",
-    "im2col_kernel_kernelHistogram1D_bar_sync": "Im2Col+Hist_bar_sync",
-    "kernelHistogram1D_upsample_bilinear2d_out_frame_bar_sync": "Upsample+Hist_bar_sync",
-    "upsample_bilinear2d_out_frame_batch_norm_collect_statistics_kernel_bar_sync": "Upsample+Batchnorm_bar_sync",
-    "im2col_kernel_batch_norm_collect_statistics_kernel_bar_sync": "Batchnorm+Im2Col_bar_sync",
-    "MaxPoolForward_batch_norm_collect_statistics_kernel_bar_sync": "Maxpool+Batchnorm_bar_sync",
 }
+
+tags = {
+    "_lb": "LB",
+    "_bar_sync": "BS",
+    "_vfuse": "VF",
+    "_hfuse": "HF",
+    "_1": "OP"
+}
+
 
 event_order = [
     "elapsed_cycles_pm",
@@ -151,6 +108,9 @@ events = {
     "achieved_occupancy": "Occupancy",
 }
 
+TAG_ORDER = [
+    "ST", "VF", "LB+VF", "HF", "LB+HF", "HF+OP", "LB+HF+OP", "BS+HF", "LB+BS+HF"
+]
 
 ###
 # note maxpool issue slot util = 6.301776
@@ -159,27 +119,11 @@ events = {
 #      up sample clock = 2072924527
 
 ###
-
-
-
-result =  {}
-
-def find_name(kernel):
-    candidate = False
-    for name in order:
-        if name in kernel:
-            candidate = kernels[name]
-    if "Histogram1D_batch_norm_collect_statistics_kernel_101" in kernel:
-        return False
-    # if not candidate:
-    #     print(kernel)
-    return candidate
+result = {}
 
 LABEL = "Avg"
 def analyze(file_name):
     app = ""
-    if "spill" in file_name:
-        app = "_p"
     with open(file_name) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
@@ -197,56 +141,88 @@ def analyze(file_name):
                 else:
                     result[key][row['Metric Name']] = float(row[LABEL].strip("%"))
 
+def build_name(names):
+    return "+".join(sorted(names))
+
+def find_name(name):
+    fused = "_fused_kernel" in name
+    r = []
+    t = ""
+    for k, v in kernels.items():
+        if k in name:
+            if not fused:
+                return v, "ST"
+            else:
+                r.append(v)
+                # if not r:
+                #     r = v
+                # else:
+                #     r += "+" + v
+    for k, v in tags.items():
+        if k in name:
+            if not t:
+                t = v
+            else:
+                t += "+" + v
+    return build_name(r), t
 
 
-def analyze_execution_time(f, res):
+found_tags = set()
+
+def analyze_execution_time(f):
     visited_ts = set()
     time_result = {}
     time_result_count = {}
+
+    def update_time_result(key, tag, time):
+        if key not in time_result:
+            time_result[key] = {}
+            time_result_count[key] = {}
+        if tag in time_result[key]:
+            time_result[key][tag] += time
+            time_result_count[key][tag] += 1
+        else:
+            time_result[key][tag] = time
+            time_result_count[key][tag] = 1
+
     with open(f) as json_file:
         data = json.load(json_file)
-        prev = None
+        prev = []
         prev_time = None
+        last_time = None
         for event in data['traceEvents']:
             name = event['name']
-            key = find_name(name)
+            key, tag = find_name(name)
             if not key:
                 continue
             if 'ts' not in event or event['ts'] in visited_ts:
                 continue
+            found_tags.add(tag)
             visited_ts.add(event['ts'])
-            if key in time_result:
-                time_result[key] += event['dur']
-                time_result_count[key] += 1
-            else:
-                time_result[key] = event['dur']
-                time_result_count[key] = 1
-            if "+" not in key:
-                if not prev:
-                    prev = key
+            update_time_result(key, tag, event['dur'])
+            if tag == "ST":
+                prev.append(key)
+                if not prev_time:
                     prev_time = event['ts']
-                else:
-                    if prev + "+" + key in kernels.values():
-                        new_name = prev + "+" + key
-                    else:
-                        new_name = key + "+" + prev
-                    new_name += "_s"
-                    if new_name in time_result:
-                        time_result[new_name] += event['ts'] + event['dur'] - prev_time
-                        time_result_count[new_name] += 1
-                    else:
-                        time_result[new_name] = event['ts'] + event['dur'] - prev_time
-                        time_result_count[new_name] = 1
-                    prev = None
+                last_time = event['ts'] + event['dur']
+                if len(prev) == 2:
+                    update_time_result(build_name(prev), "ST", last_time - prev_time)
+                    prev = []
                     prev_time = None
+                    last_time = None
 
     for x, y in time_result.items():
-        res[x] = y / 1000000 / time_result_count[x]
+        for k, v in y.items():
 
-r1 = {}
-r2 = {}
-analyze_execution_time("./data/noregcap-barsync.json", r1)
-analyze_execution_time("./data/regcap-barsync.json", r2)
+            y[k] = v / 1000000 / time_result_count[x][k]
+    return time_result
+
+# r1 = {}
+# r2 = {}
+r1 = analyze_execution_time("./data-new/ml.json")
+print(r1)
+# exit(0)
+# analyze_execution_time("./data/regcap-barsync.json", r2)
 # analyze_execution_time("./data/ml.json", r1)
 # analyze_execution_time("./data/ml-regcap.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
@@ -256,40 +232,68 @@ analyze_execution_time("./data/regcap-barsync.json", r2)
 # analyze_execution_time("./data/ml_regcap.json", r2)
 # analyze_execution_time("./data/ml-naive.json", r2)
 
-fr = {}
-for x, y in r1.items():
-    if "_s" not in x:
-        fr[x] = min(y, r2[x])
-    else:
-        fr[x] = y
+# fr = {}
+# for x, y in r1.items():
+#     if "_s" not in x:
+#         fr[x] = min(y, r2[x])
+#     else:
+#         fr[x] = y
 
 
-print(fr)
+# print(fr)
 def generate_table_1(result):
-    s = ""
+    s = " "
     suc = 0
     su = 0
-    for kernel in kernels.values():
-        if "+" not in kernel:
-            continue
-        if "_" in kernel:
-            continue
-        if kernel not in result:
-            continue
-        prt = lambda p: "%.2f" % result[p]
-        s += "{" + kernel + "} & " + prt(kernel + "_s") \
-             + " & " + prt(kernel + "_") \
-             + " & " + prt(kernel)
-        t_su = ((result[kernel + "_s"] / result[kernel]) - 1) * 100
-        s += " & " + "%.2f" % (t_su)
-        s += "\\\\ \n \\hline\n"
-        if t_su > 0:
-            suc += 1
-            su += t_su
-    print(s)
-    print(su / suc)
+    st = 0
 
-generate_table_1(fr)
+    def color_str(time):
+        if time < st:
+            return "\\textcolor{green}{%.2f}" % time
+        elif time > st:
+            return "\\textcolor{red}{%.2f}" % time
+        else:
+            return "\\textcolor{black}{%.2f}" % time
+
+    for tag in TAG_ORDER:
+        s += "& " + tag
+    s += "\\\\ \n \\hline\n"
+    for k, v in result.items():
+        if "+" not in k:
+            continue
+        s += k + " &"
+        for tag in TAG_ORDER:
+            if tag == "ST":
+                st = v[tag]
+            if tag not in v:
+                s += " * &"
+            else:
+                s += color_str(v[tag]) + " &"
+        s = s[:-1]
+        s += "\\\\ \n \\hline\n"
+    #
+    # for kernel in kernels.values():
+    #     if "+" not in kernel:
+    #         continue
+    #     if "_" in kernel:
+    #         continue
+    #     if kernel not in result:
+    #         continue
+    #     prt = lambda p: "%.2f" % result[p]
+    #     s += "{" + kernel + "} & " + prt(kernel + "_s") \
+    #          + " & " + prt(kernel + "_") \
+    #          + " & " + prt(kernel)
+    #     t_su = ((result[kernel + "_s"] / result[kernel]) - 1) * 100
+    #     s += " & " + "%.2f" % (t_su)
+    #     s += "\\\\ \n \\hline\n"
+    #     if t_su > 0:
+    #         suc += 1
+    #         su += t_su
+    print(s)
+    # print(su / suc)
+
+generate_table_1(r1)
+exit(0)
 
 # analyze("./data/ml-event.csv")
 # analyze("./data/ml-spill-event.csv")

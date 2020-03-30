@@ -10,7 +10,7 @@ std::string branchingStatement(const Context &C, const std::string &FName, bool 
 }
 
 
-static unsigned Count = 0;
+static thread_local unsigned Count = 0;
 
 std::string generateNewVarName(const std::string &Base) {
   return Base + "_" + std::to_string(Count++);

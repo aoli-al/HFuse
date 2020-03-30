@@ -1,6 +1,7 @@
 #include "KernelPrinter.h"
 
 #include <climits>
+#include <algorithm>
 
 using namespace clang;
 
@@ -40,19 +41,27 @@ void KernelPrinter::printFusedFunction(KFMap &KernelFunctionMap, unsigned Idx) {
 
 void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsigned Idx) {
 //  prettyPrintAttributes(KernelFunctionMap.begin()->second);
-  std::string Proto = " __global__ ";
+  std::string Proto = " __global__ __launch_bounds__(";
+  unsigned MaxThread = 0;
+  unsigned MaxBlock = 0;
+  unsigned TotalThreadNum = 0;
+  for (const auto &K: KFContext.Kernels) {
+    const auto &Info = K.second;
+    MaxBlock = std::max(RegFileSize / Info.Reg / Info.BlockDim.size(),
+                        MaxBlock);
+    TotalThreadNum += Info.BlockDim.size();
+    MaxThread = std::max(Info.BlockDim.size(), MaxThread);
+  }
+  MaxBlock = std::min(MaxBlock, MaxThreadNum / TotalThreadNum);
+  if (KFContext.BaseLine) {
+    Proto += std::to_string(MaxThread) + ", ";
+  } else {
+    Proto += std::to_string(TotalThreadNum) + ", ";
+  }
   if (KFContext.LaunchBound) {
-    unsigned MaxBlock = 0;
-    unsigned TotalThreadNum = 0;
-    for (const auto &K: KFContext.Kernels) {
-      const auto &Info = K.second;
-      MaxBlock = std::max(RegFileSize / Info.Reg / Info.BlockDim.size(),
-                          MaxBlock);
-      TotalThreadNum += Info.BlockDim.size();
-    }
-    MaxBlock = std::min(MaxBlock, MaxThreadNum / TotalThreadNum);
-    Proto += "__launch_bounds__(" + std::to_string(TotalThreadNum) + ", " +
-        std::to_string(MaxBlock) + ") ";
+    Proto += std::to_string(MaxBlock) + ") ";
+  } else {
+    Proto += "0) ";
   }
   Proto += "void ";
   for (auto &FName: KFContext.Order) {

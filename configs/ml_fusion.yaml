@@ -1,7 +1,3 @@
-- File: SummaryNorm.cu
-  Kernels:
-    - kernelHistogram1D
-    - batch_norm_collect_statistics_kernel
 - File: Im2ColMaxPool.cu
   Kernels:
     - im2col_kernel
@@ -37,4 +33,8 @@
 - File: UpsampleNormalization.cu
   Kernels:
     - upsample_bilinear2d_out_frame
+    - batch_norm_collect_statistics_kernel
+- File: SummaryNorm.cu
+  Kernels:
+    - kernelHistogram1D
     - batch_norm_collect_statistics_kernel
