@@ -84,7 +84,8 @@ tags = {
     "_bar_sync": "BS",
     "_vfuse": "VF",
     "_hfuse": "HF",
-    "_1": "OP"
+    "idx_1": "OP",
+    "_imba": "PP",
 }
 
 
@@ -217,6 +218,7 @@ def analyze_execution_time(f):
             y[k] = v / 1000000 / time_result_count[x][k]
     return time_result
 
+print(found_tags)
 # r1 = {}
 # r2 = {}
 r1 = analyze_execution_time("./data-new/ml-volta.json")
