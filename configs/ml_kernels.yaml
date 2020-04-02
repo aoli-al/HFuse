@@ -6,6 +6,7 @@ upsample_bilinear2d_out_frame:
     Y: 1
     Z: 1
   Reg: 43
+  ExecTime: 0.84638515
 kernelHistogram1D:
   KernelName: kernelHistogram1D
   HasBarriers: false
@@ -14,6 +15,7 @@ kernelHistogram1D:
     Y: 1
     Z: 1
   Reg: 32
+  ExecTime: 0.265113775
 batch_norm_collect_statistics_kernel:
   KernelName: batch_norm_collect_statistics_kernel
   HasBarriers: false
@@ -22,6 +24,7 @@ batch_norm_collect_statistics_kernel:
     Y: 16
     Z: 1
   Reg: 24
+  ExecTime: 1.012830175
 im2col_kernel:
   KernelName: im2col_kernel
   HasBarriers: false
@@ -30,6 +33,7 @@ im2col_kernel:
     Y: 1
     Z: 1
   Reg: 49
+  ExecTime: 0.6073299249999999
 MaxPoolForward:
   KernelName: MaxPoolForward
   HasBarriers: false
@@ -38,3 +42,4 @@ MaxPoolForward:
     Y: 1
     Z: 1
   Reg: 24
+  ExecTime: 0.8674716

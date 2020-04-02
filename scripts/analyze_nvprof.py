@@ -219,8 +219,8 @@ def analyze_execution_time(f):
 
 # r1 = {}
 # r2 = {}
-r1 = analyze_execution_time("./data-new/ml.json")
-print(r1)
+r1 = analyze_execution_time("./data-new/ml-volta.json")
+r2 = analyze_execution_time("./data-new/ml-pascal.json")
 # exit(0)
 # analyze_execution_time("./data/regcap-barsync.json", r2)
 # analyze_execution_time("./data/ml.json", r1)
@@ -241,10 +241,9 @@ print(r1)
 
 
 # print(fr)
+
 def generate_table_1(result):
     s = " "
-    suc = 0
-    su = 0
     st = 0
 
     def color_str(time):
@@ -254,12 +253,13 @@ def generate_table_1(result):
             return "\\textcolor{red}{%.2f}" % time
         else:
             return "\\textcolor{black}{%.2f}" % time
-
     for tag in TAG_ORDER:
         s += "& " + tag
     s += "\\\\ \n \\hline\n"
     for k, v in result.items():
         if "+" not in k:
+            print(k)
+            print(v)
             continue
         s += k + " &"
         for tag in TAG_ORDER:
@@ -271,28 +271,11 @@ def generate_table_1(result):
                 s += color_str(v[tag]) + " &"
         s = s[:-1]
         s += "\\\\ \n \\hline\n"
-    #
-    # for kernel in kernels.values():
-    #     if "+" not in kernel:
-    #         continue
-    #     if "_" in kernel:
-    #         continue
-    #     if kernel not in result:
-    #         continue
-    #     prt = lambda p: "%.2f" % result[p]
-    #     s += "{" + kernel + "} & " + prt(kernel + "_s") \
-    #          + " & " + prt(kernel + "_") \
-    #          + " & " + prt(kernel)
-    #     t_su = ((result[kernel + "_s"] / result[kernel]) - 1) * 100
-    #     s += " & " + "%.2f" % (t_su)
-    #     s += "\\\\ \n \\hline\n"
-    #     if t_su > 0:
-    #         suc += 1
-    #         su += t_su
     print(s)
     # print(su / suc)
 
 generate_table_1(r1)
+generate_table_1(r2)
 exit(0)
 
 # analyze("./data/ml-event.csv")

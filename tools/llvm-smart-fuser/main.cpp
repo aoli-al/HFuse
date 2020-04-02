@@ -177,12 +177,16 @@ public:
 
 
 static std::vector<std::pair<std::vector<bool>, std::string>> Presets= {
-    std::make_pair(std::vector({true, false, true}), "vfuse_lb"),
-    std::make_pair(std::vector({true, false, false}), "vfuse"),
-    std::make_pair(std::vector({false, true, false}), "hfuse_bar_sync"),
-    std::make_pair(std::vector({false, false, false}), "hfuse"),
-    std::make_pair(std::vector({false, false, true}), "hfuse_lb"),
-    std::make_pair(std::vector({false, true, true}), "hfuse_lb_bar_sync"),
+    std::make_pair(std::vector({true, false, true, false}), "vfuse_lb"),
+    std::make_pair(std::vector({true, false, false, false}), "vfuse"),
+    std::make_pair(std::vector({false, true, false, false}), "hfuse_bar_sync"),
+    std::make_pair(std::vector({false, false, false, false}), "hfuse"),
+    std::make_pair(std::vector({false, false, true, false}), "hfuse_lb"),
+    std::make_pair(std::vector({false, true, true, false}), "hfuse_lb_bar_sync"),
+    std::make_pair(std::vector({false, true, false, true}), "hfuse_bar_sync_imba"),
+    std::make_pair(std::vector({false, false, false, true}), "hfuse_imba"),
+    std::make_pair(std::vector({false, false, true, true}), "hfuse_lb_imba"),
+    std::make_pair(std::vector({false, true, true, true}), "hfuse_lb_bar_sync_imba"),
 };
 
 void Fuse(int argc, const char **argv,

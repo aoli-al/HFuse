@@ -23,6 +23,7 @@ struct KernelInfo {
   bool HasBarriers;
   BlockDim BlockDim;
   unsigned Reg;
+  double ExecTime;
 };
 
 struct FusionInfo {
@@ -38,17 +39,37 @@ struct Context {
   bool BaseLine;
   bool IsBarSyncEnabled;
   bool LaunchBound;
+  bool ImBalancedThread;
   std::string Name;
 
-  explicit Context(std::vector<KernelInfo> &Infos, bool BaseLine,
+  explicit Context(const std::vector<KernelInfo> &Infos, bool BaseLine,
                    bool IsBarSyncEnabled, bool LaunchBound,
-                   const std::string &Name):
+                   bool ImBalancedThread, std::string Name):
       BaseLine(BaseLine),
       IsBarSyncEnabled(IsBarSyncEnabled),
       LaunchBound(LaunchBound),
-      Name(Name) {
+      ImBalancedThread(ImBalancedThread),
+      Name(std::move(Name)) {
     unsigned B = 0;
+    double TotalTime = 0.;
+    unsigned TotalThread = 0;
     for (auto &Info: Infos) {
+      TotalTime += Info.ExecTime;
+      TotalThread += Info.BlockDim.size();
+    }
+    unsigned AllocatedThreads = 0;
+    for (unsigned I = 0; I < Infos.size(); I++) {
+      auto Info = Infos[I];
+      if (ImBalancedThread) {
+        unsigned Thread = 0;
+        if (I == Infos.size() - 1) {
+          Thread = TotalThread - AllocatedThreads;
+        } else {
+          Thread = int(Info.ExecTime / TotalTime * TotalThread / 32) * 32;
+          AllocatedThreads += Thread;
+        }
+        Info.BlockDim.X = Thread / Info.BlockDim.Y;
+      }
       Kernels[Info.KernelName] = Info;
       Order.push_back(Info.KernelName);
       Bounds[Info.KernelName] = std::make_pair(B, B + Info.BlockDim.size());
@@ -58,9 +79,10 @@ struct Context {
     }
   }
 
-  explicit Context(std::vector<KernelInfo> &Infos,
+  explicit Context(const std::vector<KernelInfo> &Infos,
                    const std::vector<bool> &Configs, const std::string &Name="") :
-      Context(Infos, Configs[0], Configs[1], Configs[2], Name) {
+      Context(Infos,
+              Configs[0], Configs[1], Configs[2], Configs[3], Name) {
   }
 
   [[nodiscard]] bool hasKernel(const std::string &KName) const {
@@ -111,6 +133,7 @@ struct llvm::yaml::MappingTraits<kernel_fusion::KernelInfo> {
     Io.mapRequired("HasBarriers", Info.HasBarriers);
     Io.mapRequired("BlockDim", Info.BlockDim);
     Io.mapRequired("Reg", Info.Reg);
+    Io.mapOptional("ExecTime", Info.ExecTime, 0);
   }
 };
 
