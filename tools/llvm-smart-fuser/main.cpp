@@ -27,6 +27,7 @@
 #include <utility>
 #include <fstream>
 #include <thread>
+#include <algorithm>
 #include <DeclRewriter.h>
 
 using namespace llvm;
@@ -211,6 +212,13 @@ void Fuse(int argc, const char **argv,
   tooling::CommonOptionsParser Op(NArgc, NArgv, KernelFuseCategory);
   for (const auto &Preset : Presets) {
     Context C(Infos, Preset.first, Preset.second);
+    if (C.ImBalancedThread) {
+      if (std::any_of(C.Kernels.begin(), C.Kernels.end(), [](auto I) {
+        return I.second.ExecTime < 0;
+      })) {
+        continue;
+      }
+    }
 
     FuseInstance I(Op, C);
     I.expandMacros();

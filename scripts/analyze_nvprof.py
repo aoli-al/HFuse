@@ -110,7 +110,9 @@ events = {
 }
 
 TAG_ORDER = [
-    "ST", "VF", "LB+VF", "HF", "LB+HF", "HF+OP", "LB+HF+OP", "BS+HF", "LB+BS+HF"
+    # "ST", "VF", "LB+VF", "HF", "LB+HF", "HF+OP", "LB+HF+OP", "BS+HF", "LB+BS+HF",
+    "HF+PP", "HF+OP+PP",
+    "LB+HF+PP", "LB+BS+HF+PP", "BS+HF+PP", "LB+HF+OP+PP"
 ]
 
 ###
@@ -218,11 +220,11 @@ def analyze_execution_time(f):
             y[k] = v / 1000000 / time_result_count[x][k]
     return time_result
 
-print(found_tags)
 # r1 = {}
 # r2 = {}
 r1 = analyze_execution_time("./data-new/ml-volta.json")
 r2 = analyze_execution_time("./data-new/ml-pascal.json")
+print(found_tags)
 # exit(0)
 # analyze_execution_time("./data/regcap-barsync.json", r2)
 # analyze_execution_time("./data/ml.json", r1)
@@ -264,9 +266,10 @@ def generate_table_1(result):
             print(v)
             continue
         s += k + " &"
+        st = v["ST"]
         for tag in TAG_ORDER:
-            if tag == "ST":
-                st = v[tag]
+            # if tag == "ST":
+            #     st = v[tag]
             if tag not in v:
                 s += " * &"
             else:

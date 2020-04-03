@@ -33,7 +33,6 @@ im2col_kernel:
     Y: 1
     Z: 1
   Reg: 49
-  ExecTime: 0.6073299249999999
 MaxPoolForward:
   KernelName: MaxPoolForward
   HasBarriers: false

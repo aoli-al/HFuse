@@ -133,7 +133,7 @@ struct llvm::yaml::MappingTraits<kernel_fusion::KernelInfo> {
     Io.mapRequired("HasBarriers", Info.HasBarriers);
     Io.mapRequired("BlockDim", Info.BlockDim);
     Io.mapRequired("Reg", Info.Reg);
-    Io.mapOptional("ExecTime", Info.ExecTime, 0);
+    Io.mapOptional("ExecTime", Info.ExecTime, -1);
   }
 };
 
