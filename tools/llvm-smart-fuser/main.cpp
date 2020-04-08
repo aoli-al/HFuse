@@ -273,6 +273,8 @@ int main(int argc, const char** argv){
       Fuse(argc, argv, KernelInfo, Fusion);
       break;
     } else {
+      int status;
+      waitpid(id, &status, 0);
       FusionProcesses.push_back(id);
     }
 //    FusionThreads.push_back(

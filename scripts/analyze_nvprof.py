@@ -110,9 +110,8 @@ events = {
 }
 
 TAG_ORDER = [
-    # "ST", "VF", "LB+VF", "HF", "LB+HF", "HF+OP", "LB+HF+OP", "BS+HF", "LB+BS+HF",
-    "HF+PP", "HF+OP+PP",
-    "LB+HF+PP", "LB+BS+HF+PP", "BS+HF+PP", "LB+HF+OP+PP"
+    "ST", "VF", "LB+VF", "HF", "LB+HF", "HF+OP", "LB+HF+OP", "BS+HF", "LB+BS+HF",
+    # "HF+PP", "HF+OP+PP", "LB+HF+PP", "LB+BS+HF+PP", "BS+HF+PP", "LB+HF+OP+PP"
 ]
 
 ###
@@ -125,24 +124,6 @@ TAG_ORDER = [
 result = {}
 
 LABEL = "Avg"
-def analyze(file_name):
-    app = ""
-    with open(file_name) as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            key = find_name(row['Kernel'])
-            if not key:
-                continue
-            key += app
-            if key not in result:
-                result[key] = {}
-            if 'event' in file_name:
-                result[key][row['Event Name']] = float(row[LABEL].strip("%"))
-            else:
-                if row['Metric Name'] == "achieved_occupancy":
-                    result[key][row['Metric Name']] = float(row[LABEL].strip("%")) * 100
-                else:
-                    result[key][row['Metric Name']] = float(row[LABEL].strip("%"))
 
 def build_name(names):
     return "+".join(sorted(names))
@@ -169,6 +150,25 @@ def find_name(name):
                 t += "+" + v
     return build_name(r), t
 
+def analyze(file_name, result):
+    with open(file_name) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            key, tag = find_name(row['Kernel'])
+            if not key:
+                continue
+            # key += app
+            if key not in result:
+                result[key] = {}
+            if tag not in result[key]:
+                result[key][tag] = {}
+            if 'event' in file_name:
+                result[key][tag][row['Event Name']] = float(row[LABEL].strip("%"))
+            else:
+                if row['Metric Name'] == "achieved_occupancy":
+                    result[key][tag][row['Metric Name']] = float(row[LABEL].strip("%")) * 100
+                else:
+                    result[key][tag][row['Metric Name']] = float(row[LABEL].strip("%"))
 
 found_tags = set()
 
@@ -281,16 +281,86 @@ def generate_table_1(result):
 
 generate_table_1(r1)
 generate_table_1(r2)
-exit(0)
 
+
+def generate_table_3(extime, metrics):
+    def color_str(prec):
+        prec *= 100
+        if prec > 0:
+            return "\\textcolor{green}{%.1f} &" % prec
+        else:
+            return "\\textcolor{red}{%.1f} &" % prec
+    s = ""
+    for k, v in metrics.items():
+        if "+" in k:
+            continue
+        s += "\\hline\n"
+        tag = "ST"
+        tag_order = ["ST"]
+        s += k + " &"
+        s += "ST" + " &"
+        # speed = extime[k]["ST"] / extime[k][tag] - 1
+        s += "%.2f &" % extime[k]["ST"]
+        s += "%.2f &" % v[tag]["issue_slot_utilization"]
+        s += " &"
+        s += "%.1f & %.1f \\\\\n" % (v[tag]["stall_memory_dependency"], v[tag]["achieved_occupancy"])
+    print(s)
+
+def generate_table_2(extime, metrics):
+    def color_str(t1, t2):
+        # prec *= 100
+        if t2 < t1:
+            return "\\textcolor{green}{%.2f} &" % t2
+        else:
+            return "\\textcolor{red}{%.2f} &" % t2
+    s = ""
+    for k, v in metrics.items():
+        if "+" not in k:
+            continue
+        s += "\\hline\n"
+        tag_order = list(filter(lambda x: x in v.keys() and x != "ST" and "VF" not in x, TAG_ORDER))
+        s += "\\multirow{" + str(len(tag_order)) + "}{*}{" + k + "} &"
+        native = False
+        for tag in tag_order:
+            if native:
+                s += "\\cline{2-4} \\cline{6-7}\n"
+                s += " &"
+            s += tag + " &"
+            # speed = extime[k]["ST"], extime[k][tag] - 1
+            s += color_str(extime[k]["ST"], extime[k][tag])
+            s += "%.2f &" % v[tag]["issue_slot_utilization"]
+            if not native:
+                kernels = k.split('+')
+                total_time = 0
+                total_util = 0
+                for kn in kernels:
+                    ec = metrics[kn]['ST']['elapsed_cycles_pm']
+                    isu = metrics[kn]['ST']['issue_slot_utilization']
+                    total_util += ec * isu
+                    total_time += ec
+                s += "\\multirow{" + str(len(tag_order)) + "}{*}{%.2f} &" % (total_util / total_time)
+                native = True
+            else:
+                s += " &"
+            s += "%.1f & %.1f \\\\\n" % (v[tag]["stall_memory_dependency"], v[tag]["achieved_occupancy"])
+    print(s)
+        # for tag, value in v.items():
+        #     pass
 # analyze("./data/ml-event.csv")
 # analyze("./data/ml-spill-event.csv")
 # analyze("./data/ml-metrics.csv")
 # analyze("./data/ml-spill-metrics.csv")
-analyze("./data/barsync-event.csv")
-analyze("./data/barsync-metrics.csv")
-analyze("./data/barsync-spill-event.csv")
-analyze("./data/barsync-spill-metrics.csv")
+m1 = {}
+analyze("./data-new/ml-events.csv", m1)
+analyze("./data-new/ml-metrics.csv", m1)
+
+generate_table_2(r1, m1)
+generate_table_3(r1, m1)
+
+exit(0)
+r2 = {}
+# analyze("./data/barsync-spill-event.csv", r2)
+# analyze("./data/barsync-spill-metrics.csv", r2)
 # analyze("./data/ml-spill-metrics.csv")
 #  analyze("./data/ethminer_event.csv")
 #  analyze("./data/ethminer_metrics.csv")
