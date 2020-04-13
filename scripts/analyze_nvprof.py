@@ -1,6 +1,8 @@
 import csv
 import sys
 import json
+import matplotlib.pyplot as plt
+import numpy as np
 
 order = [
     "sha256d_gpu_hash_shared(",
@@ -176,23 +178,28 @@ def analyze_execution_time(f):
     visited_ts = set()
     time_result = {}
     time_result_count = {}
+    time_result_separate = {}
 
     def update_time_result(key, tag, time):
         if key not in time_result:
             time_result[key] = {}
             time_result_count[key] = {}
+            time_result_separate[key] = {}
         if tag in time_result[key]:
             time_result[key][tag] += time
             time_result_count[key][tag] += 1
+            time_result_separate[key][tag].append(time)
         else:
             time_result[key][tag] = time
             time_result_count[key][tag] = 1
+            time_result_separate[key][tag] = [time]
 
     with open(f) as json_file:
         data = json.load(json_file)
         prev = []
         prev_time = None
         last_time = None
+        prev_dur = None
         for event in data['traceEvents']:
             name = event['name']
             key, tag = find_name(name)
@@ -207,9 +214,20 @@ def analyze_execution_time(f):
                 prev.append(key)
                 if not prev_time:
                     prev_time = event['ts']
+                    prev_dur = event['dur']
                 last_time = event['ts'] + event['dur']
                 if len(prev) == 2:
-                    update_time_result(build_name(prev), "ST", last_time - prev_time)
+                    name = build_name(prev)
+                    update_time_result(name, "ST", last_time - prev_time)
+                    update_time_result(name, "RA", prev_dur / event['dur'] if prev[0] < prev[1] else event['dur'] / prev_dur )
+                    if prev[0] not in time_result_separate[name]:
+                        time_result_separate[name][prev[0]] = (99999999999, -9999999)
+                        time_result_separate[name][prev[1]] = (99999999999, -9999999)
+                    
+                    time_result_separate[name][prev[0]] = (min(time_result_separate[name][prev[0]][0], prev_dur), 
+                                                           max(time_result_separate[name][prev[0]][1], prev_dur))
+                    time_result_separate[name][prev[1]] = (min(time_result_separate[name][prev[1]][0], event['dur']), 
+                                                           max(time_result_separate[name][prev[1]][1], event['dur']))
                     prev = []
                     prev_time = None
                     last_time = None
@@ -218,12 +236,12 @@ def analyze_execution_time(f):
         for k, v in y.items():
 
             y[k] = v / 1000000 / time_result_count[x][k]
-    return time_result
+    return time_result, time_result_separate
 
 # r1 = {}
 # r2 = {}
-r1 = analyze_execution_time("./data-new/ml-volta.json")
-r2 = analyze_execution_time("./data-new/ml-pascal.json")
+r1, r1_s = analyze_execution_time("./data-new/ml-volta-chart.json")
+#  r2 = analyze_execution_time("./data-new/ml-pascal.json")
 print(found_tags)
 # exit(0)
 # analyze_execution_time("./data/regcap-barsync.json", r2)
@@ -245,6 +263,28 @@ print(found_tags)
 
 
 # print(fr)
+
+def build_graph(result):
+    for k, v in result.items():
+        if "+" not in k:
+            continue
+        plt.figure()
+        ks = sorted(k.split('+'))
+        if v[ks[0]][1] - v[ks[0]][0] > v[ks[1]][1] - v[ks[1]][0]:
+            ks[0] = "*" + ks[0] + "*"
+        else:
+            ks[1] = "*" + ks[1] + "*"
+        for tag in TAG_ORDER:
+            if tag not in v or tag == "ST":
+                continue
+            a = np.array(v["ST"]) / np.array(v[tag]) 
+            a -= 1
+            plt.plot(v['RA'], a, '.', label=tag)
+        plt.legend()
+        plt.xlabel("ratio: " + ":".join(ks))
+        plt.ylabel("speed up")
+        plt.title(k)
+        plt.show()
 
 def generate_table_1(result):
     s = " "
@@ -280,7 +320,8 @@ def generate_table_1(result):
     # print(su / suc)
 
 generate_table_1(r1)
-generate_table_1(r2)
+build_graph(r1_s)
+#  generate_table_1(r2)
 
 
 def generate_table_3(extime, metrics):
