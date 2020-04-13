@@ -284,7 +284,8 @@ def build_graph(result):
         plt.xlabel("ratio: " + ":".join(ks))
         plt.ylabel("speed up")
         plt.title(k)
-        plt.show()
+        plt.savefig(k+'.png', quality=100, figsize=(1280, 960), dpi=400)
+        # plt.show()
 
 def generate_table_1(result):
     s = " "
