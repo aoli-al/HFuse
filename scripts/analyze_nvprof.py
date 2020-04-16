@@ -272,6 +272,18 @@ volta_selection = {
     "Im2Col+Upsample": ["HF", "VF"],
     "Maxpool+Upsample": ["LB+HF", "VF"]
 }
+
+plot_shape = {
+    "VFuse": {
+        "Pascal": "xb",
+        "Volta": "*g",
+    },
+
+    "HFuse": {
+        "Pascal": "+r",
+        "Volta": ".y",
+    },
+}
 # r2 = {}
 analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, ["Batchnorm+Im2Col"])
 analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
@@ -339,6 +351,7 @@ def build_graph(result, selection, result_volta, selection_volta):
                 a = np.array(st) / np.array(get_average(res[tag]))
                 a -= 1
                 lab = "HFuse" if "VF" not in tag else "VFuse"
+                fmt = plot_shape[lab][name]
                 lab += "(" + name + ")"
                 arr1inds = ra.argsort()
                 sorted_arr1 = ra[arr1inds[::-1]]
@@ -346,7 +359,7 @@ def build_graph(result, selection, result_volta, selection_volta):
                 range_arr = (sorted_arr1 <= range_max) & (sorted_arr1 >= range_min)
                 # lab = tag
                 # sorted_arr2 = arr2[arr1inds[::-1]]
-                plt.plot(sorted_arr1[range_arr], a[range_arr], label=lab)
+                plt.plot(sorted_arr1[range_arr], a[range_arr], fmt, label=lab, markersize=5)
             check(v, selection, vst, vra, "Pascal")
             check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
         plt.legend()
