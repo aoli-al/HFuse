@@ -126,6 +126,7 @@ TAG_ORDER = [
 result = {}
 
 LABEL = "Avg"
+ITERS = 5
 
 def build_name(names):
     return "+".join(sorted(names))
@@ -174,24 +175,27 @@ def analyze(file_name, result):
 
 found_tags = set()
 
-def analyze_execution_time(f):
+def analyze_execution_time(f, time_result, time_result_separate, ignore):
     visited_ts = set()
-    time_result = {}
+    # time_result = {}
     time_result_count = {}
-    time_result_separate = {}
+    # time_result_separate = {}
 
     def update_time_result(key, tag, time):
+        if key not in time_result_count:
+            time_result_count[key] = {}
+        if tag not in time_result_count[key]:
+            time_result_count[key][tag] = 1
+        else:
+            time_result_count[key][tag] += 1
         if key not in time_result:
             time_result[key] = {}
-            time_result_count[key] = {}
             time_result_separate[key] = {}
         if tag in time_result[key]:
             time_result[key][tag] += time
-            time_result_count[key][tag] += 1
             time_result_separate[key][tag].append(time)
         else:
             time_result[key][tag] = time
-            time_result_count[key][tag] = 1
             time_result_separate[key][tag] = [time]
 
     with open(f) as json_file:
@@ -232,15 +236,49 @@ def analyze_execution_time(f):
                     prev_time = None
                     last_time = None
 
-    for x, y in time_result.items():
+    for x, y in time_result_count.items():
         for k, v in y.items():
-
-            y[k] = v / 1000000 / time_result_count[x][k]
+            time_result[x][k] = time_result[x][k] / 1000000 / v
+    for k in ignore:
+        del time_result[k]
+        del time_result_separate[k]
     return time_result, time_result_separate
 
-# r1 = {}
+r1 = {}
+r1_s = {}
+v1 = {}
+v1_s = {}
+pascal_selection = {
+    "Batchnorm+Upsample": ["LB+BS+HF", "LB+VF"],
+    "Hist+Im2Col": ["LB+BS+HF", "LB+VF"],
+    "Hist+Maxpool": ["LB+BS+HF", "LB+VF"],
+    "Batchnorm+Hist": ["LB+BS+HF", "LB+VF"],
+    "Hist+Upsample": ["LB+BS+HF", "VF"],
+    "Batchnorm+Im2Col": ["LB+BS+HF", "LB+VF"],
+    "Im2Col+Maxpool": ["LB+HF", "LB+VF"],
+    "Batchnorm+Maxpool": ["LB+VF", "LB+BS+HF"],
+    "Im2Col+Upsample": ["VF", "HF"],
+    "Maxpool+Upsample": ["LB+HF", "LB+VF"]
+}
+volta_selection = {
+    "Batchnorm+Upsample": ["LB+BS+HF", "LB+VF"],
+    "Hist+Im2Col": ["LB+VF", "LB+BS+HF"],
+    "Hist+Maxpool": ["BS+HF", "LB+VF"],
+    "Batchnorm+Hist": ["LB+BS+HF", "VF"],
+    "Hist+Upsample": ["LB+BS+HF", "LB+VF"],
+    "Batchnorm+Im2Col": ["LB+BS+HF", "LB+VF"],
+    "Im2Col+Maxpool": ["VF", "LB+HF"], 
+    "Batchnorm+Maxpool": ["LB+BS+HF", "VF"],
+    "Im2Col+Upsample": ["HF", "VF"],
+    "Maxpool+Upsample": ["LB+HF", "VF"]
+}
 # r2 = {}
-r1, r1_s = analyze_execution_time("./data-new/ml-volta-chart.json")
+analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, ["Batchnorm+Im2Col"])
+analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
+analyze_execution_time("./data-new/ml-volta-chart-1.json", v1, v1_s, ['Im2Col+Upsample'])
+analyze_execution_time("./data-new/ml-volta-chart-2.json", v1, v1_s, [])
+# del r1['']
+# del r1_s['']
 #  r2 = analyze_execution_time("./data-new/ml-pascal.json")
 print(found_tags)
 # exit(0)
@@ -264,22 +302,53 @@ print(found_tags)
 
 # print(fr)
 
-def build_graph(result):
+def build_graph(result, selection, result_volta, selection_volta):
+    def get_average(data):
+        data = np.split(np.array(data), ITERS)
+        return np.asarray(np.matrix(data).mean(0))[0]
+
     for k, v in result.items():
+        print(k)
         if "+" not in k:
             continue
+        vra = get_average(v['RA'])
+        p_max = max(vra)
+        p_min = min(vra)
+        volta_ra = get_average(result_volta[k]['RA'])
+        v_max = max(volta_ra)
+        v_min = min(volta_ra)
+        range_min = max(v_min, p_min)
+        range_max = min(v_max, p_max)
+        # range_min = -9999
+        # range_max = 9999
         plt.figure()
+
+        vst = get_average(v['ST'])
+        volta_st = get_average(result_volta[k]['ST'])
         ks = sorted(k.split('+'))
         if v[ks[0]][1] - v[ks[0]][0] > v[ks[1]][1] - v[ks[1]][0]:
             ks[0] = "*" + ks[0] + "*"
         else:
             ks[1] = "*" + ks[1] + "*"
         for tag in TAG_ORDER:
-            if tag not in v or tag == "ST":
-                continue
-            a = np.array(v["ST"]) / np.array(v[tag]) 
-            a -= 1
-            plt.plot(v['RA'], a, '.', label=tag)
+            def check(res, sel, st, ra, name):
+                if tag not in sel[k]:
+                    return
+                if tag not in res or tag == "ST":
+                    return
+                a = np.array(st) / np.array(get_average(res[tag]))
+                a -= 1
+                lab = "HFuse" if "VF" not in tag else "VFuse"
+                lab += "(" + name + ")"
+                arr1inds = ra.argsort()
+                sorted_arr1 = ra[arr1inds[::-1]]
+                a = a[arr1inds[::-1]]
+                range_arr = (sorted_arr1 <= range_max) & (sorted_arr1 >= range_min)
+                # lab = tag
+                # sorted_arr2 = arr2[arr1inds[::-1]]
+                plt.plot(sorted_arr1[range_arr], a[range_arr], '.', label=lab)
+            check(v, selection, vst, vra, "Pascal")
+            check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
         plt.legend()
         plt.xlabel("ratio: " + ":".join(ks))
         plt.ylabel("speed up")
@@ -321,7 +390,7 @@ def generate_table_1(result):
     # print(su / suc)
 
 generate_table_1(r1)
-build_graph(r1_s)
+build_graph(r1_s, pascal_selection, v1_s, volta_selection)
 #  generate_table_1(r2)
 
 
