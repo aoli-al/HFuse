@@ -346,7 +346,7 @@ def build_graph(result, selection, result_volta, selection_volta):
                 range_arr = (sorted_arr1 <= range_max) & (sorted_arr1 >= range_min)
                 # lab = tag
                 # sorted_arr2 = arr2[arr1inds[::-1]]
-                plt.plot(sorted_arr1[range_arr], a[range_arr], '.', label=lab)
+                plt.plot(sorted_arr1[range_arr], a[range_arr], label=lab)
             check(v, selection, vst, vra, "Pascal")
             check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
         plt.legend()
