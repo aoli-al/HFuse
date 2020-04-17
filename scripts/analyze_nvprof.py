@@ -3,6 +3,7 @@ import sys
 import json
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import gridspec
 
 order = [
     "sha256d_gpu_hash_shared(",
@@ -272,6 +273,18 @@ volta_selection = {
     "Im2Col+Upsample": ["HF", "VF"],
     "Maxpool+Upsample": ["LB+HF", "VF"]
 }
+order = [
+    "Batchnorm+Upsample",
+    "Batchnorm+Hist",
+    "Batchnorm+Im2Col",
+    "Batchnorm+Maxpool",
+    "Hist+Im2Col",
+    "Hist+Maxpool",
+    "Hist+Upsample",
+    "Im2Col+Maxpool",
+    "Im2Col+Upsample",
+    "Maxpool+Upsample",
+]
 
 plot_shape = {
     "VFuse": {
@@ -285,10 +298,14 @@ plot_shape = {
     },
 }
 # r2 = {}
-analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, ["Batchnorm+Im2Col"])
-analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
-analyze_execution_time("./data-new/ml-volta-chart-1.json", v1, v1_s, ['Im2Col+Upsample'])
-analyze_execution_time("./data-new/ml-volta-chart-2.json", v1, v1_s, [])
+# analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, ["Batchnorm+Im2Col"])
+# analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
+r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
+# json.dump(r1_s, open("./data-new/ml-pascal-chart.json", 'w'))
+# analyze_execution_time("./data-new/ml-volta-chart-1.json", v1, v1_s, ['Im2Col+Upsample'])
+# analyze_execution_time("./data-new/ml-volta-chart-2.json", v1, v1_s, [])
+# json.dump(v1_s, open("./data-new/ml-volta-chart.json", 'w'))
+v1_s = json.load(open("./data-new/ml-volta-chart.json"))
 # del r1['']
 # del r1_s['']
 #  r2 = analyze_execution_time("./data-new/ml-pascal.json")
@@ -315,11 +332,23 @@ print(found_tags)
 # print(fr)
 
 def build_graph(result, selection, result_volta, selection_volta):
+    min_length = 99999999999999999999999
+    for k in order:
+        min_length = min(len(result[k]['RA']), min_length)
+        min_length = min(len(result_volta[k]['RA']), min_length)
+    min_length /= 5
+
     def get_average(data):
         data = np.split(np.array(data), ITERS)
         return np.asarray(np.matrix(data).mean(0))[0]
+    gs = gridspec.GridSpec(3, 1, height_ratios=[5, 2, 1])
+    fig, axs = plt.subplots(3, 4, figsize=(15,10))
+    idx = 0
 
-    for k, v in result.items():
+    for k in order:
+        if idx == 8:
+            idx += 1
+        v = result[k]
         print(k)
         if "+" not in k:
             continue
@@ -333,7 +362,7 @@ def build_graph(result, selection, result_volta, selection_volta):
         range_max = min(v_max, p_max)
         # range_min = -9999
         # range_max = 9999
-        plt.figure()
+        # plt.figure()
 
         vst = get_average(v['ST'])
         volta_st = get_average(result_volta[k]['ST'])
@@ -359,15 +388,36 @@ def build_graph(result, selection, result_volta, selection_volta):
                 range_arr = (sorted_arr1 <= range_max) & (sorted_arr1 >= range_min)
                 # lab = tag
                 # sorted_arr2 = arr2[arr1inds[::-1]]
-                plt.plot(sorted_arr1[range_arr], a[range_arr], fmt, label=lab, markersize=5)
+                if idx == 0:
+                    axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, label=lab, markersize=5)
+                else:
+                    axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, markersize=5)
             check(v, selection, vst, vra, "Pascal")
             check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
-        plt.legend()
-        plt.xlabel("ratio: " + ":".join(ks))
-        plt.ylabel("speed up")
-        plt.title(k)
-        plt.savefig(k+'.png', quality=100, figsize=(1280, 960), dpi=400)
+        # plt.legend()
+        axs[idx // 4, idx % 4].set_title(k)
         # plt.show()
+        idx += 1
+    # fig.
+    # fig.show()
+    # fig.legend(loc=8, ncol=4)
+    fig.legend(ncol=4, loc='lower center', bbox_to_anchor=(0.43, 0.010))
+    # fig.tight_layout()
+    for i in range(11):
+        if i == 8:
+            continue
+        ax = axs[i // 4, i % 4]
+        if i % 4 == 0:
+            ax.set(ylabel='Speed Up')
+        if int(i // 4) == 2:
+            print(i)
+            ax.set(xlabel='Ratio')
+    axs[2, 3].set_visible(False)
+    axs[2, 0].set_visible(False)
+    # set_visible
+    fig.align_ylabels(axs)
+    plt.savefig('fused.png', quality=100, dpi=400, bbox_inches='tight', pad_inches=0)
+    # plt.show()
 
 def generate_table_1(result):
     s = " "
