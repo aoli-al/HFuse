@@ -207,17 +207,24 @@ def analyze_execution_time(f, res):
                 if not prev:
                     prev = key
                     prev_time = event['ts']
+                    prev_dur = event['dur']
                 else:
                     if prev + "+" + key in kernels.values():
                         new_name = prev + "+" + key
                     else:
                         new_name = key + "+" + prev
                     new_name += "_s"
+                    def compute_time():
+                        if prev_time > event['ts']:
+                            return prev_time + prev_dur - event['ts']
+                        else:
+                            return event['ts'] + event['dur'] - prev_time
+
                     if new_name in time_result:
-                        time_result[new_name] += event['ts'] + event['dur'] - prev_time
+                        time_result[new_name] += compute_time()
                         time_result_count[new_name] += 1
                     else:
-                        time_result[new_name] = event['ts'] + event['dur'] - prev_time
+                        time_result[new_name] = compute_time()
                         time_result_count[new_name] = 1
                     prev = None
                     prev_time = None
@@ -227,12 +234,12 @@ def analyze_execution_time(f, res):
 
 r1 = {}
 r2 = {}
-analyze_execution_time("./data/ml.json", r1)
-analyze_execution_time("./data/ml-regcap.json", r2)
+#  analyze_execution_time("./data/ml.json", r1)
+#  analyze_execution_time("./data/ml-regcap.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
 # analyze_execution_time("./data/ml-regcap.json", r2)
-analyze_execution_time("./data/miner.json", r1)
-analyze_execution_time("./data/miner_regcap.json", r2)
+analyze_execution_time("./data/miner-volta.json", r1)
+analyze_execution_time("./data/miner-regcap-volta.json", r2)
 # analyze_execution_time("./data/ml_regcap.json", r2)
 # analyze_execution_time("./data/ml-naive.json", r2)
 
