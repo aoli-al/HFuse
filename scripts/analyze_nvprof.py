@@ -408,10 +408,17 @@ def build_graph(result, selection, result_volta, selection_volta):
             continue
         ax = axs[i // 4, i % 4]
         if i % 4 == 0:
-            ax.set(ylabel='Speed Up')
+            ax.set(ylabel='Speedup')
         if int(i // 4) == 2:
             print(i)
             ax.set(xlabel='Ratio')
+        if int(i // 4) == 2 and int (i % 4) == 1:
+            ax.set(ylabel='Speedup')
+        if int(i // 4) == 1 and int (i % 4) == 0:
+            ax.set(xlabel='Ratio')
+        if int(i // 4) == 1 and int (i % 4) == 3:
+            ax.set(xlabel='Ratio')
+
     axs[2, 3].set_visible(False)
     axs[2, 0].set_visible(False)
     # set_visible
