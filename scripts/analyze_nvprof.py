@@ -139,7 +139,7 @@ TAG_ORDER = [
 result = {}
 
 LABEL = "Avg"
-ITERS = 1
+ITERS = 5
 
 def build_name(names):
     return "+".join(sorted(names))
@@ -276,7 +276,13 @@ pascal_selection = {
     "Im2Col+Maxpool": ["LB+HF", "LB+VF"],
     "Batchnorm+Maxpool": ["LB+VF", "LB+BS+HF"],
     "Im2Col+Upsample": ["VF", "HF"],
-    "Maxpool+Upsample": ["LB+HF", "LB+VF"]
+    "Maxpool+Upsample": ["LB+HF", "LB+VF"],
+    "Blake2B+Ethash": ["LB+HF", "LB+VF"],
+    "Blake256+Ethash": ["LB+HF", "LB+VF"],
+    "Ethash+SHA256": ["LB+HF", "LB+VF"],
+    "Blake256+Blake2B": ["HF", "LB+VF"],
+    "Blake256+SHA256": ["HF", "LB+VF"], 
+    "Blake2B+SHA256": ["HF", "LB+VF"], 
 }
 volta_selection = {
     "Batchnorm+Upsample": ["LB+BS+HF", "LB+VF"],
@@ -288,7 +294,13 @@ volta_selection = {
     "Im2Col+Maxpool": ["VF", "LB+HF"], 
     "Batchnorm+Maxpool": ["LB+BS+HF", "VF"],
     "Im2Col+Upsample": ["HF", "VF"],
-    "Maxpool+Upsample": ["LB+HF", "VF"]
+    "Maxpool+Upsample": ["LB+HF", "VF"],
+    "Blake2B+Ethash": ["LB+HF", "LB+VF"],
+    "Blake256+Ethash": ["LB+HF", "LB+VF"],
+    "Ethash+SHA256": ["HF", "LB+VF"],
+    "Blake256+Blake2B": ["HF", "LB+VF"],
+    "Blake256+SHA256": ["HF", "LB+VF"], 
+    "Blake2B+SHA256": ["HF", "LB+VF"], 
 }
 order = [
     "Batchnorm+Upsample",
@@ -301,6 +313,12 @@ order = [
     "Im2Col+Maxpool",
     "Im2Col+Upsample",
     "Maxpool+Upsample",
+    "Blake2B+Ethash",
+    "Blake256+Ethash",
+    "Ethash+SHA256",
+    "Blake256+Blake2B",
+    "Blake256+SHA256",
+    "Blake2B+SHA256",
 ]
 
 plot_shape = {
@@ -317,16 +335,18 @@ plot_shape = {
 r2 = {}
 # analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, ["Batchnorm+Im2Col"])
 # analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
-# r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
+r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
 # json.dump(r1_s, open("./data-new/ml-pascal-chart.json", 'w'))
 # analyze_execution_time("./data-new/ml-volta-chart-1.json", v1, v1_s, ['Im2Col+Upsample'])
 # analyze_execution_time("./data-new/ml-volta-chart-2.json", v1, v1_s, [])
 # json.dump(v1_s, open("./data-new/ml-volta-chart.json", 'w'))
 # exit(0)
-# v1_s = json.load(open("./data-new/ml-volta-chart.json"))
+v1_s = json.load(open("./data-new/ml-volta-chart.json"))
 
+r1 = {}
 analyze_execution_time("./data-new/crypto-pascal.json", {}, r1_s, [])
 analyze_execution_time("./data-new/crypto-volta.json", {}, v1_s, [])
+# analyze_execution_time("./data-new/crypto-single.json", r1, v1_s, [])
 # del r1['']
 # del r1_s['']
 #  r2 = analyze_execution_time("./data-new/ml-pascal.json")
@@ -353,7 +373,7 @@ print(found_tags)
 # print(fr)
 
 def build_graph(result, selection, result_volta, selection_volta):
-    order = list(filter(lambda x: "+" in x, result.keys())) 
+    # order = list(filter(lambda x: "+" in x, result.keys())) 
     min_length = 99999999999999999999999
     for k in order:
         min_length = min(len(result[k]['RA']), min_length)
@@ -364,12 +384,12 @@ def build_graph(result, selection, result_volta, selection_volta):
         data = np.split(np.array(data), ITERS)
         return np.asarray(np.matrix(data).mean(0))[0]
     gs = gridspec.GridSpec(3, 1, height_ratios=[5, 2, 1])
-    fig, axs = plt.subplots(3, 4, figsize=(15,10))
+    fig, axs = plt.subplots(4, 4, figsize=(15,14))
     idx = 0
 
     for k in order:
-        if idx == 8:
-            idx += 1
+        # if idx == 8:
+        #     idx += 1
         v = result[k]
         print(k)
         if "+" not in k:
@@ -403,16 +423,16 @@ def build_graph(result, selection, result_volta, selection_volta):
                 a -= 1
                 lab = "HFuse" if "VF" not in tag else "VFuse"
                 fmt = plot_shape[lab][name]
-                lab = tag
+                # lab = tag
                 lab += "(" + name + ")"
-                fmt = '.'
+                # fmt = '.'
                 arr1inds = ra.argsort()
                 sorted_arr1 = ra[arr1inds[::-1]]
                 a = a[arr1inds[::-1]]
                 range_arr = (sorted_arr1 <= range_max) & (sorted_arr1 >= range_min)
                 # lab = tag
                 # sorted_arr2 = arr2[arr1inds[::-1]]
-                if idx == 0 or True:
+                if idx == 0:
                     axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, label=lab, markersize=5)
                 else:
                     axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, markersize=5)
@@ -420,37 +440,37 @@ def build_graph(result, selection, result_volta, selection_volta):
             check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
         # plt.legend()
         axs[idx // 4, idx % 4].set_title(k)
-        axs[idx // 4, idx % 4].legend()
+        # axs[idx // 4, idx % 4].legend()
         # plt.show()
         idx += 1
     # fig.
     # fig.show()
     # fig.legend(loc=8, ncol=4)
-    # fig.legend(ncol=4, loc='lower center', bbox_to_anchor=(0.43, 0.010))
+    fig.legend(ncol=4, loc='lower center', bbox_to_anchor=(0.43, 0.030))
     # fig.legend()
     # fig.tight_layout()
     for i in range(11):
-        if i == 8:
-            continue
+        # if i == 8:
+        #     continue
         ax = axs[i // 4, i % 4]
         if i % 4 == 0:
             ax.set(ylabel='Speedup')
-        if int(i // 4) == 2:
+        if int(i // 4) == 3:
             print(i)
             ax.set(xlabel='Ratio')
-        if int(i // 4) == 2 and int (i % 4) == 1:
-            ax.set(ylabel='Speedup')
-        if int(i // 4) == 1 and int (i % 4) == 0:
-            ax.set(xlabel='Ratio')
-        if int(i // 4) == 1 and int (i % 4) == 3:
-            ax.set(xlabel='Ratio')
+        # if int(i // 4) == 2 and int (i % 4) == 1:
+        #     ax.set(ylabel='Speedup')
+        # if int(i // 4) == 1 and int (i % 4) == 0:
+        #     ax.set(xlabel='Ratio')
+        # if int(i // 4) == 1 and int (i % 4) == 3:
+        #     ax.set(xlabel='Ratio')
 
-    axs[2, 3].set_visible(False)
-    axs[2, 0].set_visible(False)
+    # axs[2, 3].set_visible(False)
+    # axs[2, 0].set_visible(False)
     # set_visible
-    fig.align_ylabels(axs)
-    # plt.savefig('fused.png', quality=100, dpi=400, bbox_inches='tight', pad_inches=0)
-    plt.show()
+    # fig.align_ylabels(axs)
+    plt.savefig('fused.png', quality=100, dpi=400, bbox_inches='tight', pad_inches=0)
+    # plt.show()
 
 def generate_table_1(result):
     s = " "
@@ -485,9 +505,9 @@ def generate_table_1(result):
     print(s)
     # print(su / suc)
 
-generate_table_1(r1)
+# generate_table_1(r1)
 # build_graph(r1_s, pascal_selection, v1_s, volta_selection)
-build_graph(r1_s, {}, v1_s, {})
+build_graph(r1_s, pascal_selection, v1_s, volta_selection)
 #  generate_table_1(r2)
 
 
@@ -516,11 +536,12 @@ def generate_table_3(extime, metrics):
 
 def generate_table_2(extime, metrics):
     def color_str(t1, t2):
+        prec = (t1 / t2 - 1) * 100
         # prec *= 100
-        if t2 < t1:
-            return "\\textcolor{green}{%.2f} &" % t2
+        if prec > 0:
+            return "\\textcolor{green}{%.1f} &" % prec
         else:
-            return "\\textcolor{red}{%.2f} &" % t2
+            return "\\textcolor{red}{%.1f} &" % prec
     s = ""
     for k, v in metrics.items():
         if "+" not in k:
@@ -559,8 +580,8 @@ def generate_table_2(extime, metrics):
 # analyze("./data/ml-metrics.csv")
 # analyze("./data/ml-spill-metrics.csv")
 m1 = {}
-analyze("./data-new/ml-events.csv", m1)
-analyze("./data-new/ml-metrics.csv", m1)
+analyze("./data-new/crypto-events.csv", m1)
+analyze("./data-new/crypto-metrics.csv", m1)
 
 generate_table_2(r1, m1)
 generate_table_3(r1, m1)
