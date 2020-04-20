@@ -1,0 +1,24 @@
+- File: four.cu
+  Kernels:
+    - ethash_search
+    - blake2b_gpu_hash
+- File: four.cu
+  Kernels:
+    - sha256d_gpu_hash_shared
+    - ethash_search
+- File: four.cu
+  Kernels:
+    - sia_blake2b_gpu_hash
+    - ethash_search
+- File: four.cu
+  Kernels:
+    - blake2b_gpu_hash
+    - sha256d_gpu_hash_shared
+- File: four.cu
+  Kernels:
+    - blake2b_gpu_hash
+    - sia_blake2b_gpu_hash
+- File: four.cu
+  Kernels:
+    - sha256d_gpu_hash_shared
+    - sia_blake2b_gpu_hash

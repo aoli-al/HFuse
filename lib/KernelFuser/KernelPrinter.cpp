@@ -43,11 +43,11 @@ void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsign
 //  prettyPrintAttributes(KernelFunctionMap.begin()->second);
   std::string Proto = " __global__ __launch_bounds__(";
   unsigned MaxThread = 0;
-  unsigned MaxBlock = 0;
+  unsigned MaxBlock = 9999999;
   unsigned TotalThreadNum = 0;
   for (const auto &K: KFContext.Kernels) {
     const auto &Info = K.second;
-    MaxBlock = std::max(RegFileSize / Info.Reg / Info.BlockDim.size(),
+    MaxBlock = std::min(RegFileSize / Info.Reg / Info.BlockDim.size(),
                         MaxBlock);
     TotalThreadNum += Info.BlockDim.size();
     MaxThread = std::max(Info.BlockDim.size(), MaxThread);

@@ -1,0 +1,32 @@
+ethash_search:
+  KernelName: ethash_search
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1
+  Reg: 130
+blake2b_gpu_hash:
+  KernelName: blake2b_gpu_hash
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1
+  Reg: 64
+sha256d_gpu_hash_shared:
+  KernelName: sha256d_gpu_hash_shared
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1
+  Reg: 96
+sia_blake2b_gpu_hash:
+  KernelName: sia_blake2b_gpu_hash
+  HasBarriers: false
+  BlockDim:
+    X: 128
+    Y: 1
+    Z: 1
+  Reg: 64

@@ -71,16 +71,28 @@ order = [
 ]
 
 kernels = {
-    "sia_blake2b_gpu_hash": "SIA",
+    "sia_blake2b_gpu_hash": "Blake2B",
     "sha256d_gpu_hash_shared": "SHA256",
     "ethash_search": "Ethash",
-    "blake2b_gpu_hash": "Blake",
+    "blake2b_gpu_hash": "Blake256",
     "kernelHistogram1D": "Hist",
     "im2col_kernel": "Im2Col",
     "MaxPoolForward": "Maxpool",
     "batch_norm_collect_statistics_kernel": "Batchnorm",
     "upsample_bilinear2d_out_frame": "Upsample",
 }
+
+kernel_order = [
+    "sia_blake2b_gpu_hash",
+    "sha256d_gpu_hash_shared",
+    "ethash_search",
+    "blake2b_gpu_hash",
+    "kernelHistogram1D",
+    "im2col_kernel",
+    "MaxPoolForward",
+    "batch_norm_collect_statistics_kernel",
+    "upsample_bilinear2d_out_frame",
+]
 
 tags = {
     "_lb": "LB",
@@ -127,7 +139,7 @@ TAG_ORDER = [
 result = {}
 
 LABEL = "Avg"
-ITERS = 5
+ITERS = 1
 
 def build_name(names):
     return "+".join(sorted(names))
@@ -136,8 +148,10 @@ def find_name(name):
     fused = "_fused_kernel" in name
     r = []
     t = ""
-    for k, v in kernels.items():
+    for k in kernel_order:
+        v = kernels[k]
         if k in name:
+            name = name.replace(k, "")
             if not fused:
                 return v, "ST"
             else:
@@ -205,8 +219,11 @@ def analyze_execution_time(f, time_result, time_result_separate, ignore):
         prev_time = None
         last_time = None
         prev_dur = None
+        dur_p = 0
+        data['traceEvents'] = sorted(data['traceEvents'], key=lambda t: t['ts'])
         for event in data['traceEvents']:
             name = event['name']
+            dur_p = event['ts']
             key, tag = find_name(name)
             if not key:
                 continue
@@ -297,15 +314,19 @@ plot_shape = {
         "Volta": ".y",
     },
 }
-# r2 = {}
+r2 = {}
 # analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, ["Batchnorm+Im2Col"])
 # analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
-r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
+# r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
 # json.dump(r1_s, open("./data-new/ml-pascal-chart.json", 'w'))
 # analyze_execution_time("./data-new/ml-volta-chart-1.json", v1, v1_s, ['Im2Col+Upsample'])
 # analyze_execution_time("./data-new/ml-volta-chart-2.json", v1, v1_s, [])
 # json.dump(v1_s, open("./data-new/ml-volta-chart.json", 'w'))
-v1_s = json.load(open("./data-new/ml-volta-chart.json"))
+# exit(0)
+# v1_s = json.load(open("./data-new/ml-volta-chart.json"))
+
+analyze_execution_time("./data-new/crypto-pascal.json", {}, r1_s, [])
+analyze_execution_time("./data-new/crypto-volta.json", {}, v1_s, [])
 # del r1['']
 # del r1_s['']
 #  r2 = analyze_execution_time("./data-new/ml-pascal.json")
@@ -332,6 +353,7 @@ print(found_tags)
 # print(fr)
 
 def build_graph(result, selection, result_volta, selection_volta):
+    order = list(filter(lambda x: "+" in x, result.keys())) 
     min_length = 99999999999999999999999
     for k in order:
         min_length = min(len(result[k]['RA']), min_length)
@@ -373,7 +395,7 @@ def build_graph(result, selection, result_volta, selection_volta):
             ks[1] = "*" + ks[1] + "*"
         for tag in TAG_ORDER:
             def check(res, sel, st, ra, name):
-                if tag not in sel[k]:
+                if sel and tag not in sel[k]:
                     return
                 if tag not in res or tag == "ST":
                     return
@@ -381,14 +403,16 @@ def build_graph(result, selection, result_volta, selection_volta):
                 a -= 1
                 lab = "HFuse" if "VF" not in tag else "VFuse"
                 fmt = plot_shape[lab][name]
+                lab = tag
                 lab += "(" + name + ")"
+                fmt = '.'
                 arr1inds = ra.argsort()
                 sorted_arr1 = ra[arr1inds[::-1]]
                 a = a[arr1inds[::-1]]
                 range_arr = (sorted_arr1 <= range_max) & (sorted_arr1 >= range_min)
                 # lab = tag
                 # sorted_arr2 = arr2[arr1inds[::-1]]
-                if idx == 0:
+                if idx == 0 or True:
                     axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, label=lab, markersize=5)
                 else:
                     axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, markersize=5)
@@ -396,12 +420,14 @@ def build_graph(result, selection, result_volta, selection_volta):
             check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
         # plt.legend()
         axs[idx // 4, idx % 4].set_title(k)
+        axs[idx // 4, idx % 4].legend()
         # plt.show()
         idx += 1
     # fig.
     # fig.show()
     # fig.legend(loc=8, ncol=4)
-    fig.legend(ncol=4, loc='lower center', bbox_to_anchor=(0.43, 0.010))
+    # fig.legend(ncol=4, loc='lower center', bbox_to_anchor=(0.43, 0.010))
+    # fig.legend()
     # fig.tight_layout()
     for i in range(11):
         if i == 8:
@@ -423,8 +449,8 @@ def build_graph(result, selection, result_volta, selection_volta):
     axs[2, 0].set_visible(False)
     # set_visible
     fig.align_ylabels(axs)
-    plt.savefig('fused.png', quality=100, dpi=400, bbox_inches='tight', pad_inches=0)
-    # plt.show()
+    # plt.savefig('fused.png', quality=100, dpi=400, bbox_inches='tight', pad_inches=0)
+    plt.show()
 
 def generate_table_1(result):
     s = " "
@@ -460,7 +486,8 @@ def generate_table_1(result):
     # print(su / suc)
 
 generate_table_1(r1)
-build_graph(r1_s, pascal_selection, v1_s, volta_selection)
+# build_graph(r1_s, pascal_selection, v1_s, volta_selection)
+build_graph(r1_s, {}, v1_s, {})
 #  generate_table_1(r2)
 
 
