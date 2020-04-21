@@ -346,7 +346,8 @@ v1_s = json.load(open("./data-new/ml-volta-chart.json"))
 r1 = {}
 analyze_execution_time("./data-new/crypto-pascal.json", {}, r1_s, [])
 analyze_execution_time("./data-new/crypto-volta.json", {}, v1_s, [])
-# analyze_execution_time("./data-new/crypto-single.json", r1, v1_s, [])
+analyze_execution_time("./data-new/crypto-single.json", r1, {}, [])
+analyze_execution_time("./data-new/ml-single.json", r1, {}, [])
 # del r1['']
 # del r1_s['']
 #  r2 = analyze_execution_time("./data-new/ml-pascal.json")
@@ -372,7 +373,7 @@ print(found_tags)
 
 # print(fr)
 
-def build_graph(result, selection, result_volta, selection_volta):
+def build_graph(result, selection, result_volta, selection_volta, result_single):
     # order = list(filter(lambda x: "+" in x, result.keys())) 
     min_length = 99999999999999999999999
     for k in order:
@@ -436,6 +437,7 @@ def build_graph(result, selection, result_volta, selection_volta):
                     axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, label=lab, markersize=5)
                 else:
                     axs[idx // 4, idx % 4].plot(sorted_arr1[range_arr][::int(len(a)//min_length)], a[range_arr][::int(len(a)//min_length)], fmt, markersize=5)
+                axs[idx // 4, idx % 4].axvline(x=result_single[k]["RA"] * 1000000, ymin=0, ymax=1, linewidth=1, color='r', linestyle='dashed')
             check(v, selection, vst, vra, "Pascal")
             check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
         # plt.legend()
@@ -446,10 +448,10 @@ def build_graph(result, selection, result_volta, selection_volta):
     # fig.
     # fig.show()
     # fig.legend(loc=8, ncol=4)
-    fig.legend(ncol=4, loc='lower center', bbox_to_anchor=(0.43, 0.030))
+    fig.legend(ncol=4, loc='lower center', bbox_to_anchor=(0.43, 0.025))
     # fig.legend()
     # fig.tight_layout()
-    for i in range(11):
+    for i in range(16):
         # if i == 8:
         #     continue
         ax = axs[i // 4, i % 4]
@@ -507,7 +509,7 @@ def generate_table_1(result):
 
 # generate_table_1(r1)
 # build_graph(r1_s, pascal_selection, v1_s, volta_selection)
-build_graph(r1_s, pascal_selection, v1_s, volta_selection)
+build_graph(r1_s, pascal_selection, v1_s, volta_selection, r1)
 #  generate_table_1(r2)
 
 
@@ -526,15 +528,29 @@ def generate_table_3(extime, metrics):
         tag = "ST"
         tag_order = ["ST"]
         s += k + " &"
-        s += "ST" + " &"
+        # s += "ST" + " &"
         # speed = extime[k]["ST"] / extime[k][tag] - 1
-        s += "%.2f &" % extime[k]["ST"]
+        # s += "%.2f &" % extime[k]["ST"]
         s += "%.2f &" % v[tag]["issue_slot_utilization"]
-        s += " &"
+        # s += " &"
         s += "%.1f & %.1f \\\\\n" % (v[tag]["stall_memory_dependency"], v[tag]["achieved_occupancy"])
     print(s)
 
 def generate_table_2(extime, metrics):
+    def build_tag(tags, kernel):
+        tag = next(filter(lambda x: "HF" in x, tags))
+        if "LB" in tag:
+            yield tag
+            yield tag.replace("LB+", "")
+        else:
+            yield "LB+" + tag
+            yield tag
+        if "Hist" in kernel:
+            if "LB" in tag:
+                yield "LB+HF"
+            else:
+                yield "HF"
+        
     def color_str(t1, t2):
         prec = (t1 / t2 - 1) * 100
         # prec *= 100
@@ -543,18 +559,26 @@ def generate_table_2(extime, metrics):
         else:
             return "\\textcolor{red}{%.1f} &" % prec
     s = ""
-    for k, v in metrics.items():
+    for k in order:
+        v = metrics[k]
         if "+" not in k:
             continue
         s += "\\hline\n"
-        tag_order = list(filter(lambda x: x in v.keys() and x != "ST" and "VF" not in x, TAG_ORDER))
+        tag_order = list(build_tag(pascal_selection[k], k))
         s += "\\multirow{" + str(len(tag_order)) + "}{*}{" + k + "} &"
         native = False
-        for tag in tag_order:
+        idx = 0
+        for tag in build_tag(pascal_selection[k], k):
             if native:
                 s += "\\cline{2-4} \\cline{6-7}\n"
                 s += " &"
-            s += tag + " &"
+            if idx == 0:
+                s += "RegCap" + " &"
+            elif idx == 1:
+                s += "N-RegCap" + " &"
+            else:
+                s += "Naive" + " &"
+            idx += 1
             # speed = extime[k]["ST"], extime[k][tag] - 1
             s += color_str(extime[k]["ST"], extime[k][tag])
             s += "%.2f &" % v[tag]["issue_slot_utilization"]
@@ -582,6 +606,8 @@ def generate_table_2(extime, metrics):
 m1 = {}
 analyze("./data-new/crypto-events.csv", m1)
 analyze("./data-new/crypto-metrics.csv", m1)
+analyze("./data-new/ml-events.csv", m1)
+analyze("./data-new/ml-metrics.csv", m1)
 
 generate_table_2(r1, m1)
 generate_table_3(r1, m1)
