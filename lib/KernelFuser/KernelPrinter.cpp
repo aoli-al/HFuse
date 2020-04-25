@@ -67,7 +67,7 @@ void KernelPrinter::printFusedFunctionSignature(KFMap &KernelFunctionMap, unsign
   for (auto &FName: KFContext.Order) {
     Proto += FName + "_";
   }
-  Proto += "fused_kernel_" + KFContext.Name + "_idx_" + std::to_string(Idx);
+  Proto += "fused_kernel_" + KFContext.Name;
 //  Proto += std::to_string(Idx);
 //  Proto += "FUNC";
 

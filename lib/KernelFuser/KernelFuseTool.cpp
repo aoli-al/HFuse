@@ -39,32 +39,31 @@ void KernelFuseTool::onEndOfTranslationUnit() {
   auto FuncStream = llvm::raw_string_ostream(FuncStr);
   KernelPrinter Printer( FuncStream, C->getPrintingPolicy(), *C, Context);
   std::vector<std::string> Candidates;
-  if (!Context.BaseLine) {
-    unsigned Idx = 0;
-    for (const auto &Snippet: Fuser.getCandidates()) {
-      Printer.printFusedFunction(KernelFunctionMap, Idx++);
-      FuncStream << "\n {\n";
-      FuncStream << Snippet;
-      FuncStream << "}\n";
-      FuncStream.flush();
-      Candidates.push_back(FuncStr);
-      Results.push_back(FuncStr);
-//      llvm::outs() << FuncStr;
-      llvm::outs().flush();
-      FuncStr.clear();
-    }
-  } else {
-    Printer.printFusedFunction(KernelFunctionMap, 0);
-    FuncStream << "\n {\n";
-    for (const auto &FName: Context.Order) {
-      FuncStream << branchingStatement(Context, FName);
-      KernelFunctionMap[FName]->getBody()->printPretty(FuncStream, nullptr, C->getPrintingPolicy());
-    }
-    FuncStream << "}\n";
-    FuncStream.flush();
-    Candidates.push_back(FuncStr);
-    Results.push_back(FuncStr);
+//  if (!Context.BaseLine) {
+//    unsigned Idx = 0;
+//    for (const auto &Snippet: Fuser.getCandidates()) {
+//      Printer.printFusedFunction(KernelFunctionMap, Idx++);
+//      FuncStream << "\n {\n";
+//      FuncStream << Snippet;
+//      FuncStream << "}\n";
+//      FuncStream.flush();
+//      Candidates.push_back(FuncStr);
+//      Results.push_back(FuncStr);
+//      llvm::outs().flush();
+//      FuncStr.clear();
+//    }
+//  } else {
+  Printer.printFusedFunction(KernelFunctionMap, 0);
+  FuncStream << "\n {\n";
+  for (const auto &FName: Context.Order) {
+    FuncStream << branchingStatement(Context, FName);
+    KernelFunctionMap[FName]->getBody()->printPretty(FuncStream, nullptr, C->getPrintingPolicy());
   }
+  FuncStream << "}\n";
+  FuncStream.flush();
+  Candidates.push_back(FuncStr);
+  Results.push_back(FuncStr);
+//  }
 //  auto R = llvm::json::Value(Candidates);
 //  llvm::outs() << R;
 }

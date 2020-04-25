@@ -59,6 +59,7 @@ public:
   void recoverFiles() {
     for (const auto &File: ModifiedFiles) {
       llvm::sys::fs::copy_file(File + ".bak", File);
+      llvm::sys::fs::remove(File + ".bak");
     }
   }
 
@@ -180,14 +181,14 @@ public:
 static std::vector<std::pair<std::vector<bool>, std::string>> Presets= {
     std::make_pair(std::vector({true, false, true, false}), "vfuse_lb"),
     std::make_pair(std::vector({true, false, false, false}), "vfuse"),
-    std::make_pair(std::vector({false, true, false, false}), "hfuse_bar_sync"),
-    std::make_pair(std::vector({false, false, false, false}), "hfuse"),
-    std::make_pair(std::vector({false, false, true, false}), "hfuse_lb"),
-    std::make_pair(std::vector({false, true, true, false}), "hfuse_lb_bar_sync"),
-    std::make_pair(std::vector({false, true, false, true}), "hfuse_bar_sync_imba"),
-    std::make_pair(std::vector({false, false, false, true}), "hfuse_imba"),
-    std::make_pair(std::vector({false, false, true, true}), "hfuse_lb_imba"),
-    std::make_pair(std::vector({false, true, true, true}), "hfuse_lb_bar_sync_imba"),
+//    std::make_pair(std::vector({false, true, false, false}), "hfuse_bar_sync"),
+    std::make_pair(std::vector({false, false, false, true}), "hfuse"),
+    std::make_pair(std::vector({false, false, true, true}), "hfuse_lb"),
+//    std::make_pair(std::vector({false, true, true, false}), "hfuse_lb_bar_sync"),
+//    std::make_pair(std::vector({false, true, false, true}), "hfuse_bar_sync_imba"),
+//    std::make_pair(std::vector({false, false, false, true}), "hfuse_imba"),
+//    std::make_pair(std::vector({false, false, true, true}), "hfuse_lb_imba"),
+//    std::make_pair(std::vector({false, true, true, true}), "hfuse_lb_bar_sync_imba"),
 };
 
 void Fuse(int argc, const char **argv,
@@ -211,33 +212,35 @@ void Fuse(int argc, const char **argv,
   std::vector<std::string> Results;
   tooling::CommonOptionsParser Op(NArgc, NArgv, KernelFuseCategory);
   for (const auto &Preset : Presets) {
-    Context C(Infos, Preset.first, Preset.second);
-    if (C.ImBalancedThread) {
-      if (std::any_of(C.Kernels.begin(), C.Kernels.end(), [](auto I) {
-        return I.second.ExecTime < 0;
-      })) {
-        continue;
-      }
+    auto SplitStart = 128;
+    auto SplitEnd = 0;
+    if (Preset.first[0]) {
+      SplitEnd = 129;
+    } else {
+      SplitEnd = Infos[0].BlockDim.size() + Infos[1].BlockDim.size();
     }
+    for (unsigned Split = SplitStart; Split < SplitEnd; Split += SplitStart) {
+      Infos[0].ExecTime = Split;
+      Infos[1].ExecTime = SplitEnd - Split;
+      Context C(Infos, Preset.first, Preset.second + "_idx_" +
+          std::to_string(Split / SplitStart - 1));
+      FuseInstance I(Op, C);
+      I.expandMacros();
+      I.renameParameters();
+      I.rewriteThreadInfo();
+      I.barrierRewriter();
+      const auto &R = I.fuseKernel();
+      Results.insert(Results.end(), R.begin(), R.end());
+      I.recoverFiles();
+    }
+//    if (C.ImBalancedThread) {
+//      if (std::any_of(C.Kernels.begin(), C.Kernels.end(), [](auto I) {
+//        return I.second.ExecTime < 0;
+//      })) {
+//        continue;
+//      }
+//    }
 
-    FuseInstance I(Op, C);
-    I.expandMacros();
-    I.renameParameters();
-    I.rewriteThreadInfo();
-    I.declRewriter();
-    if (C.IsBarSyncEnabled) {
-      bool HasBarrier = I.barrierRewriter();
-      if (!HasBarrier) {
-        I.recoverFiles();
-        continue;
-      }
-    }
-    if (!C.BaseLine) {
-      I.barrierAnalyzer();
-    }
-    const auto &R = I.fuseKernel();
-    Results.insert(Results.end(), R.begin(), R.end());
-    I.recoverFiles();
   }
 
   std::string FName;
@@ -253,6 +256,7 @@ void Fuse(int argc, const char **argv,
   Of.close();
 
 }
+
 
 
 int main(int argc, const char** argv){
@@ -274,13 +278,9 @@ int main(int argc, const char** argv){
       break;
     } else {
       int status;
-      waitpid(id, &status, 0);
+//      waitpid(id, &status, 0);
       FusionProcesses.push_back(id);
     }
-//    FusionThreads.push_back(
-//        std::thread(Fuse, argc, argv, KernelInfo, Fusion));
-//    FusionThreads.back().join();
-//    T.join();
   }
   for (auto &P: FusionProcesses) {
     int status;

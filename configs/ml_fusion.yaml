@@ -1,23 +1,23 @@
-- File: Im2ColMaxPool.cu
-  Kernels:
-    - im2col_kernel
-    - MaxPoolForward
-- File: Im2ColNormalization.cu
-  Kernels:
-    - im2col_kernel
-    - batch_norm_collect_statistics_kernel
-- File: SummaryOps.cu
-  Kernels:
-    - im2col_kernel
-    - kernelHistogram1D
+#- File: Im2ColMaxPool.cu
+#  Kernels:
+#    - im2col_kernel
+#    - MaxPoolForward
+#- File: Im2ColNormalization.cu
+#  Kernels:
+#    - im2col_kernel
+#    - batch_norm_collect_statistics_kernel
+#- File: SummaryOps.cu
+#  Kernels:
+#    - im2col_kernel
+#    - kernelHistogram1D
 - File: Im2ColUpSample.cu
   Kernels:
     - im2col_kernel
     - upsample_bilinear2d_out_frame
-- File: MaxPoolBatchNorm.cu
-  Kernels:
-    - MaxPoolForward
-    - batch_norm_collect_statistics_kernel
+#- File: MaxPoolBatchNorm.cu
+#  Kernels:
+#    - MaxPoolForward
+#    - batch_norm_collect_statistics_kernel
 - File: MaxPoolUpSample.cu
   Kernels:
     - MaxPoolForward
