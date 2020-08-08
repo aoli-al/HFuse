@@ -43,3 +43,21 @@ MaxPoolForward:
     Z: 1
   Reg: 24
   ExecTime: 95
+max_pool_backward_nchw:
+  KernelName: max_pool_backward_nchw 
+  HasBarriers: false
+  BlockDim:
+    X: 256
+    Y: 1
+    Z: 1
+  Reg: 48
+  ExecTime: 95
+batch_norm_backward_kernel:
+  KernelName: batch_norm_backward_kernel
+  HasBarriers: true
+  BlockDim:
+    X: 512
+    Y: 1
+    Z: 1
+  Reg: 34
+  ExecTime: 95
