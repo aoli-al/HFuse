@@ -10,10 +10,10 @@
 #  Kernels:
 #    - im2col_kernel
 #    - kernelHistogram1D
-# - File: Im2ColUpSample.cu
-#   Kernels:
-#     - im2col_kernel
-#     - upsample_bilinear2d_out_frame
+#- File: Im2ColUpSample.cu
+#  Kernels:
+#   - im2col_kernel
+#   - upsample_bilinear2d_out_frame
 #- File: MaxPoolBatchNorm.cu
 #  Kernels:
 #    - MaxPoolForward

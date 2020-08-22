@@ -4,6 +4,7 @@
 
 #include "BarrierRewriter.h"
 #include "BarrierAnalyzer.h"
+#include <clang/Analysis/CallGraph.h>
 #include <sstream>
 
 namespace kernel_fusion {

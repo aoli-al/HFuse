@@ -130,7 +130,7 @@ public:
       KernelFinder.addMatcher(barrierMatcherFactory(hasName(K.first)),
                               &FuseTool);
     }
-    tooling::RefactoringTool Tool(Op.getCompilations(), Op.getSourcePathList());
+    tooling::ClangTool Tool(Op.getCompilations(), Op.getSourcePathList());
     Tool.run(tooling::newFrontendActionFactory(&KernelFinder).get());
     return FuseTool.GetResults();
   }

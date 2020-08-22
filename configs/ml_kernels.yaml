@@ -56,8 +56,8 @@ batch_norm_backward_kernel:
   KernelName: batch_norm_backward_kernel
   HasBarriers: true
   BlockDim:
-    X: 512
-    Y: 1
+    X: 256
+    Y: 2
     Z: 1
   Reg: 34
   ExecTime: 95
