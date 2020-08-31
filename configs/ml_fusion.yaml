@@ -38,7 +38,15 @@
 #   Kernels:
 #     - kernelHistogram1D
 #     - batch_norm_collect_statistics_kernel
-- File: MaxpoolingBackwardBatchnorm.cu
+#- File: MaxpoolingBackwardBatchnorm.cu
+#  Kernels:
+#    - max_pool_backward_nchw
+#    - batch_norm_backward_kernel
+#- File: col2im_batchnorm_backward.cu
+#  Kernels:
+#    - col2im_kernel
+#    - batch_norm_backward_kernel
+- File: col2im_maxpooling_backward.cu
   Kernels:
-    - max_pool_backward_nchw 
-    - batch_norm_backward_kernel
+    - col2im_kernel
+    - max_pool_backward_nchw

@@ -122,7 +122,8 @@ Info readYAMLInfo(const char *Path) {
   return std::move(Infos);
 }
 
-const static std::string CurrentTid = "(threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y)";
+//const static std::string CurrentTid = "(threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.x * blockDim.y)";
+const static std::string CurrentTid = "threadIdx.x";
 
 }
 

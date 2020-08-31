@@ -272,7 +272,8 @@ int main(int argc, const char** argv){
 
   // We can't do multi-thread here...
   for (const auto &Fusion: FusionInfo) {
-    int id = fork();
+//    int id = fork();
+    int id = 0;
     if (id == 0) {
       Fuse(argc, argv, KernelInfo, Fusion);
       break;

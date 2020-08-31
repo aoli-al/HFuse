@@ -1,14 +1,16 @@
 cmake_minimum_required(VERSION 3.4.3)
+
 project(smart-fuser)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(LLVM_DIST_PATH "/usr/local/opt/llvm"
+set(LLVM_DIST_PATH "${PROJECT_SOURCE_DIR}/deps/llvm-project/build"
         CACHE STRING "LLVM distribution install path")
 
 set(LLVM_DIR ${LLVM_DIST_PATH}/lib/cmake/llvm)
 set(Clang_DIR ${LLVM_DIST_PATH}/lib/cmake/clang)
 
+find_package(Torch REQUIRED)
 find_package(LLVM REQUIRED CONFIG)
 find_package(Clang REQUIRED CONFIG)
 message(STATUS "Using LLVM version ${LLVM_PACKAGE_VERSION}")
