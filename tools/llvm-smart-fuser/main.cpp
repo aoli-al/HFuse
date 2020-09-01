@@ -13,22 +13,22 @@
 #include <llvm/Support/CommandLine.h>
 #include <llvm/Support/FileSystem.h>
 
-#include "KernelFusion.h"
-#include "KernelFuseTool.h"
-#include "ThreadInfoRewriter.h"
-#include "ParameterCollector.h"
-#include "MacroExpand.h"
-#include "BarrierHoisting.h"
-#include "BarrierRewriter.h"
+#include "KernelFuser/BarrierHoisting.h"
+#include "KernelFuser/BarrierRewriter.h"
+#include "KernelFuser/KernelFuseTool.h"
+#include "KernelFuser/KernelFusion.h"
+#include "KernelFuser/MacroExpand.h"
+#include "KernelFuser/ParameterCollector.h"
+#include "KernelFuser/ThreadInfoRewriter.h"
 
-#include <unistd.h>
-#include <sys/wait.h>
-#include <set>
-#include <utility>
-#include <fstream>
-#include <thread>
+#include <KernelFuser/DeclRewriter.h>
 #include <algorithm>
-#include <DeclRewriter.h>
+#include <fstream>
+#include <set>
+#include <sys/wait.h>
+#include <thread>
+#include <unistd.h>
+#include <utility>
 
 using namespace llvm;
 using namespace clang;

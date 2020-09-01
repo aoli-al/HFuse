@@ -1,4 +1,4 @@
-#include "BarrierHoisting.h"
+#include "KernelFuser/BarrierHoisting.h"
 
 namespace kernel_fusion {
 

@@ -2,8 +2,8 @@
 // Created by Leo Li on 2020-02-11.
 //
 
-#include "BarrierRewriter.h"
-#include "BarrierAnalyzer.h"
+#include "KernelFuser/BarrierRewriter.h"
+#include "KernelFuser/BarrierAnalyzer.h"
 #include <clang/Analysis/CallGraph.h>
 #include <sstream>
 

@@ -11,7 +11,11 @@ add_library(LLVMKernelFuser
         DeclRewriter.cpp
         BarrierAnalyzer.cpp
         KernelRecursiveFuser.cpp
-        BarrierRewriter.cpp ../Torch/max_pool_batch_norm_fused.cpp ../Torch/max_pool_batch_norm_fused.h)
+        BarrierRewriter.cpp)
+
+target_include_directories(LLVMKernelFuser PUBLIC
+        ${LLVM_INCLUDE_DIRS}
+        ${CLANG_INCLUDE_DIRS})
 
 target_link_libraries(LLVMKernelFuser
         clangAST

@@ -1,4 +1,4 @@
-#include "DeclRewriter.h"
+#include "KernelFuser/DeclRewriter.h"
 
 namespace kernel_fusion {
 

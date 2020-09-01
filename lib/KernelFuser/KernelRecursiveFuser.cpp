@@ -1,4 +1,4 @@
-#include "KernelRecursiveFuser.h"
+#include "KernelFuser/KernelRecursiveFuser.h"
 
 namespace kernel_fusion {
 

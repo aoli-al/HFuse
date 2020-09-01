@@ -1,4 +1,4 @@
-#include "BarrierAnalyzer.h"
+#include "KernelFuser/BarrierAnalyzer.h"
 
 namespace kernel_fusion {
 

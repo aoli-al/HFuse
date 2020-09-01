@@ -1,5 +1,5 @@
-#include "MacroExpand.h"
-#include "KernelFuseTool.h"
+#include "KernelFuser/MacroExpand.h"
+#include "KernelFuser/KernelFuseTool.h"
 
 namespace kernel_fusion {
 

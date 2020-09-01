@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4.3)
 
-project(smart-fuser)
+project(smart-fuser LANGUAGES CXX CUDA)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -23,10 +23,8 @@ include(HandleLLVMOptions)
 include(AddLLVM)
 
 add_definitions(${LLVM_DEFINITIONS})
-include_directories(${LLVM_INCLUDE_DIRS})
-include_directories(${CLANG_INCLUDE_DIRS})
 include_directories(include)
 
-add_subdirectory(lib/KernelFuser)
+add_subdirectory(lib)
 
 add_subdirectory(tools/llvm-smart-fuser)

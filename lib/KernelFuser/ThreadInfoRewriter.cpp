@@ -1,4 +1,4 @@
-#include "ThreadInfoRewriter.h"
+#include "KernelFuser/ThreadInfoRewriter.h"
 #include <numeric>
 
 using namespace llvm;

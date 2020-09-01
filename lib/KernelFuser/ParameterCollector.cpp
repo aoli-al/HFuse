@@ -1,6 +1,6 @@
+#include "KernelFuser/ParameterCollector.h"
+#include <KernelFuser/DeclRewriter.h>
 #include <clang/Tooling/Refactoring/Rename/USRFindingAction.h>
-#include <DeclRewriter.h>
-#include "ParameterCollector.h"
 
 using namespace clang;
 

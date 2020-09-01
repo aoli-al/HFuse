@@ -1,8 +1,8 @@
 #include <clang/AST/Decl.h>
 
-#include "KernelFuseTool.h"
-#include "KernelPrinter.h"
-#include "KernelRecursiveFuser.h"
+#include "KernelFuser/KernelFuseTool.h"
+#include "KernelFuser/KernelPrinter.h"
+#include "KernelFuser/KernelRecursiveFuser.h"
 #include "llvm/Support/JSON.h"
 
 using namespace llvm;

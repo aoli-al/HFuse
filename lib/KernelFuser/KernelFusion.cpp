@@ -1,4 +1,4 @@
-#include "KernelFusion.h"
+#include "KernelFuser/KernelFusion.h"
 
 namespace kernel_fusion {
 
