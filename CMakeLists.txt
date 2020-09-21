@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.4.3)
 
 project(smart-fuser LANGUAGES CXX CUDA)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 set(LLVM_DIST_PATH "${PROJECT_SOURCE_DIR}/deps/llvm-project/build"
         CACHE STRING "LLVM distribution install path")
@@ -24,6 +24,7 @@ include(AddLLVM)
 
 add_definitions(${LLVM_DEFINITIONS})
 include_directories(include)
+include_directories(${CUDA_INCLUDE_DIRS})
 
 add_subdirectory(lib)
 

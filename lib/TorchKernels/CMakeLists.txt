@@ -7,4 +7,5 @@ add_library(TorchKernels
 target_compile_definitions(TorchKernels PUBLIC __CUDA_NO_HALF_OPERATORS__)
 target_link_libraries(TorchKernels ${TORCH_LIBRARIES})
 target_include_directories(TorchKernels PUBLIC
-        ${TORCH_INCLUDE_DIRS})
+        ${TORCH_INCLUDE_DIRS}
+        ${PROJECT_SOURCE_DIR}/deps/jitify)
