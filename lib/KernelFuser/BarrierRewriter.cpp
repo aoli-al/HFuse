@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2020-02-11.
-//
-
 #include "KernelFuser/BarrierRewriter.h"
 #include "KernelFuser/BarrierAnalyzer.h"
 #include <clang/Analysis/CallGraph.h>

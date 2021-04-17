@@ -1,7 +1,3 @@
-//
-// Created by Leo Li on 2020-02-11.
-//
-
 #ifndef SMART_FUSER_BARRIERREWRITER_H
 #define SMART_FUSER_BARRIERREWRITER_H
 
