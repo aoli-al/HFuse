@@ -278,7 +278,7 @@ int main(int argc, const char** argv){
       break;
     } else {
       int status;
-//      waitpid(id, &status, 0);
+      waitpid(id, &status, 0);
       FusionProcesses.push_back(id);
     }
   }
