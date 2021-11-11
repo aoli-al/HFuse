@@ -2,22 +2,17 @@ FROM nvidia/cuda:10.1-devel-ubuntu18.04
 
 ENV PATH="/root/miniconda3/bin:${PATH}"
 ARG PATH="/root/miniconda3/bin:${PATH}"
-ENV CC="clang"
-ARG CC="clang"
-ENV CXX="clang++"
-ARG CXX="clang++"
+ENV CC="clang-10"
+ARG CC="clang-10"
+ENV CXX="clang++-10"
+ARG CXX="clang++-10"
 
 
 RUN apt update
-RUN apt install -y git cmake python3 wget clang
+RUN apt install -y git cmake python3 wget clang-10 libclang-10-dev zlibc zlib1g-dev
 WORKDIR /root
 RUN git clone https://github.com/aoli-al/HFuse
 WORKDIR /root/HFuse/deps/
-RUN git clone --depth 1 https://github.com/aoli-al/llvm-project 
-RUN mkdir llvm-project/build
-WORKDIR /root/HFuse/deps/llvm-project/build
-RUN cmake -DLLVM_ENABLE_PROJECTS="clang"  -DCMAKE_INSTALL_PREFIX=/root/HFuse/deps/llvm-project/build -DLLVM_ENABLE_RTTI=ON -DCMAKE_BUILD_TYPE=Release ../llvm
-RUN make -j6 install
 
 WORKDIR /root/HFuse/
 RUN mkdir build
@@ -29,7 +24,7 @@ RUN make -j4
 WORKDIR /root
 RUN git clone https://github.com/aoli-al/TorchKernel
 RUN git clone https://github.com/aoli-al/ethminer
-RUN git clone https://github.com/aoli-al/pytorch
+RUN git clone --depth 1 https://github.com/aoli-al/pytorch
 
 WORKDIR /root/TorchKernel
 RUN python3 prepare_compiler_command.py
