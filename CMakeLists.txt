@@ -3,7 +3,7 @@ project(smart-fuser)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(LLVM_DIST_PATH "/usr/local/opt/llvm"
+set(LLVM_DIST_PATH "${PROJECT_SOURCE_DIR}/deps/llvm-project/build"
         CACHE STRING "LLVM distribution install path")
 
 set(LLVM_DIR ${LLVM_DIST_PATH}/lib/cmake/llvm)
