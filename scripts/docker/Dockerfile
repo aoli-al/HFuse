@@ -25,9 +25,9 @@ RUN make -j4
 WORKDIR /root
 RUN git clone https://github.com/aoli-al/TorchKernel
 RUN git clone https://github.com/aoli-al/ethminer
+RUN git clone --depth 1 https://github.com/aoli-al/pytorch
 WORKDIR /root/ethminer
 RUN git submodule update --init --recursive
-RUN git clone --depth 1 https://github.com/aoli-al/pytorch
 
 WORKDIR /root/TorchKernel
 RUN python3 prepare_compiler_command.py
