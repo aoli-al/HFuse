@@ -1,10 +1,10 @@
-FROM nvidia/cuda:10.1-devel-ubuntu18.04
+FROM nvidia/cuda:10.2-devel-ubuntu18.04
 
 ENV PATH="/root/miniconda3/bin:${PATH}"
 ARG PATH="/root/miniconda3/bin:${PATH}"
 
 RUN apt update
-RUN apt install -y git cmake python3 wget clang-10 libclang-10-dev zlibc zlib1g-dev libdbus-1-dev libboost-all-dev clang mesa-common-dev
+RUN apt install -y git cmake python3 wget clang-10 libclang-10-dev zlibc zlib1g-dev libdbus-1-dev libboost-all-dev clang mesa-common-dev 
 
 ENV CC="clang"
 ARG CC="clang"
