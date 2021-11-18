@@ -1,15 +1,17 @@
-FROM nvidia/cuda:10.2-devel-ubuntu18.04
+FROM nvidia/cuda:10.1-devel-ubuntu18.04
 
 ENV PATH="/root/miniconda3/bin:${PATH}"
 ARG PATH="/root/miniconda3/bin:${PATH}"
 
 RUN apt update
-RUN apt install -y git cmake python3 wget clang-10 libclang-10-dev zlibc zlib1g-dev libdbus-1-dev libboost-all-dev clang mesa-common-dev 
+RUN apt install -y git cmake python3 wget clang-10 libclang-10-dev zlibc zlib1g-dev libdbus-1-dev libboost-all-dev clang mesa-common-dev vim
 
 ENV CC="clang"
 ARG CC="clang"
 ENV CXX="clang++"
 ARG CXX="clang++"
+ENV CUDA_HOME='/usr/local/cuda'
+ARG CUDA_HOME='/usr/local/cuda'
 
 
 WORKDIR /root
@@ -34,6 +36,11 @@ RUN python3 prepare_compiler_command.py
 
 WORKDIR /root
 
+RUN wget https://developer.download.nvidia.com/compute/cuda/11.5.0/local_installers/cuda_11.5.0_495.29.05_linux.run \
+      && sh cuda_11.5.0_495.29.05_linux.run --toolkit --silent || true 
+
+RUN ln -sfn /usr/local/cuda-10.1/ /usr/local/cuda
+
 RUN wget \
     https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh \
     && mkdir /root/.conda \
@@ -41,7 +48,7 @@ RUN wget \
     && rm -f Miniconda3-py37_4.10.3-Linux-x86_64.sh 
 
 
-RUN conda install -y pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=10.2 -c pytorch
+RUN conda install -y pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch
 RUN mv /root/TorchKernel/Half.h /root/miniconda3/lib/python3.7/site-packages/torch/include/c10/util/Half.h
 
 ENV CC="gcc"
