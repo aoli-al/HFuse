@@ -41,7 +41,7 @@ RUN wget \
     && rm -f Miniconda3-py37_4.10.3-Linux-x86_64.sh 
 
 
-RUN conda install -y pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch
+RUN conda install -y pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=10.2 -c pytorch
 RUN mv /root/TorchKernel/Half.h /root/miniconda3/lib/python3.7/site-packages/torch/include/c10/util/Half.h
 
 ENV CC="gcc"
