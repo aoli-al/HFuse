@@ -29,6 +29,7 @@
 #include <thread>
 #include <algorithm>
 #include <DeclRewriter.h>
+#include <cstdlib>
 
 using namespace llvm;
 using namespace clang;
@@ -278,7 +279,9 @@ int main(int argc, const char** argv){
       break;
     } else {
       int status;
-      waitpid(id, &status, 0);
+      if (std::getenv("HFUSE_PARALLEL") == "1") {
+        waitpid(id, &status, 0);
+      }
       FusionProcesses.push_back(id);
     }
   }
