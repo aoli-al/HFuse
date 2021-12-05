@@ -447,10 +447,10 @@ upsample = [
 # json.dump(v1, open("./data-new/ml_perf/table-volta.json", 'w'))
 # exit(0)
 
-r1_s = json.load(open("./data-new/ml_perf/graph-pascal.json"))
-v1_s = json.load(open("./data-new/ml_perf/graph-volta.json"))
-r1 = json.load(open("./data-new/ml_perf/table-pascal.json"))
-v1 = json.load(open("./data-new/ml_perf/table-volta.json"))
+r1_s = json.load(open(sys.argv[1]))
+v1_s = json.load(open(sys.argv[2]))
+#  r1 = json.load(open("./data-new/ml_perf/table-pascal.json"))
+#  v1 = json.load(open("./data-new/ml_perf/table-volta.json"))
 
 # del r1['']
 # del r1_s['']

@@ -25,6 +25,7 @@ RUN cmake ..
 RUN make -j4
 
 WORKDIR /root
+RUN git clone https://github.com/ezyang/nvprof2json
 RUN git clone https://github.com/aoli-al/TorchKernel
 RUN git clone https://github.com/aoli-al/ethminer
 RUN git clone --depth 1 https://github.com/aoli-al/pytorch
@@ -33,6 +34,13 @@ RUN git submodule update --init --recursive
 
 WORKDIR /root/TorchKernel
 RUN python3 prepare_compiler_command.py
+RUN ./build.sh
+
+WORKDIR /root/ethminer
+RUN mkdir build
+WORKDIR /root/ethminer/build
+RUN cmake ..
+RUN make fuser -j4
 
 WORKDIR /root
 

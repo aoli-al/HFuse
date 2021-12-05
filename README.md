@@ -7,7 +7,7 @@ You first need to install CUDA and docker on your machine: https://www.celantur.
 ## Step 1: Download container
 
 ```
-docker run -–rm -–privileged -–gpus all -it leeleo3x/hfuse:latest bash
+docker run --rm --privileged --gpus all -it leeleo3x/hfuse:latest bash
 ```
 
 ## Step 2: Generate Fused Kernels
@@ -66,9 +66,20 @@ Building two projects take ~30min.
 
 ## Step 4: Run Fused Kernels
 
+- To run DL kernels
 
 ```
 cd /root/TorchKernel
 /usr/local/cuda-11.5/bin/nvprof --csv --log-file performance.csv python3 ./call.py
 /usr/local/cuda-11.5/bin/nvprof -f -o dl.nvprof python3 ./call.py
+python3 ~/nvprof2json/nvprof2json.py dl.nvprof > dl.json
+```
+
+- To run crypto kernels
+
+```
+cd /root/ethminer
+/usr/local/cuda-11.5/bin/nvprof --csv --log-file performance.csv ./build/fuse/fuser
+/usr/local/cuda-11.5/bin/nvprof -f -o crypto.nvprof ./build/fuse/fuser
+python3 ~/nvprof2json/nvprof2json.py crypto.nvprof > crypto.json
 ```
