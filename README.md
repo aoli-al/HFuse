@@ -83,3 +83,26 @@ cd /root/ethminer
 /usr/local/cuda-11.5/bin/nvprof -f -o crypto.nvprof ./build/fuse/fuser
 python3 ~/nvprof2json/nvprof2json.py crypto.nvprof > crypto.json
 ```
+
+- To visualize kernel execution time results (Figure 7)
+
+```
+mv /root/TorchKernel/dl.json /root/HFuse/scripts/data-new
+mv /root/ethminer/crpyto.json /root/HFuse/scripts/data-new
+cd /root/HFuse/scripts/
+python3 analyze_nvprof.py ./data-new/dl.json ./data-new/crypto.json
+```
+
+The graph is stored in `/root/HFuse/scripts/fused.png`
+
+- To collect kernel metrics (Figure 8)
+
+```
+cd /root/ethminer
+/usr/local/cuda-11.5/bin/nvprof --csv --log-file metrics.csv --events "elapsed_cycles_pm" --metrics "issue_slot_utilization,achieved_occupancy,stall_memory_dependency" ./build/fuse/fuser
+cd /root/TorchKernel
+/usr/local/cuda-11.5/bin/nvprof --csv --log-file metrics.csv --events "elapsed_cycles_pm" --metrics "issue_slot_utilization,achieved_occupancy,stall_memory_dependency" python3 call.py
+```
+
+You will see the metrics in `/root/ethminer/metrics.csv` and `/root/TorchKernel/metrics.csv` files. Each row shows the name of the 
+kenel, the types of the metrics collected, and the value of the metrics.

@@ -248,8 +248,8 @@ def analyze_execution_time(f, time_result, time_result_separate, ignore):
         last_time = None
         prev_dur = None
         dur_p = 0
-        data['traceEvents'] = sorted(data['traceEvents'], key=lambda t: t['ts'])
-        for event in data['traceEvents']:
+        data = sorted(data, key=lambda t: t['ts'])
+        for event in data:
             name = event['name']
             dur_p = event['ts']
             key, tag, idx = find_name(name)
@@ -259,6 +259,7 @@ def analyze_execution_time(f, time_result, time_result_separate, ignore):
                 continue
             found_tags.add(tag)
             visited_ts.add(event['ts'])
+            print(key, tag, idx)
             update_time_result(key, tag, idx, event['dur'])
             if tag == "ST":
                 prev.append(key)
@@ -368,20 +369,21 @@ order = [
 plot_shape = {
     "VFuse": {
         "1080Ti": "xb",
-        "V100": "*g",
+        #  "V100": "*g",
     },
 
     "HFuse": {
         "1080Ti": "+r",
-        "V100": ".y",
+        #  "V100": ".y",
     },
     "NTuse": {
         "1080Ti": "3c",
-        "V100": "1m",
+        #  "V100": "1m",
     },
 }
 r2 = {}
 analyze_execution_time(sys.argv[1], r1, r1_s, [])
+analyze_execution_time(sys.argv[2], r1, r1_s, [])
 #  analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, [])
 # analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
 # r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
@@ -478,19 +480,18 @@ print(found_tags)
 
 # print(fr)
 
-def build_graph(result, selection, result_volta, selection_volta):
+def build_graph(result, selection):
     # order = list(filter(lambda x: "+" in x, result_volta.keys())) 
     min_length = 99999999999999999999999
     for k in order:
         delta = 999999999999999999999
         delta_idx = 0
-        for idx in range(int(len(result_volta[k]['RA']["0"])//ITERS)):
-            if abs(result_volta[k]['RA']['0'][idx] - 1) < delta:
-                delta = abs(result_volta[k]['RA']['0'][idx] - 1)
+        for idx in range(int(len(result[k]['RA']["0"])//ITERS)):
+            if abs(result[k]['RA']['0'][idx] - 1) < delta:
+                delta = abs(result[k]['RA']['0'][idx] - 1)
                 delta_idx = idx
         print("delta: ", k, delta_idx)
         min_length = min(len(result[k]['RA']["0"]), min_length)
-        min_length = min(len(result_volta[k]['RA']["0"]), min_length)
     min_length /= ITERS
 
     def get_average(data):
@@ -526,17 +527,13 @@ def build_graph(result, selection, result_volta, selection_volta):
         vra = get_average(v['RA']["0"])
         p_max = max(vra)
         p_min = min(vra)
-        volta_ra = get_average(result_volta[k]['RA']["0"])
-        v_max = max(volta_ra)
-        v_min = min(volta_ra)
-        range_min = max(v_min, p_min)
-        range_max = min(v_max, p_max)
+        range_min = p_min
+        range_max = p_max
         range_min = -9999
         range_max = 9999
         # plt.figure()
 
         vst = get_average(v['ST']["0"])
-        volta_st = get_average(result_volta[k]['ST']["0"])
         ks = sorted(k.split('+'))
         if v[ks[0]][1] - v[ks[0]][0] > v[ks[1]][1] - v[ks[1]][0]:
             ks[0] = "*" + ks[0] + "*"
@@ -560,7 +557,7 @@ def build_graph(result, selection, result_volta, selection_volta):
                 fmt = '.'
             if lab == "NTuse":
                 lab = "Naive"
-            lab += "(" + name + ")"
+            #  lab += "(" + name + ")"
             arr1inds = ra.argsort()
             sorted_arr1 = ra[arr1inds[::-1]]
             a = a[arr1inds[::-1]]
@@ -607,11 +604,11 @@ def build_graph(result, selection, result_volta, selection_volta):
         #     check(get_average(bst), "HF", vst, vra, "Pascal", iii)
         check(get_best(v, "HF"), "HF", vst, vra, "1080Ti", "xx")
         check(get_best(v, "VF"), "VF", vst, vra, "1080Ti", "xx")
-        check(get_best(result_volta[k], "HF"), "HF", volta_st, volta_ra, "V100", "xx")
-        check(get_best(result_volta[k], "VF"), "VF", volta_st, volta_ra, "V100", "xx")
+        #  check(get_best(result_volta[k], "HF"), "HF", volta_st, volta_ra, "V100", "xx")
+        #  check(get_best(result_volta[k], "VF"), "VF", volta_st, volta_ra, "V100", "xx")
         if k in split:
             check(get_best_naive(v, "HF", str(split[k])), "NT", vst, vra, "1080Ti", "xx")
-            check(get_best_naive(result_volta[k], "HF", str(split[k])), "NT", volta_st, volta_ra, "V100", "xx")
+            #  check(get_best_naive(result_volta[k], "HF", str(split[k])), "NT", volta_st, volta_ra, "V100", "xx")
 
         # check(result_volta[k], selection_volta, volta_st, volta_ra, "Volta")
         # plt.legend()
@@ -685,7 +682,8 @@ def generate_table_1(result):
 
 # generate_table_1(r1)
 # build_graph(r1_s, pascal_selection, v1_s, volta_selection)
-build_graph(r1_s, None, r1_s, None)
+build_graph(r1_s, None)
+exit(0)
 #  generate_table_1(r2)
 
 

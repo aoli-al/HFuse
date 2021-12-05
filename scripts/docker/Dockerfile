@@ -24,6 +24,23 @@ WORKDIR /root/HFuse/build
 RUN cmake ..
 RUN make -j4
 
+
+RUN wget \
+    https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh \
+    && mkdir /root/.conda \
+    && bash Miniconda3-py37_4.10.3-Linux-x86_64.sh -b \
+    && rm -f Miniconda3-py37_4.10.3-Linux-x86_64.sh 
+
+RUN conda install -y pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch 
+RUN pip3 install matplotlib
+
+RUN mv /root/TorchKernel/Half.h /root/miniconda3/lib/python3.7/site-packages/torch/include/c10/util/Half.h
+
+ENV CC="gcc"
+ARG CC="gcc"
+ENV CXX="g++"
+ARG CXX="g++"
+
 WORKDIR /root
 RUN git clone https://github.com/ezyang/nvprof2json
 RUN git clone https://github.com/aoli-al/TorchKernel
@@ -49,19 +66,6 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/11.5.0/local_install
 
 RUN ln -sfn /usr/local/cuda-10.1/ /usr/local/cuda
 
-RUN wget \
-    https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh \
-    && mkdir /root/.conda \
-    && bash Miniconda3-py37_4.10.3-Linux-x86_64.sh -b \
-    && rm -f Miniconda3-py37_4.10.3-Linux-x86_64.sh 
 
-
-RUN conda install -y pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch
-RUN mv /root/TorchKernel/Half.h /root/miniconda3/lib/python3.7/site-packages/torch/include/c10/util/Half.h
-
-ENV CC="gcc"
-ARG CC="gcc"
-ENV CXX="g++"
-ARG CXX="g++"
 
 CMD sh
