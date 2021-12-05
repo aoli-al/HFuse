@@ -142,7 +142,7 @@ TAG_ORDER = [
 result = {}
 
 LABEL = "Avg"
-ITERS = 5
+ITERS = 1
 
 def build_name(names):
     return "+".join(sorted(names))
@@ -381,7 +381,8 @@ plot_shape = {
     },
 }
 r2 = {}
-# analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, ["Batchnorm+Im2Col"])
+analyze_execution_time(sys.argv[1], r1, r1_s, [])
+#  analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, [])
 # analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
 # r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
 # analyze_execution_time("./data-new/ml-volta-chart-1.json", v1, v1_s, ['Im2Col+Upsample'])
@@ -447,8 +448,8 @@ upsample = [
 # json.dump(v1, open("./data-new/ml_perf/table-volta.json", 'w'))
 # exit(0)
 
-r1_s = json.load(open(sys.argv[1]))
-v1_s = json.load(open(sys.argv[2]))
+#  r1_s = json.load(open(sys.argv[1]))
+#  v1_s = json.load(open(sys.argv[2]))
 #  r1 = json.load(open("./data-new/ml_perf/table-pascal.json"))
 #  v1 = json.load(open("./data-new/ml_perf/table-volta.json"))
 
@@ -684,7 +685,7 @@ def generate_table_1(result):
 
 # generate_table_1(r1)
 # build_graph(r1_s, pascal_selection, v1_s, volta_selection)
-build_graph(r1_s, None, v1_s, None)
+build_graph(r1_s, None, r1_s, None)
 #  generate_table_1(r2)
 
 
