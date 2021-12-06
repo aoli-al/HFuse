@@ -10,7 +10,9 @@ You first need to install CUDA and docker on your machine: https://www.celantur.
 docker run --rm --privileged --gpus all -it leeleo3x/hfuse:latest bash
 ```
 
-## Step 2: Generate Fused Kernels
+## Step 2: Generate Fused Kernels (Optional)
+
+Note that we have provided pre-fused kernels and you can skip this step.
 
 - Fuse DL kernels:
 ```
@@ -33,15 +35,16 @@ You may use `HFUSE_PARALLEL` to enable parallel fusing.
 Note that you can only use it while fusing DL kernels. 
 Fusing all kernels takes ~30min. 
 
-## Step 3: Build Fused Kernels
-
-- First you need to move the fused kernels to the corresponding folders.
+- Next, you need to move the fused kernels to the corresponding folders.
 
 ```
 cd /root
 mv ./fused-torch/* ./TorchKernel/fused
 mv ./fused-crypto/* ./ethminer/libethash-cuda/
 ```
+
+## Step 3: Build Fused Kernels (Optional)
+
 
 
 - Build DL kernels:
@@ -84,11 +87,13 @@ cd /root/ethminer
 python3 ~/nvprof2json/nvprof2json.py crypto.nvprof > crypto.json
 ```
 
+The execution time of each kernel are stored in `/root/ethminer/performance.csv` and `/root/TorchKernel/performance.csv`.
+
 - To visualize kernel execution time results (Figure 7)
 
 ```
 mv /root/TorchKernel/dl.json /root/HFuse/scripts/data-new
-mv /root/ethminer/crpyto.json /root/HFuse/scripts/data-new
+mv /root/ethminer/crypto.json /root/HFuse/scripts/data-new
 cd /root/HFuse/scripts/
 python3 analyze_nvprof.py ./data-new/dl.json ./data-new/crypto.json
 ```

@@ -25,6 +25,15 @@ RUN cmake ..
 RUN make -j4
 
 
+WORKDIR /root
+RUN git clone https://github.com/ezyang/nvprof2json
+RUN git clone https://github.com/aoli-al/TorchKernel
+RUN git clone https://github.com/aoli-al/ethminer
+RUN git clone --depth 1 https://github.com/aoli-al/pytorch
+WORKDIR /root/ethminer
+RUN git submodule update --init --recursive
+
+WORKDIR /root
 RUN wget \
     https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh \
     && mkdir /root/.conda \
@@ -41,31 +50,23 @@ ARG CC="gcc"
 ENV CXX="g++"
 ARG CXX="g++"
 
-WORKDIR /root
-RUN git clone https://github.com/ezyang/nvprof2json
-RUN git clone https://github.com/aoli-al/TorchKernel
-RUN git clone https://github.com/aoli-al/ethminer
-RUN git clone --depth 1 https://github.com/aoli-al/pytorch
-WORKDIR /root/ethminer
-RUN git submodule update --init --recursive
-
 WORKDIR /root/TorchKernel
 RUN python3 prepare_compiler_command.py
-RUN ./build.sh
+# RUN ./build.sh
 
 WORKDIR /root/ethminer
-RUN mkdir build
-WORKDIR /root/ethminer/build
-RUN cmake ..
-RUN make fuser -j4
+# RUN mkdir build
+# WORKDIR /root/ethminer/build
+# RUN cmake ..
+# RUN make fuser -j4
 
 WORKDIR /root
 
 RUN wget https://developer.download.nvidia.com/compute/cuda/11.5.0/local_installers/cuda_11.5.0_495.29.05_linux.run \
-      && sh cuda_11.5.0_495.29.05_linux.run --toolkit --silent || true 
+      && sh cuda_11.5.0_495.29.05_linux.run --toolkit --silent || true
 
 RUN ln -sfn /usr/local/cuda-10.1/ /usr/local/cuda
 
-
+#
 
 CMD sh
