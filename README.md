@@ -43,7 +43,7 @@ mv ./fused-torch/* ./TorchKernel/fused
 mv ./fused-crypto/* ./ethminer/libethash-cuda/
 ```
 
-## Step 3: Build Fused Kernels (Optional)
+## Step 3: Build Fused Kernels
 
 
 
