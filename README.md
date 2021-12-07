@@ -73,10 +73,12 @@ Building two projects take ~30min.
 
 ```
 cd /root/TorchKernel
-/usr/local/cuda-11.5/bin/nvprof --csv --log-file performance.csv python3 ./call.py
-/usr/local/cuda-11.5/bin/nvprof -f -o dl.nvprof python3 ./call.py
+/usr/local/cuda-11.5/bin/nvprof --csv --log-file performance.csv python3 ./call_{arch}.py
+/usr/local/cuda-11.5/bin/nvprof -f -o dl.nvprof python3 ./call_{arch}.py
 python3 ~/nvprof2json/nvprof2json.py dl.nvprof > dl.json
 ```
+
+And repace {arch} with the GPU you use (1080 or v100).
 
 - To run crypto kernels
 
