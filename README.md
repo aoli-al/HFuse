@@ -43,6 +43,20 @@ mv ./fused-torch/* ./TorchKernel/fused
 mv ./fused-crypto/* ./ethminer/libethash-cuda/
 ```
 
+- Note: HFuse makes several implace modifications of the input kernels due to the limitation of Clang Toolchain. If you cancel a fusing task (Ctrl-C) or the system crashes due to unknown reseaons. You need to go to the source file repo and revert all changes made by HFuse.
+
+- To revert changes of crypto kernels:
+```
+cd /root/ethminer/
+git checkout .
+```
+
+- To revert changes of DL kernels:
+```
+cd /root/TorchKernel
+git checkout .
+```
+
 ## Step 3: Build Fused Kernels
 
 
