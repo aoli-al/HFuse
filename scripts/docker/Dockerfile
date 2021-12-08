@@ -31,6 +31,7 @@ RUN git clone https://github.com/aoli-al/TorchKernel
 RUN git clone https://github.com/aoli-al/ethminer
 RUN git clone --depth 1 https://github.com/aoli-al/pytorch
 WORKDIR /root/ethminer
+RUN git checkout ae
 RUN git submodule update --init --recursive
 
 WORKDIR /root
