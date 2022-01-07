@@ -383,7 +383,7 @@ plot_shape = {
 }
 r2 = {}
 analyze_execution_time(sys.argv[1], r1, r1_s, [])
-analyze_execution_time(sys.argv[2], r1, r1_s, [])
+#  analyze_execution_time(sys.argv[2], r1, r1_s, [])
 #  analyze_execution_time("./data-new/ml-pascal-chart-1.json", r1, r1_s, [])
 # analyze_execution_time("./data-new/ml-pascal-chart-2.json", r1, r1_s, [])
 # r1_s = json.load(open("./data-new/ml-pascal-chart.json"))
